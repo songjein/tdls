@@ -1,0 +1,36 @@
+#!/usr/bin/env node
+
+const program  = require('commander');
+const chalk = require('chalk');
+
+const fs = require('fs');
+
+program
+	.option('-t, --todo <required>', 'Todo') 
+	.option('-s, --secret [optional]', 'Secret mode')
+	.parse(process.argv);
+
+const todo = program.todo;
+const secret = program.secret;
+
+if (!todo && !secret) {
+	console.error(chalk.red.bold('options required'));
+	process.exit(1);
+}
+
+console.log(chalk.green.bold('add command', todo));
+if (secret)
+	console.log(chalk.red.bold('secret mode'));
+
+let todos = fs.readFileSync('todos.json', 'utf-8');
+console.log("file status", todos);
+
+/*
+fs.writeFile('todos.json', data, 'utf-8', (error) => {
+	if (e) {
+		console.log(e);	
+	} else {
+		console.log('done');	
+	}
+});
+*/
