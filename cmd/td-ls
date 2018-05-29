@@ -1,112 +1,106 @@
 #!/usr/bin/env node
-/**
- * TODO: 콘솔 접속하자마자 todolist 보여주기 
- * TODO:
- */
 
 const program  = require('commander');
 const chalk = require('chalk');
 
+const fs = require('fs');
+
+const request = require('request');
+
+let options = {
+	host: '192.168.182.195',
+	port: 48484,
+	headers: {
+		'Content-Type': 'application/json'
+	}
+}
+
 program
-	.version('0.0.1')
-	.command('add')
-	.description('add todo item')
-	.option('-t, --todo <required>', 'Todo') 
-	.option('-s, --secret [optional]', 'Secret mode')
-	.action(function(options) {
-		console.log(chalk.green.bold('add command', options.todo));
-		if (options.secret)
-			console.log('secret mode');
-	})
-	.command('list')
-	.description('list todo items')
 	.option('-n, --number [optional]', 'Show channel items')
-	.option('-c, --channel', 'Show channel items')
-	.action(function(options) {
-		console.log(chalk.green.bold('list command'));
-		if (options.number) {
-			console.log(chalk.blue.bold('list number: ', options.number));		
+	.option('-c, --channel [optional]', 'Show channel items')
+	.option('-w, --withoutch [optional]', 'Show without channel items')
+	.parse(process.argv);
+
+/**
+ *	Options
+ */
+const number = program.number ? program.number : -1;
+const wc = program.channel;
+const woc = program.withoutch;
+
+/**
+ *	Validation
+ */
+if (false) { /* vali */ }
+
+/**
+ *	Verbose	
+ */
+console.log(chalk.green.bold('List command'));
+	
+/**
+ *	Read JSON file	
+ */
+let todos = []
+let channels = [];
+
+fs.readFile('todos.json', 'utf-8', (err, data) => {
+	if (err) {
+		console.error(chalk.red.bold(err));
+		console.log(chalk.yellow.bold("--> New file will be created"));
+	} else {
+		todos = JSON.parse(data);
+
+		// channel 정보 가져오기from subch.json
+		if (fs.existsSync('subch.json')) {
+			channels = JSON.parse(fs.readFileSync('subch.json', 'utf8'));
+			console.log("Subscribed channel list", channels)
 		}
-	});
 
-program.parse(process.argv)
+		// api request
+		if (channels.length == 0) {
+			if (todos.length == 0) {
+				console.log(chalk.yellow.bold("[Empty]"));	
+			}
+			todos.forEach((item, idx) => {
+				if (number > 0 && number <= idx) return false;
+				if ("ch" in item && !woc) console.log(chalk.cyan(idx + ". ", chalk.inverse(item.todo)));
+				else	console.log(chalk.cyan(idx + ". "), chalk.yellow.bold(item.todo));	
+			});
+		}
+		
+		// channel이 하나 이상일 경우 코드
+		for (i = 0; i < channels.length; i++ ){
+			ci = i;
+			request({
+				url: 'http://192.168.182.195:48484/getch/' + channels[i].id
+			}, (error, response, body) => {
+				let ts = JSON.parse(body).todos;
+				// 싱크가 맞지 않는 todo 추가
+				for (t = 0 ; t < ts.length; t ++){
+					if (!channels[ci]["synced"].includes(ts[t].time)){
+						channels[ci]["synced"].push(ts[t].time);
+						todos.unshift({"todo": ts[t].todo, "secret": false, "ch": true});
+					}
+				}
+				//console.log(channels);
+				//console.log(todos);
 
-if (program.args.length === 0) program.help();
+				// subch.json 및 todos.json 갱신
+				////
 
-
-/**
- *	API 서버 정보
- */
-SERVER_ADDR = "localhost:48484"
-ADD = "/add"
-LS = "/ls"
-RM = "/rm"
-FIN = "/fin"
-MKCH = "/mkch"
-SUBCH = "/subch"
-PUBCH = "/pubch"
-
-/**
- *	기타 전역 변수
- */
-const log = console.log;
-
-/**
- *	function 정의
- */
-
-/**
- *	add todo
- */
-function add(argv) {
-	log("add");
-}
-
-
-/**
- *	list todo	
- */
-function ls(argv) {
-	log("ls");
-}
-
-
-/**
- *	remove todo	
- */
-function rm(argv) {
-	log("rm");
-}
-
-
-/**
- *	finish todo	
- */
-function fin(argv) {
-	log("fin");
-}
-
-
-/**
- *	subscribe channel
- */
-function mkch(argv) {
-	log("mkch");
-}
-
-
-/**
- *	subscribe channel
- */
-function subch(argv) {
-	log("subch");
-}
-
-
-/**
- *	publish item to channel
- */
-function subch(argv) {
-	log("pubch");
-}
+				if (todos.length == 0) {
+					console.log(chalk.yellow.bold("[Empty]"));	
+				}
+				todos.forEach((item, idx) => {
+					if (number > 0 && number <= idx) return false;
+					if ("ch" in item && !woc) console.log(chalk.cyan(idx + ". ", chalk.inverse(item.todo)));
+					else	console.log(chalk.cyan(idx + ". "), chalk.yellow.bold(item.todo));	
+				});
+				////////////////////////////
+			});
+		}
+		// api request end
+	}
+});
 

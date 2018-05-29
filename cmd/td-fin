@@ -1,0 +1,72 @@
+#!/usr/bin/env node
+
+const program  = require('commander');
+const chalk = require('chalk');
+const inquirer = require('inquirer');
+
+const fs = require('fs');
+
+program
+	.option('-i, --idx <required>', 'Todo') 
+	.parse(process.argv);
+
+/**
+ *	Options
+ */
+const idx = program.idx;
+
+/**
+ *	Validation	
+ */
+if (!idx) {
+	console.error(chalk.red.bold('Option required'));
+	program.help();
+	process.exit(1);
+}
+
+/**
+ *	Verbose	
+ */
+console.log(chalk.green.bold('Fin command ; '), "idx :", chalk.yellow.underline(idx));
+
+/**
+ *	Read JSON file	
+ */
+let todos = []
+fs.readFile('todos.json', 'utf-8', (err, data) => {
+	if (err) {
+		console.error(chalk.red.bold(err));
+		return;
+	} else {
+		todos = JSON.parse(data);
+	}
+
+	const questions = [
+		{
+			message: "Finish " + idx + "th item '" + chalk.bgGreen(todos[idx].todo) + "'?",
+			type: "confirm",
+			name: "confirm"
+		}
+	];
+	inquirer.prompt(questions).then((answer) => {
+		if (!answer.confirm) {
+			console.log(chalk.yellow.bold("Nothing happened :)"));	
+			return;
+		}
+		todos.splice(idx, 1);
+
+		/**
+		 *	Write JSON file
+		 */
+		fs.writeFile('todos.json', JSON.stringify(todos), 'utf-8', (err) => {
+			if (err) {
+				console.error(chalk.red.bold(err));	
+			} else {
+				console.log(chalk.green.bold('Finshed Successfully'));	
+			}
+		});
+	});
+
+	// fin write
+});
+

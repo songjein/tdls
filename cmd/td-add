@@ -7,30 +7,61 @@ const fs = require('fs');
 
 program
 	.option('-t, --todo <required>', 'Todo') 
-	.option('-s, --secret [optional]', 'Secret mode')
+	.option('-s, --secret', 'Secret mode')
 	.parse(process.argv);
 
+/**
+ *	Options
+ */
 const todo = program.todo;
-const secret = program.secret;
+const secret = program.secret ? program.secret : false;
 
+
+/**
+ *	Validation	
+ */
 if (!todo && !secret) {
-	console.error(chalk.red.bold('options required'));
+	console.error(chalk.red.bold('Options required'));
+	if (!todo) program.help();
 	process.exit(1);
 }
 
-console.log(chalk.green.bold('add command', todo));
+/**
+ *	Verbose	
+ */
+console.log(chalk.green.bold('Add command ; '), "+", chalk.white.underline(todo));
 if (secret)
-	console.log(chalk.red.bold('secret mode'));
+	console.log(chalk.red.bold('- Secret mode -'));
+else
+	console.log(chalk.cyan.bold('- Public mode -'));
+	
 
-let todos = fs.readFileSync('todos.json', 'utf-8');
-console.log("file status", todos);
-
-/*
-fs.writeFile('todos.json', data, 'utf-8', (error) => {
-	if (e) {
-		console.log(e);	
+/**
+ *	Read JSON file	
+ */
+let todos = []
+fs.readFile('todos.json', 'utf-8', (err, data) => {
+	if (err) {
+		console.error(chalk.red.bold(err));
+		console.log(chalk.yellow.bold("--> New file will be created"));
 	} else {
-		console.log('done');	
+		todos = JSON.parse(data);
 	}
+
+	// add item
+	const item = {'todo': todo, 'secret': secret};
+	todos.push(item);
+	
+	/**
+	 *	Write JSON file
+	 */
+	fs.writeFile('todos.json', JSON.stringify(todos), 'utf-8', (err) => {
+		if (err) {
+			console.error(chalk.red.bold(err));	
+		} else {
+			console.log(chalk.green.bold('Added Successfully'));	
+		}
+	});
+	// fin write
 });
-*/
+

@@ -1,0 +1,94 @@
+#!/usr/bin/env node
+
+const program  = require('commander');
+const chalk = require('chalk');
+const inquirer = require('inquirer');
+
+const fs = require('fs');
+
+program
+	.option('-i, --idx [optional]', 'Todo item\'s idx to remove') 
+	.option('-a, --all', 'Remove all')
+	.parse(process.argv);
+
+/**
+ *	Options
+ */
+const idx = program.idx;
+const all = program.all;
+
+/**
+ *	Validation	
+ */
+if (!idx && !all) {
+	console.error(chalk.red.bold('Option required'));
+	program.help();
+	process.exit(1);
+}
+
+/**
+ *	Verbose	
+ */
+if (all) {
+	console.log(chalk.red.bold('Rm command ; '), chalk.red.underline("all items will be removed"));
+} else {
+	console.log(chalk.green.bold('Rm command ; '), "idx :", chalk.red.underline(idx));
+}
+
+/**
+ *	Read JSON file	
+ */
+let todos = []
+fs.readFile('todos.json', 'utf-8', (err, data) => {
+	if (err) {
+		console.error(chalk.red.bold(err));
+		return;
+	} else {
+		todos = JSON.parse(data);
+	}
+	
+	let questions;
+	if (all) {
+		questions = [
+			{
+				message: "Remove " + chalk.bgRed("all items ?"),
+				type: "confirm",
+				name: "confirm"
+			}
+		];
+	} else {	
+		questions = [
+			{
+				message: "Remove " + idx + "th item '" + chalk.bgRed(todos[idx].todo) + "'?",
+				type: "confirm",
+				name: "confirm"
+			}
+		];
+	}
+	inquirer.prompt(questions).then((answer) => {
+		if (!answer.confirm) {
+			console.log(chalk.yellow.bold("Nothing happened :)"));	
+			return;
+		}
+
+		if (all) {
+			todos = [];
+		} else {
+			todos.splice(idx, 1);
+		}
+
+		/**
+		 *	Write JSON file
+		 */
+		fs.writeFile('todos.json', JSON.stringify(todos), 'utf-8', (err) => {
+			if (err) {
+				console.error(chalk.red.bold(err));	
+			} else {
+				console.log(chalk.green.bold('Removed Successfully'));	
+			}
+		});
+	});
+
+	// fin write
+});
+

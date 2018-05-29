@@ -1,0 +1,18 @@
+#!/usr/bin/env node
+
+const program  = require('commander');
+const chalk = require('chalk');
+
+program
+	.version('0.0.1')
+	.command('add', 'add todo item').alias('a')
+	.command('ls', 'list todo items').alias('l')
+	.command('fin', 'finish todo item').alias('f')
+	.command('rm', 'remove todo item').alias('r')
+	.command('mkch', 'make channel').alias('mc')
+	.command('subch', 'subscribe channel').alias('sc')
+	.command('pubch', 'publish todo item').alias('pc')
+	.parse(process.argv)
+
+if (program.args.length === 0) program.help();
+

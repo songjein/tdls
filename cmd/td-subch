@@ -1,0 +1,60 @@
+#!/usr/bin/env node
+
+const program  = require('commander');
+const chalk = require('chalk');
+
+const fs = require('fs');
+
+program
+	.option('-i, --id <required>', 'Channel id') 
+	.parse(process.argv);
+
+/**
+ *	Options
+ */
+const id = program.id;
+
+
+/**
+ *	Validation	
+ */
+if (!id) {
+	console.error(chalk.red.bold('Options required'));
+	program.help();
+	process.exit(1);
+}
+
+/**
+ *	Verbose	
+ */
+console.log(chalk.green.bold('Subch command ; '));
+
+/**
+ *	Read JSON file	
+ */
+let channels = []
+fs.readFile('subch.json', 'utf-8', (err, data) => {
+	if (err) {
+		console.error(chalk.red.bold(err));
+		console.log(chalk.yellow.bold("--> New file will be created"));
+	} else {
+		channels = JSON.parse(data);
+	}
+
+	// add item
+	const item = {'id': id, 'synced': []};
+	channels.push(item);
+	
+	/**
+	 *	Write JSON file
+	 */
+	fs.writeFile('subch.json', JSON.stringify(channels), 'utf-8', (err) => {
+		if (err) {
+			console.error(chalk.red.bold(err));	
+		} else {
+			console.log(chalk.green.bold('Added Successfully'));	
+		}
+	});
+	// fin write
+});
+
