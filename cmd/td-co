@@ -32,7 +32,7 @@ if (!first && !second) {
 /**
  *	Verbose	
  */
-console.log(chalk.green.bold('co command ; '), chalk.green.underline(first) ," <---> ", chalk.green.underline(second));
+console.log(chalk.green.bold('co command ; '), chalk.green.underline(first) , chalk.magenta(" <---> "), chalk.green.underline(second));
 	
 
 /**

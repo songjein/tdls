@@ -20,7 +20,7 @@ program
 /**
  *	Verbose	
  */
-console.log(chalk.green.bold('chls command'));
+console.log(chalk.green.bold('lsch command'));
 
 /**
  *	Read JSON file	
