@@ -1,5 +1,9 @@
 #!/usr/bin/env node
 
+/**
+ * TODO: 없는 채널 입니다
+ */
+
 const program  = require('commander');
 const chalk = require('chalk');
 
@@ -12,7 +16,7 @@ program
 /**
  *	Options
  */
-const id = program.id;
+const id = program.id.trim();
 
 
 /**
@@ -27,13 +31,19 @@ if (!id) {
 /**
  *	Verbose	
  */
-console.log(chalk.green.bold('Subch command ; '));
+console.log(chalk.green.bold('subch command ; '));
 
 /**
  *	Read JSON file	
  */
+const SUBCHFILE = "subch.json";
+/**
+ *	subch.json ; subscribed channels meta data 
+ *	{ "id" : channel-id, "synced": [synced todo item's timestamp] }
+ */
+
 let channels = []
-fs.readFile('subch.json', 'utf-8', (err, data) => {
+fs.readFile(SUBCHFILE, 'utf-8', (err, data) => {
 	if (err) {
 		console.error(chalk.red.bold(err));
 		console.log(chalk.yellow.bold("--> New file will be created"));
@@ -48,7 +58,7 @@ fs.readFile('subch.json', 'utf-8', (err, data) => {
 	/**
 	 *	Write JSON file
 	 */
-	fs.writeFile('subch.json', JSON.stringify(channels), 'utf-8', (err) => {
+	fs.writeFile(SUBCHFILE, JSON.stringify(channels), 'utf-8', (err) => {
 		if (err) {
 			console.error(chalk.red.bold(err));	
 		} else {

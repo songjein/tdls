@@ -62,7 +62,7 @@ fs.readFile('todos.json', 'utf-8', (err, data) => {
 			if (err) {
 				console.error(chalk.red.bold(err));	
 			} else {
-				console.log(chalk.green.bold('Finshed Successfully'));	
+				console.log(chalk.green.bold('Finished Successfully'));	
 			}
 		});
 	});

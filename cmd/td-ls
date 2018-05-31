@@ -41,66 +41,86 @@ console.log(chalk.green.bold('List command'));
 /**
  *	Read JSON file	
  */
-let todos = []
-let channels = [];
+let _todos = []
+let _channels = [];
+const SUBCHFILE = "subch.json";
+const TODOFILE = "todos.json";
 
 fs.readFile('todos.json', 'utf-8', (err, data) => {
 	if (err) {
 		console.error(chalk.red.bold(err));
 		console.log(chalk.yellow.bold("--> New file will be created"));
 	} else {
-		todos = JSON.parse(data);
+		_todos = JSON.parse(data);
 
-		// channel 정보 가져오기from subch.json
-		if (fs.existsSync('subch.json')) {
-			channels = JSON.parse(fs.readFileSync('subch.json', 'utf8'));
-			console.log("Subscribed channel list", channels)
+		// channel 정보 가져오기from SUBCHFILE 
+		if (fs.existsSync(SUBCHFILE)) {
+			_channels = JSON.parse(fs.readFileSync(SUBCHFILE, 'utf8'));
+			console.log("Subscribed channel list", chalk.yellow(_channels.map((item)=>{return item.id}).join(",")))
 		}
 
-		// api request
-		if (channels.length == 0) {
-			if (todos.length == 0) {
-				console.log(chalk.yellow.bold("[Empty]"));	
-			}
-			todos.forEach((item, idx) => {
-				if (number > 0 && number <= idx) return false;
-				if ("ch" in item && !woc) console.log(chalk.cyan(idx + ". ", chalk.inverse(item.todo)));
-				else	console.log(chalk.cyan(idx + ". "), chalk.yellow.bold(item.todo));	
-			});
+		// 구독하는 채널이 없다면
+		if (_channels.length == 0) {
+			showTodos(); return;
 		}
 		
-		// channel이 하나 이상일 경우 코드
-		for (i = 0; i < channels.length; i++ ){
-			ci = i;
+		// channel이 하나 이상일 때
+		for (i = 0; i < _channels.length; i++ ){
+			/**
+			 *	주의: i 를 이용하면 callback 에서 이미 i가 증가해버린 뒤여서 i에 대한 sync를 놓친다 
+			 *	따라서 현재 i를 서버로 보냈다가
+			 *	서버에서도 받은 i를 응답과 함께 넘겨주면 (tmpidx)
+			 *	해당 i를 활용해서 처리한다
+			 */
 			request({
-				url: 'http://192.168.182.195:48484/getch/' + channels[i].id
+				url: 'http://192.168.182.195:48484/getch/' + _channels[i].id + "/" + i
 			}, (error, response, body) => {
-				let ts = JSON.parse(body).todos;
-				// 싱크가 맞지 않는 todo 추가
+				if (error) {
+					console.log(error);
+					return;
+				}
+				
+				const parsedBody = JSON.parse(body);
+				const idx = parsedBody.tmpidx;
+				if (parsedBody.status == "EMPTY"){
+					console.log("Channel id : " + chalk.red.bold(_channels[idx].id + " not exist"));
+					return;
+				}
+				let ts = parsedBody["content"]["todos"];
+
+				// 싱크가 맞지 않는 todo 추가 및 timestamp 기록
+				let isSynced = false;
 				for (t = 0 ; t < ts.length; t ++){
-					if (!channels[ci]["synced"].includes(ts[t].time)){
-						channels[ci]["synced"].push(ts[t].time);
-						todos.unshift({"todo": ts[t].todo, "secret": false, "ch": true});
+					if (!_channels[idx]["synced"].includes(ts[t].timestamp)){
+						_channels[idx]["synced"].push(ts[t].timestamp);
+						_todos.push({"todo": ts[t].todo, "secret": false, "ch": true});
+						isSynced = true;
 					}
 				}
-				//console.log(channels);
-				//console.log(todos);
+				
+				if (!isSynced) return;
 
-				// subch.json 및 todos.json 갱신
-				////
-
-				if (todos.length == 0) {
-					console.log(chalk.yellow.bold("[Empty]"));	
-				}
-				todos.forEach((item, idx) => {
-					if (number > 0 && number <= idx) return false;
-					if ("ch" in item && !woc) console.log(chalk.cyan(idx + ". ", chalk.inverse(item.todo)));
-					else	console.log(chalk.cyan(idx + ". "), chalk.yellow.bold(item.todo));	
-				});
-				////////////////////////////
+				fs.writeFileSync(SUBCHFILE, JSON.stringify(_channels), encoding="utf-8");
+				fs.writeFileSync(TODOFILE, JSON.stringify(_todos), encoding="utf-8");
+				console.log(chalk.blue.bold("New Todo item from Subscribed Channel [" + _channels[idx] + "]"));
 			});
 		}
-		// api request end
+
+		showTodos();
 	}
 });
 
+/**
+ *	show todo
+ *	using global variable '_todos'
+ */
+function showTodos() {
+	if (_todos.length == 0) {
+		console.log(chalk.yellow.bold("[Empty]"));	
+	}
+	_todos.forEach((item, idx) => {
+		if (number > 0 && number <= idx) return false;
+		if ("ch" in item && !woc) console.log(chalk.cyan(idx + ". ", chalk.inverse(item.todo)));
+		else	console.log(chalk.cyan(idx + ". "), chalk.yellow.bold(item.todo));	
+	});
+}
