@@ -1,0 +1,43 @@
+#!/usr/bin/env node
+
+const program  = require('commander');
+const chalk = require('chalk');
+const inquirer = require('inquirer');
+
+const fs = require('fs');
+
+program
+	.parse(process.argv);
+
+/**
+ *	Options
+ */
+
+/**
+ *	Validation	
+ */
+
+/**
+ *	Verbose	
+ */
+console.log(chalk.green.bold('chls command'));
+
+/**
+ *	Read JSON file	
+ */
+const SUBCHFILE = "subch.json";
+
+fs.readFile(SUBCHFILE, 'utf-8', (err, data) => {
+	if (err) {
+		console.error(chalk.red.bold(err));
+		return;
+	} else {
+		channels = JSON.parse(data);
+	}
+	
+	for (i = 0 ; i < channels.length; i++){
+		console.log(i + ". " + chalk.yellow.bold((channels[i].id)));
+	}
+
+});
+

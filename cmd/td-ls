@@ -36,7 +36,7 @@ if (false) { /* vali */ }
 /**
  *	Verbose	
  */
-console.log(chalk.green.bold('List command'));
+console.log(chalk.green.bold('list command'));
 	
 /**
  *	Read JSON file	

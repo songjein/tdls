@@ -27,7 +27,7 @@ if (!idx) {
 /**
  *	Verbose	
  */
-console.log(chalk.green.bold('Fin command ; '), "idx :", chalk.yellow.underline(idx));
+console.log(chalk.green.bold('fin command ; '), "idx :", chalk.yellow.underline(idx));
 
 /**
  *	Read JSON file	

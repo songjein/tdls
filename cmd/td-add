@@ -29,7 +29,7 @@ if (!todo && !secret) {
 /**
  *	Verbose	
  */
-console.log(chalk.green.bold('Add command ; '), "+", chalk.white.underline(todo));
+console.log(chalk.green.bold('add command ; '), "+", chalk.white.underline(todo));
 if (secret)
 	console.log(chalk.red.bold('- Secret mode -'));
 else

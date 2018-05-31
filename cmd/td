@@ -10,6 +10,7 @@ program
 	.command('fin', 'finish todo item').alias('f')
 	.command('rm', 'remove todo item').alias('r')
 	.command('mkch', 'make channel').alias('mc')
+	.command('lsch', 'list channels').alias('lc')
 	.command('rmch', 'remove channel').alias('rc')
 	.command('subch', 'subscribe channel').alias('sc')
 	.command('pubch', 'publish todo item').alias('pc')

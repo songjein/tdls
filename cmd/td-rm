@@ -30,9 +30,9 @@ if (!idx && !all) {
  *	Verbose	
  */
 if (all) {
-	console.log(chalk.red.bold('Rm command ; '), chalk.red.underline("all items will be removed"));
+	console.log(chalk.red.bold('rm command ; '), chalk.red.underline("all items will be removed"));
 } else {
-	console.log(chalk.green.bold('Rm command ; '), "idx :", chalk.red.underline(idx));
+	console.log(chalk.green.bold('rm command ; '), "idx :", chalk.red.underline(idx));
 }
 
 /**
