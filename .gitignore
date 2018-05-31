@@ -1,2 +1,3 @@
-*node_module/*
+node_module/*
+stdio-api/node_module/*
 *.json
