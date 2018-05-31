@@ -1,0 +1,64 @@
+#!/usr/bin/env node
+
+const program  = require('commander');
+const chalk = require('chalk');
+
+const fs = require('fs');
+
+program
+	.option('-1, --first <required>', 'first item') 
+	.option('-2, --second <required>', 'second item')
+	.parse(process.argv);
+
+/**
+ *	Options
+ */
+const first = program.first;
+const second = program.second;
+
+
+/**
+ *	Validation	
+ */
+if (!first && !second) {
+	console.error(chalk.red.bold('Options required'));
+	program.help();
+	process.exit(1);
+}
+
+/**
+ *	Verbose	
+ */
+console.log(chalk.green.bold('co command ; '), chalk.green.underline(first) ," <---> ", chalk.green.underline(second));
+	
+
+/**
+ *	Read JSON file	
+ */
+let todos = []
+fs.readFile('todos.json', 'utf-8', (err, data) => {
+	if (err) {
+		console.error(chalk.red.bold(err));
+		console.log(chalk.yellow.bold("--> New file will be created"));
+	} else {
+		todos = JSON.parse(data);
+	}
+
+	// change items
+	const tmp = todos[first];
+	todos[first] = todos[second];
+	todos[second] = tmp;
+	
+	/**
+	 *	Write JSON file
+	 */
+	fs.writeFile('todos.json', JSON.stringify(todos), 'utf-8', (err) => {
+		if (err) {
+			console.error(chalk.red.bold(err));	
+		} else {
+			console.log(chalk.green.bold('Changed Successfully'));	
+		}
+	});
+	// fin write
+});
+

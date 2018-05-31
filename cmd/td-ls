@@ -1,5 +1,9 @@
 #!/usr/bin/env node
 
+/**
+ *	TODO: 실제 채널 ls 기능 추가
+ */
+
 const program  = require('commander');
 const chalk = require('chalk');
 
