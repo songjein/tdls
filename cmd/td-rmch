@@ -1,0 +1,83 @@
+#!/usr/bin/env node
+
+const program  = require('commander');
+const chalk = require('chalk');
+const inquirer = require('inquirer');
+
+const fs = require('fs');
+
+program
+	.option('-i, --id [optional]', 'Channel\'s id(string) to remove') 
+	.parse(process.argv);
+
+/**
+ *	Options
+ */
+const id = program.id;
+
+/**
+ *	Validation	
+ */
+if (!id) {
+	console.error(chalk.red.bold('Option required'));
+	program.help();
+	process.exit(1);
+}
+
+/**
+ *	Verbose	
+ */
+console.log(chalk.green.bold('chrm command ; '), "id :", chalk.red.underline(id));
+
+/**
+ *	Read JSON file	
+ */
+const SUBCHFILE = "subch.json";
+
+fs.readFile(SUBCHFILE, 'utf-8', (err, data) => {
+	if (err) {
+		console.error(chalk.red.bold(err));
+		return;
+	} else {
+		channels = JSON.parse(data);
+	}
+	
+	let	questions = [
+		{
+			message: "Remove " + id + "th item '" + chalk.bgRed(channels[id]) + "'?",
+			type: "confirm",
+			name: "confirm"
+		}
+	];
+
+	inquirer.prompt(questions).then((answer) => {
+		if (!answer.confirm) {
+			console.log(chalk.yellow.bold("Nothing happened :)"));	
+			return;
+		}
+		
+		// find idx and remove
+		let removedItem = undefined;
+		for (i = 0 ; i < channels.length; i++){
+			if (channels[i].id == id){
+				removedItem = channels[i];
+				channels.splice(i, 1);
+				break;
+			}
+		}
+
+		/**
+		 *	Write JSON file
+		 */
+		fs.writeFile(SUBCHFILE, JSON.stringify(channels), 'utf-8', (err) => {
+			if (err) {
+				console.error(chalk.red.bold(err));	
+			} else {
+				console.log(removedItem.id + chalk.green.bold(' Removed Successfully'));	
+			}
+		});
+	});
+
+	// fin write
+});
+
