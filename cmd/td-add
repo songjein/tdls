@@ -39,8 +39,10 @@ else
 /**
  *	Read JSON file	
  */
+const TODOFILE = "todos.json";
 let todos = []
-fs.readFile('todos.json', 'utf-8', (err, data) => {
+
+fs.readFile(TODOFILE, 'utf-8', (err, data) => {
 	if (err) {
 		console.error(chalk.red.bold(err));
 		console.log(chalk.yellow.bold("--> New file will be created"));
@@ -55,7 +57,7 @@ fs.readFile('todos.json', 'utf-8', (err, data) => {
 	/**
 	 *	Write JSON file
 	 */
-	fs.writeFile('todos.json', JSON.stringify(todos), 'utf-8', (err) => {
+	fs.writeFile(TODOFILE, JSON.stringify(todos), 'utf-8', (err) => {
 		if (err) {
 			console.error(chalk.red.bold(err));	
 		} else {

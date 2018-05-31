@@ -1,4 +1,7 @@
 #!/usr/bin/env node
+/**
+ *	TODO: -2 디폴트값을 0으로 하면..
+ */
 
 const program  = require('commander');
 const chalk = require('chalk');

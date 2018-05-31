@@ -1,0 +1,45 @@
+#!/usr/bin/env node
+
+/**
+ *	TODO: 다양한 방식의 보여주기 (통계나, 완료시간 기준)
+ */
+
+const program  = require('commander');
+const chalk = require('chalk');
+
+const fs = require('fs');
+
+const request = require('request');
+
+program
+	.parse(process.argv);
+
+/**
+ *	Options
+ */
+
+/**
+ *	Validation
+ */
+if (false) { /* vali */ }
+
+/**
+ *	Verbose	
+ */
+console.log(chalk.green.bold('lsf command'));
+	
+/**
+ *	Read JSON file	
+ */
+const FINFILE = "fin.json";
+
+if (fs.existsSync(FINFILE)) {
+	fins = JSON.parse(fs.readFileSync(FINFILE, 'utf8'));
+} else {
+	console.log(chlak.red.underline("No finished items"));		
+}
+
+for (i = 0; i < fins.length; i++){
+	console.log(chalk.cyan(i) + ". " + chalk.yellow.bold(fins[i].todo));	
+}
+
