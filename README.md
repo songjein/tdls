@@ -1,4 +1,4 @@
-td ; command line todo list tools for engineers
+td ; command line todo-list tools for engineers
 ==================================================
 ## Features
 1. add, ls, rm, fin todo items
