@@ -14,9 +14,8 @@ td ; command line todo-list tools for engineers
 	<pre>export PATH=$PATH:/home/jeinsong/td/cmd:</pre>
 
 ## Usage
-1.td -h
+1.*td -h*
 <pre>
-
   Usage: td [options] [command]
 
   Options:
@@ -39,6 +38,17 @@ td ; command line todo-list tools for engineers
     pubch|pc       publish todo item
     help [cmd]     display help for [cmd]
 
+</pre>
+
+2. td help 'command'
+<pre>
+  Usage: td-add [options]
+
+  Options:
+
+    -t, --todo <required>  Todo
+    -s, --secret           Secret mode
+    -h, --help             output usage information
 </pre>
 - 제가 써보니 매우 편리하고 효율적인 업무 관리를 가능하게하는 툴임이 분명합니다
 - 커맨드라인 상에서 작업하는 시간이 많은 분일 수록 꼭 써야합니다
