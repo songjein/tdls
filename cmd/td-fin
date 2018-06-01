@@ -11,6 +11,7 @@ const inquirer = require('inquirer');
 
 const fs = require('fs');
 
+const settings = require('./settings');
 const utils = require('./utils');
 
 program
@@ -39,8 +40,8 @@ console.log(chalk.green.bold('fin command ; '), "idx :", chalk.yellow.underline(
 /**
  *	Read JSON file	
  */
-const TODOFILE = "todos.json";
-const FINFILE = "fin.json";
+const TODOFILE = settings.TODOFILE;
+const FINFILE = settings.FINFILE;
 let todos = []
 
 fs.readFile(TODOFILE, 'utf-8', (err, data) => {

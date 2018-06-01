@@ -1,11 +1,9 @@
 #!/usr/bin/env node
 
-/**
- * TODO: 없는 채널 입니다
- */
-
 const program  = require('commander');
 const chalk = require('chalk');
+
+const settings = require('./settings');
 
 const fs = require('fs');
 
@@ -16,7 +14,7 @@ program
 /**
  *	Options
  */
-const id = program.id.trim();
+const id = program.id ? program.id.trim() : undefined;
 
 
 /**
@@ -31,12 +29,12 @@ if (!id) {
 /**
  *	Verbose	
  */
-console.log(chalk.green.bold('subch command ; '));
+console.log(chalk.green.bold('subch command ; ') + chalk.yellow.bold("channel " + id));
 
 /**
  *	Read JSON file	
  */
-const SUBCHFILE = "subch.json";
+const SUBCHFILE = settings.SUBCHFILE;
 /**
  *	subch.json ; subscribed channels meta data 
  *	{ "id" : channel-id, "synced": [synced todo item's timestamp] }

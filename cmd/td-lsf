@@ -7,6 +7,8 @@
 const program  = require('commander');
 const chalk = require('chalk');
 
+const settings = require('./settings');
+
 const fs = require('fs');
 
 const request = require('request');
@@ -31,7 +33,7 @@ console.log(chalk.green.bold('lsf command'));
 /**
  *	Read JSON file	
  */
-const FINFILE = "fin.json";
+const FINFILE = settings.FINFILE;
 
 if (fs.existsSync(FINFILE)) {
 	fins = JSON.parse(fs.readFileSync(FINFILE, 'utf8'));

@@ -4,6 +4,8 @@ const program  = require('commander');
 const chalk = require('chalk');
 const inquirer = require('inquirer');
 
+const settings = require('./settings');
+
 const fs = require('fs');
 
 program
@@ -25,7 +27,7 @@ console.log(chalk.green.bold('lsch command'));
 /**
  *	Read JSON file	
  */
-const SUBCHFILE = "subch.json";
+const SUBCHFILE = settings.SUBCHFILE;
 
 fs.readFile(SUBCHFILE, 'utf-8', (err, data) => {
 	if (err) {

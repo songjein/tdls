@@ -4,6 +4,8 @@ const program  = require('commander');
 const chalk = require('chalk');
 const inquirer = require('inquirer');
 
+const settings = require('./settings');
+
 const fs = require('fs');
 
 program
@@ -27,12 +29,12 @@ if (!id) {
 /**
  *	Verbose	
  */
-console.log(chalk.green.bold('chrm command ; '), "id :", chalk.red.underline(id));
+console.log(chalk.green.bold('rmch command ; '), "id :", chalk.red.underline(id));
 
 /**
  *	Read JSON file	
  */
-const SUBCHFILE = "subch.json";
+const SUBCHFILE = settings.SUBCHFILE;
 
 fs.readFile(SUBCHFILE, 'utf-8', (err, data) => {
 	if (err) {
@@ -44,7 +46,7 @@ fs.readFile(SUBCHFILE, 'utf-8', (err, data) => {
 	
 	let	questions = [
 		{
-			message: "Remove " + id + "th item '" + chalk.bgRed(channels[id]) + "'?",
+			message: "Remove channel " + chalk.bgRed(id) + "'?",
 			type: "confirm",
 			name: "confirm"
 		}

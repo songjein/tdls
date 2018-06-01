@@ -8,6 +8,8 @@ const chalk = require('chalk');
 
 const fs = require('fs');
 
+const settings = require('./settings');
+
 program
 	.option('-1, --first <required>', 'first item') 
 	.option('-2, --second <required>', 'second item')
@@ -39,7 +41,9 @@ console.log(chalk.green.bold('co command ; '), chalk.green.underline(first) , ch
  *	Read JSON file	
  */
 let todos = []
-fs.readFile('todos.json', 'utf-8', (err, data) => {
+const TODOFILE = settings.TODOFILE; 
+
+fs.readFile(TODOFILE, 'utf-8', (err, data) => {
 	if (err) {
 		console.error(chalk.red.bold(err));
 		console.log(chalk.yellow.bold("--> New file will be created"));
@@ -55,7 +59,7 @@ fs.readFile('todos.json', 'utf-8', (err, data) => {
 	/**
 	 *	Write JSON file
 	 */
-	fs.writeFile('todos.json', JSON.stringify(todos), 'utf-8', (err) => {
+	fs.writeFile(TODOFILE, JSON.stringify(todos), 'utf-8', (err) => {
 		if (err) {
 			console.error(chalk.red.bold(err));	
 		} else {

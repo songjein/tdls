@@ -9,6 +9,8 @@ const chalk = require('chalk');
 
 const fs = require('fs');
 
+const settings = require('./settings');
+
 const request = require('request');
 
 let options = {
@@ -47,10 +49,10 @@ console.log(chalk.green.bold('ls command'));
  */
 let _todos = []
 let _channels = [];
-const SUBCHFILE = "subch.json";
-const TODOFILE = "todos.json";
+const SUBCHFILE = settings.SUBCHFILE;
+const TODOFILE = settings.TODOFILE;
 
-fs.readFile('todos.json', 'utf-8', (err, data) => {
+fs.readFile(TODOFILE, 'utf-8', (err, data) => {
 	if (err) {
 		console.error(chalk.red.bold(err));
 		console.log(chalk.yellow.bold("--> New file will be created"));
@@ -86,11 +88,15 @@ fs.readFile('todos.json', 'utf-8', (err, data) => {
 				
 				const parsedBody = JSON.parse(body);
 				const idx = parsedBody.tmpidx;
-				if (parsedBody.status == "EMPTY"){
+				if (parsedBody.status == "EMPTY") {
+					console.log("Channel id : " + chalk.red.bold(_channels[idx].id + " has no items"));
+					return;
+				}
+				else if (parsedBody.status == "NOCH") {
 					console.log("Channel id : " + chalk.red.bold(_channels[idx].id + " not exist"));
 					return;
 				}
-				let ts = parsedBody["content"]["todos"];
+				let ts = parsedBody["content"];
 
 				// 싱크가 맞지 않는 todo 추가 및 timestamp 기록
 				let isSynced = false;

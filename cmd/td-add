@@ -5,6 +5,8 @@ const chalk = require('chalk');
 
 const fs = require('fs');
 
+const settings = require('./settings');
+
 program
 	.option('-t, --todo <required>', 'Todo') 
 	.option('-s, --secret', 'Secret mode')
@@ -39,7 +41,7 @@ else
 /**
  *	Read JSON file	
  */
-const TODOFILE = "todos.json";
+const TODOFILE = settings.TODOFILE; 
 let todos = []
 
 fs.readFile(TODOFILE, 'utf-8', (err, data) => {
