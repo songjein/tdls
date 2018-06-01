@@ -8,5 +8,5 @@ td ; command line todo list tools for engineers
 
 ## Usage
 1. git clone
-2. add location of 'cmd' directory to .bashrc
+2. add location of 'cmd' directory to .bashrc  
 	example: <pre>export PATH=$PATH:/home/jeinsong/stdio/cmd:</pre>
