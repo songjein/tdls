@@ -1,5 +1,8 @@
 td ; command line todo-list tools for engineers
 ==================================================
+## Motivation
+커맨드라인 인터페이스 상에서 많은 시간을 보내는 엔지니어를 위한 일정관리 툴입니다.
+
 ## Features
 1. add(추가), ls(조회), rm(삭제), fin(끝내기) 기능 지원 
 2. 일정 공유를 위한 채널 생성 기능 (mkch, pubch)
@@ -71,6 +74,12 @@ ls command
 5.  첫번째 일정
 </pre>
 
+> ## td fin -i '끝내고자 하는 todo item 의 인덱스'
+<pre>
+fin command ;  idx : 5
+? Finish 5th item '첫번째 일정'? Yes
+Finished Successfully
+</pre>
 
 - 제가 써보니 매우 편리하고 효율적인 업무 관리를 가능하게하는 툴임이 분명합니다
 - 커맨드라인 상에서 작업하는 시간이 많은 분일 수록 꼭 써야합니다
