@@ -82,6 +82,19 @@ fin command ;  idx : 5
 Finished Successfully
 </pre>
 
+> ## td co -1 'idx' -2 'idx'
+>> -1 옵션에 전달된 인덱스의 아이템과 -2 옵션에 전달된 인덱스의 아이템 순서를 바꿉니다.
+<pre>
+co command ;  0  <--->  4
+Changed Successfully
+
+0.  서버 file io
+1.  계획 추가 기능
+2.  삭제기능 추가하기
+3.  바로 끝내는 명령어 넣을까
+4.  sub todo item 추가 옵션
+</pre>
+
 - 제가 써보니 매우 편리하고 효율적인 업무 관리를 가능하게하는 툴임이 분명합니다
 - 커맨드라인 상에서 작업하는 시간이 많은 분일 수록 꼭 써야합니다
 - 안쓰면 바보
