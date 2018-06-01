@@ -76,7 +76,7 @@ ls command
 5.  첫번째 일정
 </pre>
 
-> ## td fin -i '끝내고자 하는 todo item 의 인덱스'
+> ## td fin -i 5
 >> 인덱스에 해당하는 아이템을 끝냅니다.
 <pre>
 fin command ;  idx : 5
@@ -84,7 +84,7 @@ fin command ;  idx : 5
 Finished Successfully
 </pre>
 
-> ## td co -1 'idx' -2 'idx'
+> ## td co -1 0 -2 4
 >> -1 옵션에 전달된 인덱스의 아이템과 -2 옵션에 전달된 인덱스의 아이템 순서를 바꿉니다. (Change Order)
 <pre>
 co command ;  0  <--->  4
