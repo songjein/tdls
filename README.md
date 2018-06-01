@@ -9,6 +9,7 @@ td ; command line todo-list tools for engineers
 
 ## Installation
 1. git clone
+2. npm install
 2. add location of 'cmd' directory to .bashrc
 	<pre>export PATH=$PATH:/home/jeinsong/td/cmd:</pre>
 
