@@ -14,7 +14,7 @@ td ; command line todo-list tools for engineers
 	<pre>export PATH=$PATH:/home/jeinsong/td/cmd:</pre>
 
 ## Usage
-> ## td -h
+> ## td -h 
 <pre>
   Usage: td [options] [command]
 
@@ -40,7 +40,7 @@ td ; command line todo-list tools for engineers
 
 </pre>
 
-2. td help 'command'
+> ## td help 'command'
 <pre>
   Usage: td-add [options]
 
