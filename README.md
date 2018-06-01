@@ -7,7 +7,7 @@ td ; command line todo list tools for engineers
 4. Data visualization 
 4. Interrupting program development (찬란바보)
 
-## Install 
+## Installation
 1. git clone
 2. add location of 'cmd' directory to .bashrc
 	<pre>export PATH=$PATH:/home/jeinsong/td/cmd:</pre>
