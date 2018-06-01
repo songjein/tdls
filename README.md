@@ -14,7 +14,7 @@ td ; command line todo-list tools for engineers
 	<pre>export PATH=$PATH:/home/jeinsong/td/cmd:</pre>
 
 ## Usage
-1.*td -h*
+> ## td -h
 <pre>
   Usage: td [options] [command]
 
