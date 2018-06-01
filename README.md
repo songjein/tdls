@@ -5,9 +5,10 @@ td ; command line todo-list tools for engineers
 
 ## Features
 1. add(추가), ls(조회), rm(삭제), fin(끝내기) 기능 지원 
-2. 일정 공유를 위한 채널 생성 기능 (mkch, pubch)
-3. 채널 구독을 통한 일정 받아 보기 (subch -> ls) ; api 서버 실행 후 이용 가능
-4. 웹 페이지 에서의 데이터 시각화 및 업무 패턴 분석 (계획)
+2. todo item 공유를 위한 채널 생성 기능 (mkch)
+3. 특정 채널에 todo item 보내기 (pubch)
+4. 채널 구독을 통한 일정 받아 보기 (subch -> ls) ; (2~3은 api 서버 실행 후 이용 가능)
+5. 웹 페이지 에서의 데이터 시각화 및 업무 패턴 분석 (계획)
 
 ## Installation
 1. git clone 
