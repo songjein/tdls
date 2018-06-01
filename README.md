@@ -65,6 +65,7 @@ Added Successfully
 </pre>
 
 > ## td ls 
+>> 목록을 조회합니다.
 <pre>
 ls command
 0.  sub todo item 추가 옵션
@@ -76,6 +77,7 @@ ls command
 </pre>
 
 > ## td fin -i '끝내고자 하는 todo item 의 인덱스'
+>> 인덱스에 해당하는 아이템을 끝냅니다.
 <pre>
 fin command ;  idx : 5
 ? Finish 5th item '첫번째 일정'? Yes
@@ -83,7 +85,7 @@ Finished Successfully
 </pre>
 
 > ## td co -1 'idx' -2 'idx'
->> -1 옵션에 전달된 인덱스의 아이템과 -2 옵션에 전달된 인덱스의 아이템 순서를 바꿉니다.
+>> -1 옵션에 전달된 인덱스의 아이템과 -2 옵션에 전달된 인덱스의 아이템 순서를 바꿉니다. (Change Order)
 <pre>
 co command ;  0  <--->  4
 Changed Successfully
