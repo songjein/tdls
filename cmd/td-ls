@@ -62,7 +62,7 @@ fs.readFile(TODOFILE, 'utf-8', (err, data) => {
 		// channel 정보 가져오기from SUBCHFILE 
 		if (fs.existsSync(SUBCHFILE)) {
 			_channels = JSON.parse(fs.readFileSync(SUBCHFILE, 'utf8'));
-			console.log("Subscribed channel list", chalk.yellow(_channels.map((item)=>{return item.id}).join(",")))
+			console.log("Subscribed channel list :", chalk.yellow(_channels.map((item)=>{return item.id}).join(",")))
 		}
 
 		// 구독하는 채널이 없다면

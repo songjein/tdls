@@ -5,3 +5,8 @@ td ; command line todo list tools for engineers
 2. make channels 
 3. share todo items by subscribing channels
 4. Interrupting program development
+
+## Usage
+1. git clone
+2. add location of 'cmd' directory to .bashrc
+	example: <pre>export PATH=$PATH:/home/jeinsong/stdio/cmd:</pre>
