@@ -10,7 +10,7 @@ td ; command line todo list tools for engineers
 ## Install 
 1. git clone
 2. add location of 'cmd' directory to .bashrc
-	<pre>export PATH=$PATH:/home/jeinsong/stdio/cmd:</pre>
+	<pre>export PATH=$PATH:/home/jeinsong/td/cmd:</pre>
 
 ## Usage
 ...
