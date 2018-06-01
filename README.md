@@ -50,6 +50,26 @@ td ; command line todo-list tools for engineers
     -s, --secret           Secret mode
     -h, --help             output usage information
 </pre>
+
+> ## td add -t "첫번째 일정"
+<pre>
+add command ;  + 첫번째 일정
+- Public mode -
+Added Successfully
+</pre>
+
+> ## td ls 
+<pre>
+ls command
+0.  sub todo item 추가 옵션
+1.  계획 추가 기능
+2.  삭제기능 추가하기
+3.  바로 끝내는 명령어 넣을까
+4.  서버 file io
+5.  첫번째 일정
+</pre>
+
+
 - 제가 써보니 매우 편리하고 효율적인 업무 관리를 가능하게하는 툴임이 분명합니다
 - 커맨드라인 상에서 작업하는 시간이 많은 분일 수록 꼭 써야합니다
 - 안쓰면 바보
