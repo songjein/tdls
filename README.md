@@ -1,20 +1,21 @@
 td ; command line todo-list tools for engineers
 ==================================================
 ## Features
-1. add, ls, rm, fin todo items
-2. Making channels 
-3. Sharing todo items by subscribing channels
-4. Data visualization 
-4. Interrupting program development (찬란바보)
+1. add(추가), ls(조회), rm(삭제), fin(끝내기) 기능 지원 
+2. 일정 공유를 위한 채널 생성 기능 (mkch)
+3. 채널 구독을 통한 일정 받아 보기 (subch -> ls) ; api 서버 실행 후 이용 가능
+4. 웹 페이지 에서의 데이터 시각화 및 업무 패턴 분석 (계획)
 
 ## Installation
-1. git clone
-2. npm install
-2. add location of 'cmd' directory to .bashrc
+1. git clone 
+2. cd td
+3. npm install
+2. 'cmd' 디렉터리 path를 .bashrc에 추가합니다.
 	<pre>export PATH=$PATH:/home/jeinsong/td/cmd:</pre>
 
 ## Usage
 > ## td -h 
+>> 지원하는 명령어를 확인할 수 있습니다.
 <pre>
   Usage: td [options] [command]
 
@@ -41,6 +42,7 @@ td ; command line todo-list tools for engineers
 </pre>
 
 > ## td help 'command'
+>> 특정 명령어의 사용법을 확인합니다.
 <pre>
   Usage: td-add [options]
 
