@@ -1,5 +1,10 @@
+const utils = require('../cmd/utils');
+
 var express = require('express');
 var app = express();
+
+const API_CHANNELS = "/APICHANNELS.json"
+const API_TODOS = "/APITODOS.json"
 
 // allow CORS request
 app.use(function(req, res, next) {
@@ -60,6 +65,7 @@ app.get('/mkch', function(req, res) {
 	channels[id] = pw; // TODO: 암호화 하기
 	todos[id] = [];
 	res.send("channel list : " + JSON.stringify(channels) );	
+	utils.writefile(__dirname + API_CHANNELS, JSON.stringify(channels), "CHANNELS Written Successfully");
 });
 
 app.get('/pubch', function(req, res) {
@@ -73,6 +79,8 @@ app.get('/pubch', function(req, res) {
 	todos[id].push({todo: td, timestamp: Date.now()});
 
 	res.send("Publish item to ch: " + id + " / "  + JSON.stringify(todos[id]));	
+
+	utils.writefile(__dirname + API_TODOS, JSON.stringify(todos), "TODOS Written Successfully");
 });
 
 app.get('/rmchtd', function(req, res) {
@@ -86,8 +94,6 @@ app.get('/rmchtd', function(req, res) {
 
 	res.send("Remove item of ch" + id );	
 });
-
-
 
 app.listen(48484, function() {
 	console.log("API app listening on port 48484");
