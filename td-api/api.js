@@ -72,8 +72,22 @@ app.get('/pubch', function(req, res) {
 	//channels[id]["todos"].push({todo: td, timestamp: Date.now()});
 	todos[id].push({todo: td, timestamp: Date.now()});
 
-	res.send("Publish item to ch" + id + " / "  + JSON.stringify(todos[id]));	
+	res.send("Publish item to ch: " + id + " / "  + JSON.stringify(todos[id]));	
 });
+
+app.get('/rmchtd', function(req, res) {
+	const id = req.query.id;
+	const pw = req.query.pw;
+	const idx = req.query.idx;
+
+	// 비번 체크 생략
+
+	todos[id].splice(idx, 1)
+
+	res.send("Remove item of ch" + id );	
+});
+
+
 
 app.listen(48484, function() {
 	console.log("API app listening on port 48484");
