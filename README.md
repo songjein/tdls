@@ -6,6 +6,8 @@ td ; command line todo-list tools for engineers
 개발 도중 갑자기 떠오르는 아이디어를 메모할 때도 유용합니다.  
 팀원과 공유해야할 일정 혹은 메모가 있다면 채널을 만들고 구독 및 출판 기능을 통해 공유가 가능합니다.
 
+![Alt text](./images/td.PNG)
+
 ## Features
 1. add(추가), ls(조회), rm(삭제), fin(끝내기) 기능 지원 
 2. todo item 공유를 위한 채널 생성 기능 (mkch)
