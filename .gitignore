@@ -1,3 +1,3 @@
-node_module/*
-td-api/node_module/*
+node_modules/*
+td-api/node_modules/*
 *.json
