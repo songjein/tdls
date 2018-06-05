@@ -62,7 +62,12 @@ fs.readFile(TODOFILE, 'utf-8', (err, data) => {
 		// channel 정보 가져오기from SUBCHFILE 
 		if (fs.existsSync(SUBCHFILE)) {
 			_channels = JSON.parse(fs.readFileSync(SUBCHFILE, 'utf8'));
-			console.log("Subscribed channel list :", chalk.yellow(_channels.map((item)=>{return item.id}).join(",")))
+			console.log("Subscribed channel list :", _channels.map((item)=>{
+					const chIdx = getChIdx(item.id);
+					const bg = getBGColor(chIdx);
+					return bg(item.id)
+				}).join(",")
+			)
 		}
 
 		// 구독하는 채널이 없다면
@@ -103,7 +108,7 @@ fs.readFile(TODOFILE, 'utf-8', (err, data) => {
 				for (t = 0 ; t < ts.length; t ++){
 					if (!_channels[idx]["synced"].includes(ts[t].timestamp)){
 						_channels[idx]["synced"].push(ts[t].timestamp);
-						_todos.push({"todo": ts[t].todo, "secret": false, "ch": true});
+						_todos.push({"todo": ts[t].todo, "secret": false, "ch": _channels[idx].id });
 						isSynced = true;
 					}
 				}
@@ -130,7 +135,36 @@ function showTodos() {
 	}
 	_todos.forEach((item, idx) => {
 		if (number > 0 && number <= idx) return false;
-		if ("ch" in item && !woc) console.log(chalk.cyan(idx + ". ", chalk.inverse(item.todo)));
+		if ("ch" in item && !woc) { 
+			const chIdx = getChIdx(item.ch);
+			const bg = getBGColor(chIdx);
+			console.log(chalk.cyan(idx + ". ", bg(item.todo)));
+		}
 		else	console.log(chalk.cyan(idx + ". "), chalk.yellow.bold(item.todo));	
 	});
+}
+
+/**
+ * get index of a channel
+ * using global variable ; _channels
+ */
+function getChIdx(id) {
+	for (let i = 0 ; i < _channels.length; i++)
+		if (_channels[i].id == id) return i;
+}
+
+/**
+ *	return chalk BGcolor function
+ */
+function getBGColor(idx) {
+	switch(idx % 4) {
+		case 0:
+			return chalk.bgWhite.black;
+		case 1:
+			return chalk.bgYellow.black;
+		case 2:
+			return chalk.bgMagenta.white;
+		case 3:
+			return chalk.bgCyan.black;
+	}
 }
