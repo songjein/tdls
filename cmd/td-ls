@@ -140,7 +140,10 @@ function showTodos() {
 			const bg = getBGColor(chIdx);
 			console.log(chalk.cyan(idx + ". ", bg(item.todo)));
 		}
-		else	console.log(chalk.cyan(idx + ". "), chalk.yellow.bold(item.todo));	
+		else {
+			let msg = (idx < 3 ? chalk.red.bold('@').repeat(3 - idx) + ' ' : '') + chalk.yellow.bold(item.todo);
+			console.log(chalk.cyan(idx + ". "), msg);
+		}		
 	});
 }
 
