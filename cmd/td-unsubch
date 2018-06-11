@@ -29,7 +29,7 @@ if (!id) {
 /**
  *	Verbose	
  */
-console.log(chalk.green.bold('rmch command ; '), "id :", chalk.red.underline(id));
+console.log(chalk.green.bold('unsubch command ; '), "id :", chalk.red.underline(id));
 
 /**
  *	Read JSON file	
@@ -46,7 +46,7 @@ fs.readFile(SUBCHFILE, 'utf-8', (err, data) => {
 	
 	let	questions = [
 		{
-			message: "Remove channel " + chalk.bgRed(id) + "'?",
+			message: "Unsubscribe the channel " + chalk.bgRed(id) + "'?",
 			type: "confirm",
 			name: "confirm"
 		}
@@ -75,7 +75,7 @@ fs.readFile(SUBCHFILE, 'utf-8', (err, data) => {
 			if (err) {
 				console.error(chalk.red.bold(err));	
 			} else {
-				console.log(removedItem.id + chalk.green.bold(' Removed Successfully'));	
+				console.log(removedItem.id + chalk.green.bold(' Unsubscribed Successfully'));	
 			}
 		});
 	});

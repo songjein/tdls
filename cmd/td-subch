@@ -60,7 +60,7 @@ fs.readFile(SUBCHFILE, 'utf-8', (err, data) => {
 		if (err) {
 			console.error(chalk.red.bold(err));	
 		} else {
-			console.log(chalk.green.bold('Added Successfully'));	
+			console.log(chalk.green.bold('Subscribed Successfully'));	
 		}
 	});
 	// fin write
