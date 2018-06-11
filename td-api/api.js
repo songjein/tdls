@@ -68,12 +68,23 @@ app.get('/getch/:id/:tmpidx', function(req, res) {
 });
 
 app.get('/mkch', function(req, res) {
+	let ret = {
+		'status': 'OK',
+	}
 	const id = req.query.id;
 	const pw = req.query.pw;
+	if (id in channels) {
+		ret['status'] = 'EXIST';	
+		return res.json(ret);
+	}
+	// channel 및 todos 생성
 	channels[id] = pw; // TODO: 암호화 하기
 	todos[id] = [];
-	res.send("channel list : " + JSON.stringify(channels) );	
+
+	res.json(ret);	
+
 	utils.writefile(API_CHANNELS_FILE, JSON.stringify(channels), "CHANNELS Written Successfully");
+	utils.writefile(API_TODOS_FILE, JSON.stringify(todos), "TODOS Written Successfully");
 });
 
 app.get('/pubch', function(req, res) {
