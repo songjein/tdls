@@ -13,8 +13,8 @@ program
 	.command('rm', 'remove todo item').alias('r')
 	.command('mkch', 'make channel').alias('mc')
 	.command('lsch', 'list subscribed channels').alias('lc') // TODO : ls 에 합치기
-	.command('unsubch', 'unsubscribe channel').alias('usc')
 	.command('subch', 'subscribe channel').alias('sc')
+	.command('unsubch', 'unsubscribe channel').alias('usc')
 	.command('pubch', 'publish todo item').alias('pc')
 	.parse(process.argv)
 
