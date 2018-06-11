@@ -1,10 +1,12 @@
 const utils = require('../cmd/utils');
 
+const fs = require('fs');
+
 var express = require('express');
 var app = express();
 
-const API_CHANNELS = "/APICHANNELS.json"
-const API_TODOS = "/APITODOS.json"
+const API_CHANNELS_FILE = __dirname + "/APICHANNELS.json"
+const API_TODOS_FILE = __dirname + "/APITODOS.json"
 
 // allow CORS request
 app.use(function(req, res, next) {
@@ -14,22 +16,29 @@ app.use(function(req, res, next) {
 });
 
 /**
- *	in-memory channels object
- *	{	
- *		id_1: { "pw": password, "todos": [] }
- *		, id_2: {...}
- *		, ...	
- *	}	
- *	
- *	"todos" array's elements look like
- * 	{ "todo" : todo-item, "timestamp": timestamp for synchronization }
- * 
+ *	in-memory channels & todos object
  *	keep the values for 1 week
  */
+
 var channels = {
+	/**
+	 *	{"sa":"1234","sa2":"1234","zumlabs":"1234"}
+	 */
 };
+if (fs.existsSync(API_CHANNELS_FILE))
+	channels = JSON.parse(fs.readFileSync(API_CHANNELS_FILE, 'utf8'));
+
 var todos = {
+	/**
+	 *	{
+   *		"sa":[{"todo":"수요일 주간 회의록","timestamp":1528163153010},{"todo":"목요일 훈련소 입소","timestamp":1528180503249}],
+   *		"sa2":[],"zumlabs":[{"todo":"프로젝트 마무리","timestamp":1528166496133},{"todo":"시스템 구조도","timestamp":1528173746149}]
+	 *	}
+	 */
 };
+if (fs.existsSync(API_TODOS_FILE))
+	todos = JSON.parse(fs.readFileSync(API_TODOS_FILE, 'utf8'));
+
 
 app.get('/', function(req, res) {
 	res.json(channels);	
@@ -61,11 +70,10 @@ app.get('/getch/:id/:tmpidx', function(req, res) {
 app.get('/mkch', function(req, res) {
 	const id = req.query.id;
 	const pw = req.query.pw;
-	//channels[id] = { "pw": pw, "todos": [] };
 	channels[id] = pw; // TODO: 암호화 하기
 	todos[id] = [];
 	res.send("channel list : " + JSON.stringify(channels) );	
-	utils.writefile(__dirname + API_CHANNELS, JSON.stringify(channels), "CHANNELS Written Successfully");
+	utils.writefile(API_CHANNELS_FILE, JSON.stringify(channels), "CHANNELS Written Successfully");
 });
 
 app.get('/pubch', function(req, res) {
@@ -80,7 +88,7 @@ app.get('/pubch', function(req, res) {
 
 	res.send("Publish item to ch: " + id + " / "  + JSON.stringify(todos[id]));	
 
-	utils.writefile(__dirname + API_TODOS, JSON.stringify(todos), "TODOS Written Successfully");
+	utils.writefile(API_TODOS_FILE, JSON.stringify(todos), "TODOS Written Successfully");
 });
 
 app.get('/rmchtd', function(req, res) {
@@ -98,3 +106,4 @@ app.get('/rmchtd', function(req, res) {
 app.listen(48484, function() {
 	console.log("API app listening on port 48484");
 });
+
