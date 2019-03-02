@@ -15,11 +15,15 @@ const request = require('request');
 
 program
 	.description('Show finished items')
+	.option('-a, --all', 'Show all items (default: false)', false)
+	.option('-n, --number [optional]', 'Show n-items only', 10) 
 	.parse(process.argv);
 
 /**
  *	Options
  */
+const all = program.all;
+const number = program.number;
 
 /**
  *	Validation
@@ -43,6 +47,7 @@ if (fs.existsSync(FINFILE)) {
 }
 
 for (i = 0; i < fins.length; i++){
+	if (!all && (number > 0 && number <= i)) break;
 	console.log(chalk.cyan(i) + ". " + chalk.yellow.bold(fins[i].todo));	
 }
 

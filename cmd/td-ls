@@ -25,14 +25,16 @@ let options = {
 
 program
 	.description('List todo items')
-	.option('-n, --number [optional]', 'Show n-items only')
-	.option('-c, --channel', 'Show items from channels, default:false', false)
+	.option('-a, --all', 'Show all items (default: false)', false)
+	.option('-n, --number [optional]', 'Show n-items only', 10) 
+	.option('-c, --channel', 'Show items from channels (default: false)', false)
 	.parse(process.argv);
 
 /**
  *	Options
  */
-const number = program.number ? program.number : -1;
+const all = program.all;
+const number = program.number; 
 const channel = program.channel;
 
 /**
@@ -76,7 +78,7 @@ function showTodos(todos) {
 		return;
 	}
 	todos.forEach((item, idx) => {
-		if (number > 0 && number <= idx) return false;
+		if (!all && (number > 0 && number <= idx)) return false;
 		// [TODO-deprecated] 기존의 채널에 대한 처리 
 		/*
 		if ("ch" in item && !woc) { 
