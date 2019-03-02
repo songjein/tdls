@@ -10,9 +10,12 @@ const fs = require('fs');
 
 const settings = require('./settings');
 
+const EMPTY_MSG = "Empty!, you can add an item using 'td add'"
+
 program
+	.description('Change two item\'s order(idx)')
 	.option('-1, --first <required>', 'first item') 
-	.option('-2, --second <required>', 'second item')
+	.option('-2, --second <required>', 'second item', 0) 
 	.parse(process.argv);
 
 /**
@@ -45,20 +48,15 @@ const TODOFILE = settings.TODOFILE;
 
 fs.readFile(TODOFILE, 'utf-8', (err, data) => {
 	if (err) {
-		console.error(chalk.red.bold(err));
-		console.log(chalk.yellow.bold("--> New file will be created"));
+		console.log(chalk.yellow.bold(EMPTY_MSG));
 	} else {
 		todos = JSON.parse(data);
 	}
 
-	// change items
 	const tmp = todos[first];
 	todos[first] = todos[second];
 	todos[second] = tmp;
 	
-	/**
-	 *	Write JSON file
-	 */
 	fs.writeFile(TODOFILE, JSON.stringify(todos), 'utf-8', (err) => {
 		if (err) {
 			console.error(chalk.red.bold(err));	

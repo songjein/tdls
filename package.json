@@ -9,13 +9,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.18.0",
     "chalk": "^2.4.1",
     "commander": "^2.15.1",
     "i": "^0.3.6",
     "inquirer": "^5.2.0",
     "request": "^2.87.0"
   },
-	"bin": {
-		"td": "./cmd/td"	
-	}
+  "bin": {
+    "td": "./cmd/td"
+  }
 }

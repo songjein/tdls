@@ -15,7 +15,8 @@ const settings = require('./settings');
 const utils = require('./utils');
 
 program
-	.option('-i, --idx <required>', 'Todo') 
+	.description('Finish todo item')
+	.option('-i, --idx <index-required>', 'Index of item want to finish') 
 	.parse(process.argv);
 
 /**
@@ -54,21 +55,19 @@ fs.readFile(TODOFILE, 'utf-8', (err, data) => {
 
 	const questions = [
 		{
-			message: "Finish " + idx + "th item '" + chalk.bgGreen(todos[idx].todo) + "'?",
+			message: "Want to finish " + idx + "th item '" + chalk.bgGreen(todos[idx].todo) + "'?",
 			type: "confirm",
 			name: "confirm"
 		}
 	];
-	inquirer.prompt(questions).then((answer) => {
-		if (!answer.confirm) {
+	inquirer.prompt(questions).then((answers) => {
+		if (!answers.confirm) {
 			console.log(chalk.yellow.bold("Nothing happened :)"));	
 			return;
 		}
 		
 		const finItem = todos[idx];
 		todos.splice(idx, 1);
-
-		// Write JSON file
 		utils.writefile(TODOFILE, JSON.stringify(todos), undefined);
 		
 		// 완료 목룍 반영

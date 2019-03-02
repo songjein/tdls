@@ -4,7 +4,7 @@ const program  = require('commander');
 const chalk = require('chalk');
 
 program
-	.version('0.0.2')
+	.version('0.0.3', '-v, --version')
 	.command('add', 'add todo item').alias('a')
 	.command('ls', 'list todo items').alias('l')
 	.command('lsf', 'list finished todo items').alias('lf')
@@ -16,7 +16,18 @@ program
 	.command('subch', 'subscribe channel').alias('sc')
 	.command('unsubch', 'unsubscribe channel').alias('usc')
 	.command('pubch', 'publish todo item').alias('pc')
-	.parse(process.argv)
+
+/*
+program
+	.command('*', { noHelp: true })
+	.action(() => {
+		console.error(chalk.red.bold('Wrong command'));
+		program.help();
+	});
+*/
+
+program
+	.parse(process.argv);
 
 if (program.args.length === 0) program.help();
 

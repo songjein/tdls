@@ -11,10 +11,12 @@ const fs = require('fs');
 
 const settings = require('./settings');
 
-const request = require('request');
+const axios = require('axios');
 
+const EMPTY_MSG = "Empty!, you can add an item using 'td add'"
+ 
 let options = {
-	host: '192.168.182.195',
+	host: 'localhost',
 	port: 48484,
 	headers: {
 		'Content-Type': 'application/json'
@@ -22,17 +24,16 @@ let options = {
 }
 
 program
-	.option('-n, --number [optional]', 'Show channel items')
-	.option('-c, --channel [optional]', 'Show channel items')
-	.option('-w, --withoutch [optional]', 'Show without channel items')
+	.description('List todo items')
+	.option('-n, --number [optional]', 'Show n-items only')
+	.option('-c, --channel', 'Show items from channels, default:false', false)
 	.parse(process.argv);
 
 /**
  *	Options
  */
 const number = program.number ? program.number : -1;
-const wc = program.channel;
-const woc = program.withoutch;
+const channel = program.channel;
 
 /**
  *	Validation
@@ -48,102 +49,47 @@ console.log(chalk.green.bold('ls command'));
  *	Read JSON file	
  */
 let _todos = []
-let _channels = [];
+let _channels = []; // [TODO] deprecated
 const SUBCHFILE = settings.SUBCHFILE;
 const TODOFILE = settings.TODOFILE;
 
 fs.readFile(TODOFILE, 'utf-8', (err, data) => {
 	if (err) {
-		console.error(chalk.red.bold(err));
-		console.log(chalk.yellow.bold("--> New file will be created"));
-	} else {
+		console.log(chalk.yellow.bold(EMPTY_MSG));
+	} else if (!channel) {
 		_todos = JSON.parse(data);
-
-		// channel 정보 가져오기from SUBCHFILE 
-		if (fs.existsSync(SUBCHFILE)) {
-			_channels = JSON.parse(fs.readFileSync(SUBCHFILE, 'utf8'));
-			console.log("Subscribed channel list :", _channels.map((item)=>{
-					const chIdx = getChIdx(item.id);
-					const bg = getBGColor(chIdx);
-					return bg(item.id)
-				}).join(",")
-			)
-		}
-
-		// 구독하는 채널이 없다면
-		if (_channels.length == 0) {
-			showTodos(); return;
-		}
-		
-		// channel이 하나 이상일 때
-		for (i = 0; i < _channels.length; i++ ){
-			/**
-			 *	주의: i 를 이용하면 callback 에서 이미 i가 증가해버린 뒤여서 i에 대한 sync를 놓친다 
-			 *	따라서 현재 i를 서버로 보냈다가
-			 *	서버에서도 받은 i를 응답과 함께 넘겨주면 (tmpidx)
-			 *	해당 i를 활용해서 처리한다
-			 */
-			request({
-				url: 'http://192.168.182.195:48484/getch/' + _channels[i].id + "/" + i
-			}, (error, response, body) => {
-				if (error) {
-					console.log(error);
-					return;
-				}
-				
-				const parsedBody = JSON.parse(body);
-				const idx = parsedBody.tmpidx;
-				if (parsedBody.status == "EMPTY") {
-					console.log("Channel id : " + chalk.red.bold(_channels[idx].id + " has no items"));
-					return;
-				}
-				else if (parsedBody.status == "NOCH") {
-					console.log("Channel id : " + chalk.red.bold(_channels[idx].id + " not exist"));
-					return;
-				}
-				let ts = parsedBody["content"];
-
-				// 싱크가 맞지 않는 todo 추가 및 timestamp 기록
-				let isSynced = false;
-				for (t = 0 ; t < ts.length; t ++){
-					if (!_channels[idx]["synced"].includes(ts[t].timestamp)){
-						_channels[idx]["synced"].push(ts[t].timestamp);
-						_todos.push({"todo": ts[t].todo, "secret": false, "ch": _channels[idx].id });
-						isSynced = true;
-					}
-				}
-				
-				if (!isSynced) return;
-
-				fs.writeFileSync(SUBCHFILE, JSON.stringify(_channels), encoding="utf-8");
-				fs.writeFileSync(TODOFILE, JSON.stringify(_todos), encoding="utf-8");
-				console.log(chalk.blue.bold("New Todo item from Subscribed Channel [" + _channels[idx] + "]"));
-			});
-		}
-
-		showTodos();
-	}
+		showTodos(_todos);
+	} else { 
+		console.log('will show items from channels');	
+	} 
 });
 
 /**
  *	show todo
  *	using global variable '_todos'
+ *	[TODO] 채널에 대한 아이템을 같이 보여주려하다보니 복합해짐.
+ *	따라서, 별도의 옵션이 전달된 경우에만 구독하는 채널에 대한 item 리스트를 별도로 보여줌
  */
-function showTodos() {
-	if (_todos.length == 0) {
-		console.log(chalk.yellow.bold("[Empty]"));	
+function showTodos(todos) {
+	if (todos.length == 0) {
+		console.log(chalk.yellow.bold(EMPTY_MSG));
+		return;
 	}
-	_todos.forEach((item, idx) => {
+	todos.forEach((item, idx) => {
 		if (number > 0 && number <= idx) return false;
+		// [TODO-deprecated] 기존의 채널에 대한 처리 
+		/*
 		if ("ch" in item && !woc) { 
 			const chIdx = getChIdx(item.ch);
 			const bg = getBGColor(chIdx);
 			console.log(chalk.cyan(idx + ". ", bg(item.todo)));
 		}
-		else {
-			let msg = (idx < 3 ? chalk.red.bold('@').repeat(3 - idx) + ' ' : '') + chalk.yellow.bold(item.todo);
+		*/
+		let msg = chalk.yellow.bold(item.todo);
+		if (idx < 3) 
+			console.log(chalk.red(idx + ". "), msg);
+		else
 			console.log(chalk.cyan(idx + ". "), msg);
-		}		
 	});
 }
 

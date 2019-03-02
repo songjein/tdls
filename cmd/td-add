@@ -8,23 +8,26 @@ const fs = require('fs');
 const settings = require('./settings');
 
 program
-	.option('-t, --todo <required>', 'Todo') 
-	.option('-s, --secret', 'Secret mode')
+	.description('Add todo item')
+	.option('-t, --todo <text-required>', 'Todo') 
+	.option('-s, --secret', 'Secret mode', false)
 	.parse(process.argv);
 
 /**
  *	Options
  */
 const todo = program.todo;
-const secret = program.secret ? program.secret : false;
+const secret = program.secret; 
+// const secret = program.secret ? program.secret : false;
 
 
 /**
  *	Validation	
  */
-if (!todo && !secret) {
+//if (!todo && !secret) {
+if (!todo) {
 	console.error(chalk.red.bold('Options required'));
-	if (!todo) program.help();
+	program.help();
 	process.exit(1);
 }
 
@@ -45,20 +48,13 @@ const TODOFILE = settings.TODOFILE;
 let todos = []
 
 fs.readFile(TODOFILE, 'utf-8', (err, data) => {
-	if (err) {
-		console.error(chalk.red.bold(err));
-		console.log(chalk.yellow.bold("--> New file will be created"));
-	} else {
+	if (!err) {
 		todos = JSON.parse(data);
 	}
 
-	// add item
 	const item = {'todo': todo, 'secret': secret};
 	todos.push(item);
 	
-	/**
-	 *	Write JSON file
-	 */
 	fs.writeFile(TODOFILE, JSON.stringify(todos), 'utf-8', (err) => {
 		if (err) {
 			console.error(chalk.red.bold(err));	
@@ -66,6 +62,5 @@ fs.readFile(TODOFILE, 'utf-8', (err, data) => {
 			console.log(chalk.green.bold('Added Successfully'));	
 		}
 	});
-	// fin write
 });
 

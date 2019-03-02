@@ -51,7 +51,7 @@ fs.readFile(TODOFILE, 'utf-8', (err, data) => {
 		todos = JSON.parse(data);
 	}
 	
-	let questions;
+	let questions = undefined;
 	if (all) {
 		questions = [
 			{
@@ -81,9 +81,6 @@ fs.readFile(TODOFILE, 'utf-8', (err, data) => {
 			todos.splice(idx, 1);
 		}
 
-		/**
-		 *	Write JSON file
-		 */
 		fs.writeFile(TODOFILE, JSON.stringify(todos), 'utf-8', (err) => {
 			if (err) {
 				console.error(chalk.red.bold(err));	
