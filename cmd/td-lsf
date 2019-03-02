@@ -17,6 +17,7 @@ program
 	.description('Show finished items')
 	.option('-a, --all', 'Show all items (default: false)', false)
 	.option('-n, --number [optional]', 'Show n-items only', 10) 
+	.option('-t, --timestamp', 'With timestamp (default: false)', false)
 	.parse(process.argv);
 
 /**
@@ -24,6 +25,7 @@ program
  */
 const all = program.all;
 const number = program.number;
+const timestamp = program.timestamp;
 
 /**
  *	Validation
@@ -48,6 +50,12 @@ if (fs.existsSync(FINFILE)) {
 
 for (i = 0; i < fins.length; i++){
 	if (!all && (number > 0 && number <= i)) break;
-	console.log(chalk.cyan(i) + ". " + chalk.yellow.bold(fins[i].todo));	
+
+	let msg = chalk.cyan(i) + ". " + chalk.yellow.bold(fins[i].todo);
+	if (timestamp) {
+		const date = new Date(fins[i][globals.FIN_AT]);
+		msg += ' - ' + date;
+	}
+	console.log(msg);	
 }
 

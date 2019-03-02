@@ -9,10 +9,10 @@ td ; command line todo-list tools for engineers
 ![Alt text](./images/td.PNG)
 
 ## Features
-1. add(추가), ls(조회), rm(삭제), fin(끝내기) 기능 지원 
+1. add(추가), ls(조회), rm(삭제), fin(끝내기), co(순서 바꾸기) 기능 지원 
 2. todo item 공유를 위한 채널 생성 기능 (mkch)
 3. 특정 채널에 todo item 보내기 (pubch)
-4. 채널 구독을 통한 일정 받아 보기 (subch -> ls) ; (2~3은 api 서버 실행 후 이용 가능)
+4. 채널 구독을 통한 일정 받아 보기 (subch -> ls) 
 5. 웹 페이지 에서의 데이터 시각화 및 업무 패턴 분석 (계획)
 
 ## Installation
@@ -80,7 +80,7 @@ ls command
 </pre>
 
 > ## td fin -i 5
->> 인덱스에 해당하는 아이템을 끝냅니다.
+>> 인덱스에 해당하는 아이템을 끝냅니다. 기본값은 0입니다.
 <pre>
 fin command ;  idx : 5
 ? Finish 5th item '첫번째 일정'? Yes

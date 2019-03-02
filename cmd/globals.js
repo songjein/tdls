@@ -5,6 +5,7 @@ module.exports = {
 	SUBCHFILE: __dirname + "/data/subch.json",
 	FIN_AT: 'finished_at',
 	ADD_AT: 'created_at',
+	CH_ID: 'channel_id',
 	EMPTY_MSG: "Empty!, you can add an item using 'td add'",
 };
 

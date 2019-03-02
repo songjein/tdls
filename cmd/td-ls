@@ -27,6 +27,7 @@ program
 	.option('-a, --all', 'Show all items (default: false)', false)
 	.option('-n, --number [optional]', 'Show n-items only', 10) 
 	.option('-c, --channel', 'Show items from channels (default: false)', false)
+	.option('-t, --timestamp', 'With timestamp (default: false)', false)
 	.parse(process.argv);
 
 /**
@@ -35,6 +36,7 @@ program
 const all = program.all;
 const number = program.number; 
 const channel = program.channel;
+const timestamp = program.timestamp;
 
 /**
  *	Validation
@@ -87,6 +89,12 @@ function showTodos(todos) {
 		}
 		*/
 		let msg = chalk.yellow.bold(item.todo);
+
+		if (timestamp) {
+			const date = new Date(item[globals.ADD_AT]);
+			msg += ' - ' + date;
+		}
+
 		if (idx < 3) 
 			console.log(chalk.red(idx + ". "), msg);
 		else
