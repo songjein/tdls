@@ -1,5 +1,4 @@
 td ; command line todo-list tools for engineers  
-(개발 일시 중단)
 ==================================================
 ## Motivation
 커맨드라인 인터페이스 상에서 많은 시간을 보내는 엔지니어를 위한 일정관리(todo-list) 툴입니다.  
