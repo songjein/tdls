@@ -88,7 +88,7 @@ Finished Successfully
 </pre>
 
 > ## td co -1 0 -2 4
->> -1 옵션에 전달된 인덱스의 아이템과 -2 옵션에 전달된 인덱스의 아이템 순서를 바꿉니다. (Change Order)
+>> -1 옵션에 전달된 인덱스의 아이템과 -2 옵션에 전달된 인덱스의 아이템 순서를 바꿉니다. (Change Order), -2 옵션의 기본값은 0입니다. (-1 옵션만 전달 시 최상단으로 순서 변경)
 <pre>
 co command ;  0  <--->  4
 Changed Successfully
