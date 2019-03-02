@@ -96,9 +96,9 @@ function showTodos(todos) {
 		}
 
 		if (idx < 3) 
-			console.log(chalk.red(idx + ". "), msg);
+			console.log(chalk.red(idx + "."), msg);
 		else
-			console.log(chalk.cyan(idx + ". "), msg);
+			console.log(chalk.cyan(idx + "."), msg);
 	});
 }
 
