@@ -1,4 +1,4 @@
-td ; command line todo-list tools for engineers  
+td-ls ; command line todo-list & blogging tools for engineers  
 ==================================================
 ## Motivation
 커맨드라인 인터페이스 상에서 많은 시간을 보내는 엔지니어를 위한 일정관리(todo-list) 툴입니다.  
@@ -13,7 +13,8 @@ td ; command line todo-list tools for engineers
 2. todo item 공유를 위한 채널 생성 기능 (mkch)
 3. 특정 채널에 todo item 보내기 (pubch)
 4. 채널 구독을 통한 일정 받아 보기 (subch -> ls) 
-5. 웹 페이지 에서의 데이터 시각화 및 업무 패턴 분석 (계획)
+5. md 기반의 블로깅 툴 (계획)
+6. 웹 페이지 에서의 데이터 시각화 및 업무 패턴 분석 (계획)
 
 ## Installation
 1. git clone  https://github.com/songjein/td
