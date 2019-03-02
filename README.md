@@ -17,11 +17,9 @@ td ; command line todo-list tools for engineers
 5. 웹 페이지 에서의 데이터 시각화 및 업무 패턴 분석 (계획)
 
 ## Installation
-1. git clone 
+1. git clone  https://github.com/songjein/td
 2. cd td
-3. npm install
-2. 'cmd' 디렉터리 path를 .bashrc에 추가합니다.
-	<pre>export PATH=$PATH:/home/jeinsong/td/cmd:</pre>
+3. sudo npm i -g
 
 ## Usage
 > ## td -h 
