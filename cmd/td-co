@@ -8,9 +8,7 @@ const chalk = require('chalk');
 
 const fs = require('fs');
 
-const settings = require('./settings');
-
-const EMPTY_MSG = "Empty!, you can add an item using 'td add'"
+const globals = require('./globals');
 
 program
 	.description('Change two item\'s order(idx)')
@@ -44,11 +42,11 @@ console.log(chalk.green.bold('co command ; '), chalk.green.underline(first) , ch
  *	Read JSON file	
  */
 let todos = []
-const TODOFILE = settings.TODOFILE; 
+const TODOFILE = globals.TODOFILE; 
 
 fs.readFile(TODOFILE, 'utf-8', (err, data) => {
 	if (err) {
-		console.log(chalk.yellow.bold(EMPTY_MSG));
+		console.log(chalk.yellow.bold(globals.EMPTY_MSG));
 	} else {
 		todos = JSON.parse(data);
 	}

@@ -9,11 +9,10 @@ const chalk = require('chalk');
 
 const fs = require('fs');
 
-const settings = require('./settings');
+const globals = require('./globals');
 
 const axios = require('axios');
 
-const EMPTY_MSG = "Empty!, you can add an item using 'td add'"
  
 let options = {
 	host: 'localhost',
@@ -52,12 +51,12 @@ console.log(chalk.green.bold('ls command'));
  */
 let _todos = []
 let _channels = []; // [TODO] deprecated
-const SUBCHFILE = settings.SUBCHFILE;
-const TODOFILE = settings.TODOFILE;
+const SUBCHFILE = globals.SUBCHFILE;
+const TODOFILE = globals.TODOFILE;
 
 fs.readFile(TODOFILE, 'utf-8', (err, data) => {
 	if (err) {
-		console.log(chalk.yellow.bold(EMPTY_MSG));
+		console.log(chalk.yellow.bold(globals.EMPTY_MSG));
 	} else if (!channel) {
 		_todos = JSON.parse(data);
 		showTodos(_todos);
@@ -74,7 +73,7 @@ fs.readFile(TODOFILE, 'utf-8', (err, data) => {
  */
 function showTodos(todos) {
 	if (todos.length == 0) {
-		console.log(chalk.yellow.bold(EMPTY_MSG));
+		console.log(chalk.yellow.bold(globals.EMPTY_MSG));
 		return;
 	}
 	todos.forEach((item, idx) => {

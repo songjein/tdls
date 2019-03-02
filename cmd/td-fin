@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- *	TODO: fin 할 때 코멘트를 추가할 수 있는 기능
+ *	TODO: fin 할 때 코멘트를 추가할 수 있는 기능(굳이?)
  *	TODO: fin 할 때 완료 시간 추가 + add 시 생성 시간 및 목표 시간 입력받기?
  */
 
@@ -11,12 +11,12 @@ const inquirer = require('inquirer');
 
 const fs = require('fs');
 
-const settings = require('./settings');
+const globals = require('./globals');
 const utils = require('./utils');
 
 program
 	.description('Finish todo item')
-	.option('-i, --idx <index-required>', 'Index of item want to finish') 
+	.option('-i, --idx <index-required>', 'Index of item want to finish', 0) 
 	.parse(process.argv);
 
 /**
@@ -27,8 +27,7 @@ const idx = program.idx;
 /**
  *	Validation	
  */
-if (!idx) {
-	console.error(chalk.red.bold('Option required'));
+if (false) {
 	program.help();
 	process.exit(1);
 }
@@ -41,8 +40,8 @@ console.log(chalk.green.bold('fin command ; '), "idx :", chalk.yellow.underline(
 /**
  *	Read JSON file	
  */
-const TODOFILE = settings.TODOFILE;
-const FINFILE = settings.FINFILE;
+const TODOFILE = globals.TODOFILE;
+const FINFILE = globals.FINFILE;
 let todos = []
 
 fs.readFile(TODOFILE, 'utf-8', (err, data) => {
@@ -67,6 +66,7 @@ fs.readFile(TODOFILE, 'utf-8', (err, data) => {
 		}
 		
 		const finItem = todos[idx];
+		finItem[globals.FIN_AT] = Date.now();
 		todos.splice(idx, 1);
 		utils.writefile(TODOFILE, JSON.stringify(todos), undefined);
 		

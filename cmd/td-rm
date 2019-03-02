@@ -4,7 +4,7 @@ const program  = require('commander');
 const chalk = require('chalk');
 const inquirer = require('inquirer');
 
-const settings = require('./settings');
+const globals = require('./globals');
 
 const fs = require('fs');
 
@@ -41,7 +41,7 @@ if (all) {
  *	Read JSON file	
  */
 let todos = []
-const TODOFILE = settings.TODOFILE;
+const TODOFILE = globals.TODOFILE;
 
 fs.readFile(TODOFILE, 'utf-8', (err, data) => {
 	if (err) {
