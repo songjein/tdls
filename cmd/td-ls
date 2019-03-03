@@ -53,10 +53,10 @@ console.log(chalk.green.bold('ls command'));
  */
 let _todos = []
 let _channels = []; // [TODO] deprecated
-const SUBCHFILE = globals.SUBCHFILE;
-const TODOFILE = globals.TODOFILE;
+const SUBCH_FILE = globals.SUBCH_FILE;
+const TODO_FILE = globals.TODO_FILE;
 
-fs.readFile(TODOFILE, 'utf-8', (err, data) => {
+fs.readFile(TODO_FILE, 'utf-8', (err, data) => {
 	if (err) {
 		console.log(chalk.yellow.bold(globals.EMPTY_MSG));
 	} else if (!channel) {

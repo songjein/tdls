@@ -1,0 +1,70 @@
+#!/usr/bin/env node
+
+
+const fs = require('fs');
+const axios = require('axios');
+const chalk = require('chalk');
+const inquirer = require('inquirer');
+const program  = require('commander');
+
+const utils = require('./utils');
+const globals = require('./globals');
+
+program
+	.description('Generate key pair from service(https://tdls.dev)')
+	.parse(process.argv);
+
+/**
+ *	Options
+ */
+
+/**
+ *	Validation	
+ */
+if (false) {
+	console.error(chalk.red.bold('Options required'));
+	program.help();
+	process.exit(1);
+}
+
+/**
+ *	Verbose	
+ */
+console.log(chalk.green.bold('keygen command'));
+
+/**
+ *	Do something
+ */
+const { KEY_FILE } = globals;
+
+const doSomthing = async () => {
+	try {
+		if (fs.existsSync(KEY_FILE)) {
+			const questions = [
+				{
+					message: 'key pair already exist, you really want re-generate it?',
+					type: 'confirm',
+					name: 'confirm',
+					default: false,
+				}	
+			];
+
+			const answers = await inquirer.prompt(questions);
+
+			if (!answers.confirm) {
+				console.log(chalk.yellow.bold(globals.NH_MSG));	
+				return;
+			}
+
+		}
+		const { data } = await axios.get(globals.API + '/users/generateKey');
+		console.log(`key pair successfully generated :) => ${ chalk.red(globals.KEY_FILE) }`);
+		const { firstKey, secondKey } = data;
+		console.log('firstKey:', chalk.yellow.bold(firstKey));
+		console.log('secondKey:', chalk.yellow.bold(secondKey));
+		utils.writeFile(KEY_FILE, JSON.stringify({ firstKey, secondKey }), undefined);
+	} catch (error) {
+		console.error(error);
+	}
+}
+doSomthing();

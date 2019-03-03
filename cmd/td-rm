@@ -41,9 +41,9 @@ if (all) {
  *	Read JSON file	
  */
 let todos = []
-const TODOFILE = globals.TODOFILE;
+const TODO_FILE = globals.TODO_FILE;
 
-fs.readFile(TODOFILE, 'utf-8', (err, data) => {
+fs.readFile(TODO_FILE, 'utf-8', (err, data) => {
 	if (err) {
 		console.error(chalk.red.bold(err));
 		return;
@@ -71,7 +71,7 @@ fs.readFile(TODOFILE, 'utf-8', (err, data) => {
 	}
 	inquirer.prompt(questions).then((answer) => {
 		if (!answer.confirm) {
-			console.log(chalk.yellow.bold("Nothing happened :)"));	
+			console.log(chalk.yellow.bold(globals.NH_MSG));	
 			return;
 		}
 
@@ -81,7 +81,7 @@ fs.readFile(TODOFILE, 'utf-8', (err, data) => {
 			todos.splice(idx, 1);
 		}
 
-		fs.writeFile(TODOFILE, JSON.stringify(todos), 'utf-8', (err) => {
+		fs.writeFile(TODO_FILE, JSON.stringify(todos), 'utf-8', (err) => {
 			if (err) {
 				console.error(chalk.red.bold(err));	
 			} else {

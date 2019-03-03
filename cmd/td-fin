@@ -11,8 +11,8 @@ const inquirer = require('inquirer');
 
 const fs = require('fs');
 
-const globals = require('./globals');
 const utils = require('./utils');
+const globals = require('./globals');
 
 program
 	.description('Finish todo item')
@@ -40,11 +40,11 @@ console.log(chalk.green.bold('fin command ; '), "idx :", chalk.yellow.underline(
 /**
  *	Read JSON file	
  */
-const TODOFILE = globals.TODOFILE;
-const FINFILE = globals.FINFILE;
+const TODO_FILE = globals.TODO_FILE;
+const FIN_FILE = globals.FIN_FILE;
 let todos = []
 
-fs.readFile(TODOFILE, 'utf-8', (err, data) => {
+fs.readFile(TODO_FILE, 'utf-8', (err, data) => {
 	if (err) {
 		console.error(chalk.red.bold(err));
 		return;
@@ -68,15 +68,15 @@ fs.readFile(TODOFILE, 'utf-8', (err, data) => {
 		const finItem = todos[idx];
 		finItem[globals.FIN_AT] = Date.now();
 		todos.splice(idx, 1);
-		utils.writefile(TODOFILE, JSON.stringify(todos), undefined);
+		utils.writeFile(TODO_FILE, JSON.stringify(todos), undefined);
 		
 		// 완료 목룍 반영
 		let fins = [];
-		if (fs.existsSync(FINFILE)) {
-			fins = JSON.parse(fs.readFileSync(FINFILE, 'utf8'));
+		if (fs.existsSync(FIN_FILE)) {
+			fins = JSON.parse(fs.readFileSync(FIN_FILE, 'utf8'));
 		}
 		fins.push(finItem);
-		utils.writefile(FINFILE, JSON.stringify(fins), "Finished Successfully");
+		utils.writeFile(FIN_FILE, JSON.stringify(fins), "Finished Successfully");
 	});
 
 	// fin write
