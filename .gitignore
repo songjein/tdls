@@ -1,4 +1,4 @@
 node_modules/*
-td-api/node_modules/*
-*.json
+data/*.json
 todo
+.env
