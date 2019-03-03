@@ -3,9 +3,77 @@
   <head>
     <title>td-ls</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+		<style>
+			.code-block {
+				padding-left: 1rem;	
+			}
+			.container {
+				padding-left: 1rem;	
+			}
+		</style>
   </head>
   <body>
 		<b style='font-size: 1.5rem;'>td-ls;</b>
-		Simple, Lightweight, Command-line Todo-list & Tech Blogging Service 
+		Simple, Lightweight, <u>Command-line Todo-list & Tech Blogging</u> Service <a href='https://github.com/songjein/tdls' target='_blank'>contribution(github)</a>
+
+		<div style='height: 20px'></div>
+
+		<div class='container'>
+			<div>
+				<b>setting</b><br>
+				<div class='code-block'>
+					<code>
+						git clone https://github.com/songjein/tdls<br>
+						cd tdls<br>
+						sudo npm i -g<br>
+					</code>
+				</div>
+			</div>
+			<div>
+				<b>register</b><br>
+				<div class='code-block'>
+					<code>
+						td keygen <br>
+						td setinfo
+					</code>
+				</div>
+			</div>
+			<div>
+				<b>todo-list</b><br>
+				<div class='code-block'>
+					<code> 
+						td add -t 'schedule or memo...' <br>
+						td ls <br>
+						td fin -i index_of_todo_item <br>
+						td lsf <br>
+						td rm -i index_of_todo_item <br>
+					</code>
+				</div>
+			</div>
+
+			<div>
+				<b>blogging</b><br>
+				<div class='code-block'>
+					<code> 
+						개발중...
+					</code>
+				</div>
+			</div>
+
+			<div style='height:20px;'></div>
+
+			<div>
+				<b>User List</b>
+				<div class='code-block'>
+					<code>
+						<% for (let i = 0 ; i < users.length; i++) { %>
+							<b><%= users[i].nickName %></b> (<%= users[i].email %>, <a href="<%= users[i].githubUrl %>" target="_blank">github</a>) <br>
+						<% } %>
+					</code>
+				</div>
+			</div>
+
+		</div>
+		<!-- container -->
   </body>
 </html>
