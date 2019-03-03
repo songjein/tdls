@@ -57,7 +57,9 @@ const doSomthing = async () => {
 			}
 
 		}
-		const { data } = await axios.get(globals.API + '/users/generateKey');
+
+		const keygenRoute = '/users/generateKey';
+		const { data } = await axios.get(globals.API + keygenRoute);
 		console.log(`key pair successfully generated :) => ${ chalk.red(globals.KEY_FILE) }`);
 		const { firstKey, secondKey } = data;
 		console.log('firstKey:', chalk.yellow.bold(firstKey));
