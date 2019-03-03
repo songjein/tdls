@@ -40,10 +40,10 @@ console.log(chalk.green.bold('lsf command'));
 /**
  *	Read JSON file	
  */
-const FINFILE = globals.FINFILE;
+const FIN_FILE = globals.FIN_FILE;
 
-if (fs.existsSync(FINFILE)) {
-	fins = JSON.parse(fs.readFileSync(FINFILE, 'utf8'));
+if (fs.existsSync(FIN_FILE)) {
+	fins = JSON.parse(fs.readFileSync(FIN_FILE, 'utf8'));
 } else {
 	console.log(chlak.red.underline("No finished items"));		
 }

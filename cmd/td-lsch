@@ -27,9 +27,9 @@ console.log(chalk.green.bold('lsch command'));
 /**
  *	Read JSON file	
  */
-const SUBCHFILE = settings.SUBCHFILE;
+const SUBCH_FILE = settings.SUBCH_FILE;
 
-fs.readFile(SUBCHFILE, 'utf-8', (err, data) => {
+fs.readFile(SUBCH_FILE, 'utf-8', (err, data) => {
 	if (err) {
 		console.error(chalk.red.bold(err));
 		return;

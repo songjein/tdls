@@ -1,0 +1,38 @@
+#!/usr/bin/env node
+
+const program  = require('commander');
+const chalk = require('chalk');
+
+const globals = require('./globals');
+
+const fs = require('fs');
+
+program
+	.description('template desc')
+	.option('-i, --id <required>', 'Channel id') 
+	.parse(process.argv);
+
+/**
+ *	Options
+ */
+const id = program.id ? program.id.trim() : undefined;
+
+
+/**
+ *	Validation	
+ */
+if (false) {
+	console.error(chalk.red.bold('Options required'));
+	program.help();
+	process.exit(1);
+}
+
+/**
+ *	Verbose	
+ */
+console.log(chalk.green.bold('template command ; ') + chalk.yellow.bold("template"));
+
+/**
+ *	Do something
+ */
+

@@ -34,9 +34,9 @@ console.log(chalk.green.bold('unsubch command ; '), "id :", chalk.red.underline(
 /**
  *	Read JSON file	
  */
-const SUBCHFILE = settings.SUBCHFILE;
+const SUBCH_FILE = settings.SUBCH_FILE;
 
-fs.readFile(SUBCHFILE, 'utf-8', (err, data) => {
+fs.readFile(SUBCH_FILE, 'utf-8', (err, data) => {
 	if (err) {
 		console.error(chalk.red.bold(err));
 		return;
@@ -71,7 +71,7 @@ fs.readFile(SUBCHFILE, 'utf-8', (err, data) => {
 		/**
 		 *	Write JSON file
 		 */
-		fs.writeFile(SUBCHFILE, JSON.stringify(channels), 'utf-8', (err) => {
+		fs.writeFile(SUBCH_FILE, JSON.stringify(channels), 'utf-8', (err) => {
 			if (err) {
 				console.error(chalk.red.bold(err));	
 			} else {

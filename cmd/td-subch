@@ -34,14 +34,14 @@ console.log(chalk.green.bold('subch command ; ') + chalk.yellow.bold("channel " 
 /**
  *	Read JSON file	
  */
-const SUBCHFILE = settings.SUBCHFILE;
+const SUBCH_FILE = settings.SUBCH_FILE;
 /**
  *	subch.json ; subscribed channels meta data 
  *	{ "id" : channel-id, "synced": [synced todo item's timestamp] }
  */
 
 let channels = []
-fs.readFile(SUBCHFILE, 'utf-8', (err, data) => {
+fs.readFile(SUBCH_FILE, 'utf-8', (err, data) => {
 	if (err) {
 		console.error(chalk.red.bold(err));
 		console.log(chalk.yellow.bold("--> New file will be created"));
@@ -56,7 +56,7 @@ fs.readFile(SUBCHFILE, 'utf-8', (err, data) => {
 	/**
 	 *	Write JSON file
 	 */
-	fs.writeFile(SUBCHFILE, JSON.stringify(channels), 'utf-8', (err) => {
+	fs.writeFile(SUBCH_FILE, JSON.stringify(channels), 'utf-8', (err) => {
 		if (err) {
 			console.error(chalk.red.bold(err));	
 		} else {
