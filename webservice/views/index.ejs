@@ -5,7 +5,10 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
 		<style>
 			.code-block {
-				padding-left: 1rem;	
+				display: inline-block;
+				margin: 0.5rem 0;
+				padding: 0 1rem;	
+				background: rgb(250,250,250);	
 			}
 			.container {
 				padding-left: 1rem;	
@@ -47,6 +50,7 @@
 						td fin -i index_of_todo_item <br>
 						td lsf <br>
 						td rm -i index_of_todo_item <br>
+						td co -1 first_index -2 second_index<br>
 					</code>
 				</div>
 			</div>
@@ -63,11 +67,11 @@
 			<div style='height:20px;'></div>
 
 			<div>
-				<b>User List</b>
+				<b>User List</b> <br>
 				<div class='code-block'>
 					<code>
 						<% for (let i = 0 ; i < users.length; i++) { %>
-							<b><%= users[i].nickName %></b> (<%= users[i].email %>, <a href="<%= users[i].githubUrl %>" target="_blank">github</a>) <br>
+							- <b><%= users[i].nickName %></b> (<%= users[i].email %>, <a href="<%= users[i].githubUrl %>" target="_blank">github</a>) <br>
 						<% } %>
 					</code>
 				</div>
