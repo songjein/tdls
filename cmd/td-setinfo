@@ -1,0 +1,105 @@
+#!/usr/bin/env node
+
+
+const fs = require('fs');
+const axios = require('axios');
+const chalk = require('chalk');
+const inquirer = require('inquirer');
+const program  = require('commander');
+
+const utils = require('./utils');
+const globals = require('./globals');
+
+program
+	.description('Set user information through service(https://tdls.dev)')
+	.parse(process.argv);
+
+/**
+ *	Options
+ */
+
+/**
+ *	Validation	
+ */
+if (false) {
+	console.error(chalk.red.bold('Options required'));
+	program.help();
+	process.exit(1);
+}
+
+/**
+ *	Verbose	
+ */
+console.log(chalk.green.bold('setinfo command'));
+
+/**
+ *	Do something
+ */
+const { KEY_FILE } = globals;
+
+const doSomthing = async () => {
+	const getUserInfoRoute = '/users/getUserInfo';
+	const setUserInfoRoute = '/users/setUserInfo';
+	const githubRoot = 'https://github.com/';
+	try {
+		const content = fs.readFileSync(KEY_FILE, 'utf-8');
+		const { firstKey, secondKey }= JSON.parse(content); 
+		console.log(chalk.red('check info through ' + globals.API));
+		const userInfo = await axios.post(globals.API + getUserInfoRoute, { firstKey, secondKey });
+		let _nickName = undefined, _company = undefined, 
+			_email = undefined, _githubId = undefined, _memo = undefined;
+		if (userInfo.data.status == 'error') {
+			console.log(chalk.yellow('User info not found with your key pair'));
+			console.log(chalk.cyan('Let\'s create new one'));
+		} else {
+			const { nickName, company, email, githubUrl, memo } = userInfo.data.user;
+			_nickName = nickName, _company = company, _email = email, _githubId = githubUrl.substring(githubRoot.length), _memo = memo;
+			console.log(chalk.yellow('User info found with your key pair, default values set'));
+		}
+		const questions = [
+			{
+				message: 'nickName:',
+				type: 'input',
+				name: 'nickName',
+				default: _nickName,
+			},
+			{
+				message:'company:',
+				type: 'input',
+				name: 'company',
+				default: _company,
+			},
+			{
+				message: 'email:',
+				type: 'input',
+				name: 'email',
+				default: _email,
+			},
+			{
+				message: 'gitubID(https://github.com/:id):',
+				type: 'input',
+				name: 'githubId',
+				default: _githubId,
+			},
+			{
+				message: 'memo(bio):',
+				type: 'input',
+				name: 'memo',
+				default: _memo,
+			}
+		];
+		const answers = await inquirer.prompt(questions);
+		
+		answers['githubUrl'] = githubRoot + answers.githubId;
+		answers['firstKey'] = firstKey;
+		answers['secondKey'] = secondKey;
+
+		const { data } = await axios.post(globals.API + setUserInfoRoute, answers);
+		console.log(chalk.yellow('user information successfully updated :)'));
+		console.log(data);
+
+	} catch (error) {
+		console.error(error);
+	}
+}
+doSomthing();
