@@ -2,8 +2,15 @@
 <html>
   <head>
     <title>td-ls</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel='stylesheet' href='/stylesheets/style.css' />
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 		<style>
+			body {
+				max-width: 1024px;	
+				margin: auto;
+				font-family: 'Open Sans', sans-serif;
+			}
 			.code-block {
 				display: inline-block;
 				margin: 0.5rem 0;
@@ -59,10 +66,28 @@
 				<b>blogging</b><br>
 				<div class='code-block'>
 					<code> 
-						개발중...
+						td log -f 'markdown file name' </br>
+						마크다운 기반의 블로깅 기능 개발중...
 					</code>
 				</div>
 			</div>
+
+			<div>
+				<b style='color:orange'>In development...</b><br>
+				<div class='code-block'>
+					<code> 
+						- 마크다운 기반의 블로깅</br>
+						- 현재 로컬에서만 가능한 td push & pull 기능 (tdls.dev에 기록&백업)<br>
+						- 유저가 td add 시 -s(secret) 옵션 명시할 경우 클라이언트 단에서 암/복호화</br>
+						- 유저페이지(todo-list, tech-blog)<br>
+						- 유저의 td fin 명령에 대한 캘린더(빨래판) 그리기 <br>
+						- team-todo-list를 가능케 하는 channel 생성 기능 <br>
+						- todo-item 생성시 태그(대분류; ex.캐글, 수학공부) 포함, 조회시 그루핑 기능 <br>
+					</code>
+				</div>
+			</div>
+
+
 
 			<div style='height:20px;'></div>
 
@@ -71,7 +96,13 @@
 				<div class='code-block'>
 					<code>
 						<% for (let i = 0 ; i < users.length; i++) { %>
-							- <b><%= users[i].nickName %></b> (<%= users[i].email %>, <a href="<%= users[i].githubUrl %>" target="_blank">github</a>) <br>
+							- <b><%= users[i].nickName %></b> 
+								(
+									<%= users[i].email %>, 
+									<a href="<%= users[i].githubUrl %>" target="_blank">github</a>, 
+									<a href='#' onclick="alert('준비중 입니다. (3월 초 개발 완료);')">todo-list</a>
+									<a href='#' onclick="alert('준비중 입니다. (3월 초 개발 완료);')">tech-blog</a>
+								) <br>
 						<% } %>
 					</code>
 				</div>
