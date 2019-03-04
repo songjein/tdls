@@ -19,9 +19,10 @@
 			}
 			.code-block {
 				display: inline-block;
-				margin: 0.5rem 0;
-				padding: 0 1rem;	
-				background: rgb(250,250,250);	
+				width: 96%;
+				margin: 1% 0;
+				padding: 0 1%;	
+				background: rgba(250,250,250, 0.5);	
 			}
 		</style>
   </head>
@@ -36,10 +37,45 @@
 		<div style='height: 20px'></div>
 
 		<div class='container'>
+
+			<div>
+				<b>User List</b> <br>
+				<div class='code-block'>
+					<code>
+						<% for (let i = 0 ; i < users.length; i++) { %>
+							- <b><%= users[i].nickName %></b> 
+								(
+									<%= users[i].email %>, 
+									<a href="<%= users[i].githubUrl %>" target="_blank">github</a>, 
+									<a href='#' onclick="alert('준비중 입니다. (3월 초 개발 완료);')">todo-list</a>
+									<a href='#' onclick="alert('준비중 입니다. (3월 초 개발 완료);')">tech-blog</a>
+								) <br>
+						<% } %>
+					</code>
+				</div>
+			</div>
+
+			<div style='height:20px;'></div>
+
+			<div>
+				<b>Latest Articles</b> <a href='/logs'>more...</a><br>
+				<div class='code-block'>
+					<code>
+						<% for (let i = 0 ; i < (logs.length > 5 ? 5 : logs.length); i++) { %>
+							- <b><%= logs[i].title %></b> by <%= logs[i].User.nickName %>, (<%= logs[i].createdAt.toUTCString().split('GMT')[0].split(',')[1].trim() %>) <a href='/logs/<%= logs[i].id %>'>show</a><br>
+						<% } %>
+					</code>
+				</div>
+			</div>
+
+			<div style='height:20px;'></div>
+
 			<div>
 				<b>setting</b><br>
 				<div class='code-block'>
 					<code>
+						* Prerequisite: node  <br>
+						* Recommendation: using conda in muti-user environment <br>
 						git clone https://github.com/songjein/tdls<br>
 						cd tdls<br>
 						sudo npm i -g<br>
@@ -82,6 +118,8 @@
 				<b style='color:orange'>In development...</b><br>
 				<div class='code-block'>
 					<code> 
+						- 웹페이지 댓글 및 채팅 기능 + 콘솔 상에서 채팅도? <br>
+						- log 업데이트 기능 (기존에 존재하는 글)  <br>
 						- 현재 로컬에서만 가능한 td push & pull 기능 (tdls.dev에 기록&백업)<br>
 						- 유저가 td add 시 -s(secret) 옵션 명시할 경우 클라이언트 단에서 암/복호화</br>
 						- 유저페이지(todo-list, tech-blog)<br>
@@ -89,39 +127,7 @@
 						- team-todo-list를 가능케 하는 channel 생성 기능 <br>
 						- todo-item 생성시 태그(대분류; ex.캐글, 수학공부) 포함, 조회시 그루핑 기능 <br>
 						- graph-based blog, 블로그 글끼리 링크 가능, 트리를 이용한 상호 관계 시각화 <br>
-					</code>
-				</div>
-			</div>
-
-
-			<div style='height:20px;'></div>
-
-			<div>
-				<b>User List</b> <br>
-				<div class='code-block'>
-					<code>
-						<% for (let i = 0 ; i < users.length; i++) { %>
-							- <b><%= users[i].nickName %></b> 
-								(
-									<%= users[i].email %>, 
-									<a href="<%= users[i].githubUrl %>" target="_blank">github</a>, 
-									<a href='#' onclick="alert('준비중 입니다. (3월 초 개발 완료);')">todo-list</a>
-									<a href='#' onclick="alert('준비중 입니다. (3월 초 개발 완료);')">tech-blog</a>
-								) <br>
-						<% } %>
-					</code>
-				</div>
-			</div>
-
-			<div style='height:20px;'></div>
-
-			<div>
-				<b>Latest Articles</b> <a href='/logs'>more...</a><br>
-				<div class='code-block'>
-					<code>
-						<% for (let i = 0 ; i < (logs.length > 5 ? 5 : logs.length); i++) { %>
-							- <b><%= logs[i].title %></b> by <%= logs[i].User.nickName %>, (<%= logs[i].createdAt.toUTCString().split('GMT')[0].split(',')[1].trim() %>) <a href='/logs/<%= logs[i].id %>'>show</a><br>
-						<% } %>
+						- 이스터에그<br>
 					</code>
 				</div>
 			</div>
