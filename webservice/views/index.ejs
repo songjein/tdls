@@ -11,20 +11,27 @@
 				margin: auto;
 				font-family: 'Open Sans', sans-serif;
 			}
+			.header {
+				padding-left: 1rem;	
+			}
+			.container {
+				padding-left: 1rem;	
+			}
 			.code-block {
 				display: inline-block;
 				margin: 0.5rem 0;
 				padding: 0 1rem;	
 				background: rgb(250,250,250);	
 			}
-			.container {
-				padding-left: 1rem;	
-			}
 		</style>
   </head>
   <body>
-		<b style='font-size: 1.5rem;'>td-ls;</b>
-		Simple, Lightweight, <u>Command-line Todo-list & Tech Blogging</u> Service <a href='https://github.com/songjein/tdls' target='_blank'>contribution(github)</a>
+		<div class='header'>
+			<b style='font-size: 1.5rem;'>td-ls;</b>
+			Simple, Lightweight, <u>Command-line Todo-list & Tech Blogging</u> Service,
+			<a href='https://github.com/songjein/tdls' target='_blank'>Contribution(github)</a>
+		</div>
+
 
 		<div style='height: 20px'></div>
 
@@ -52,7 +59,7 @@
 				<b>todo-list</b><br>
 				<div class='code-block'>
 					<code> 
-						td add -t 'schedule or memo...' <br>
+						td add -m 'schedule or memo...' <br>
 						td ls <br>
 						td fin -i index_of_todo_item <br>
 						td lsf <br>
@@ -76,13 +83,14 @@
 				<b style='color:orange'>In development...</b><br>
 				<div class='code-block'>
 					<code> 
-						- 마크다운 기반의 블로깅</br>
+						- markdown-based 블로깅</br>
 						- 현재 로컬에서만 가능한 td push & pull 기능 (tdls.dev에 기록&백업)<br>
 						- 유저가 td add 시 -s(secret) 옵션 명시할 경우 클라이언트 단에서 암/복호화</br>
 						- 유저페이지(todo-list, tech-blog)<br>
 						- 유저의 td fin 명령에 대한 캘린더(빨래판) 그리기 <br>
 						- team-todo-list를 가능케 하는 channel 생성 기능 <br>
 						- todo-item 생성시 태그(대분류; ex.캐글, 수학공부) 포함, 조회시 그루핑 기능 <br>
+						- graph-based blog, 블로그 글끼리 링크 가능, 트리를 이용한 상호 관계 시각화 <br>
 					</code>
 				</div>
 			</div>
