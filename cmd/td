@@ -13,6 +13,7 @@ program
 	.command('rm', 'remove todo item').alias('r') 
 	.command('keygen', 'generate key through https://tdls.dev').alias('kg')
 	.command('setinfo', 'set user info through https://tdls.dev').alias('si')
+	.command('log', 'write tech-blog article to https://tdls.dev using markdown file').alias('lg')
 	.command('mkch', 'make channel').alias('mc') // [TODO] 여기서부턴 아직 미구현
 	.command('lsch', 'list subscribed channels').alias('lc') // TODO : ls 에 합치기
 	.command('subch', 'subscribe channel').alias('sc')

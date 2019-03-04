@@ -41,9 +41,9 @@ const doSomthing = async () => {
 	const getUserInfoRoute = '/users/getUserInfo';
 	const setUserInfoRoute = '/users/setUserInfo';
 	const githubRoot = 'https://github.com/';
+	const keyText = fs.readFileSync(KEY_FILE, 'utf-8');
+	const { firstKey, secondKey }= JSON.parse(keyText); 
 	try {
-		const content = fs.readFileSync(KEY_FILE, 'utf-8');
-		const { firstKey, secondKey }= JSON.parse(content); 
 		console.log(chalk.red('check info through ' + globals.API));
 		const userInfo = await axios.post(globals.API + getUserInfoRoute, { firstKey, secondKey });
 		let _nickName = undefined, _company = undefined, 

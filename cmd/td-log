@@ -1,0 +1,71 @@
+#!/usr/bin/env node
+
+
+const fs = require('fs');
+const axios = require('axios');
+const chalk = require('chalk');
+const program  = require('commander');
+const inquirer = require('inquirer');
+const showdown = require('showdown');
+
+const converter = new showdown.Converter();
+
+const utils = require('./utils');
+const globals = require('./globals');
+
+program
+	.description('Write tech-blog article to https://tdls.dev using markdown file\n  the first line of the file should not be blank, it is considered as title of the article.')
+	.option('-f, --file <file-path-required>', 'File path') 
+	.parse(process.argv);
+
+/**
+ *	Options 
+ */
+const filePath = program.file; // [TODO] 일단 abs path 를 기대함
+
+/**
+ *	Validation	
+ */
+if (!filePath) {
+	console.error(chalk.red.bold('File path required'));
+	program.help();
+	process.exit(1);
+}
+
+/**
+ *	Verbose	
+ */
+console.log(chalk.green.bold('Log command'));
+
+/**
+ *	Do something
+ */
+const { KEY_FILE } = globals;
+
+const doSomthing = async () => {
+	const logRoute= '/logs/';
+
+	if (!fs.existsSync(KEY_FILE)) {
+		console.log(chalk.red('Key file doesn\'t exist!'));
+		console.log(chalk.yellow('You can get a key-pair using "td keygen"'));
+		return;
+	}
+
+	const keyText = fs.readFileSync(KEY_FILE, 'utf-8');
+	const { firstKey, secondKey }= JSON.parse(keyText); 
+
+	const md = fs.readFileSync(filePath, 'utf-8');
+	const title = md.split('\n')[0].replace('#','').trim();
+	const htmlBody = converter.makeHtml(md);
+
+	try {
+		const payload = { firstKey, secondKey, title, htmlBody };
+		const { data } = await axios.post(globals.API + logRoute, payload);
+		console.log(chalk.yellow('Log successfully updated :)'));
+		console.log(data);
+
+	} catch (error) {
+		console.error(error);
+	}
+}
+doSomthing();
