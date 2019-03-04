@@ -16,7 +16,7 @@ program
 /**
  *	Options
  */
-const todo = program.todo;
+const todo = program.msg;
 const secret = program.secret; 
 // const secret = program.secret ? program.secret : false;
 
