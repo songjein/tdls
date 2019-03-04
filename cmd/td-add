@@ -9,7 +9,7 @@ const globals = require('./globals');
 
 program
 	.description('Add todo item')
-	.option('-t, --todo <text-required>', 'Todo') 
+	.option('-m, --msg <text-required>', 'Todo item (message)') 
 	.option('-s, --secret', 'Secret mode', false)
 	.parse(process.argv);
 
