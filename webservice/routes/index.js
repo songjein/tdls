@@ -1,13 +1,19 @@
 var express = require('express');
 var router = express.Router();
 
-const { User } = require('../models')
+const { User, Log } = require('../models')
 
 /* GET home page. */
 router.get('/', async (req, res, next) => {
 	try {
 		const users = await User.findAll();
-		res.render('index', { users });
+		const logs = await Log.findAll({
+			order: [
+				['id', 'DESC'], // ASC
+			],	
+			include: [{ model: User, attributes: ['nickName'] }],
+		});
+		res.render('index', { users, logs });
 	} catch (error) {
 		console.log(error);
 		next(error);	

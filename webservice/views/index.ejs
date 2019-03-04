@@ -27,7 +27,7 @@
   </head>
   <body>
 		<div class='header'>
-			<b style='font-size: 1.5rem;'>td-ls;</b>
+			<a href='/' style='text-decoration:none; color: black;'><b style='font-size: 1.5rem;'>td-ls;</b></a>
 			Simple, Lightweight, <u>Command-line Todo-list & Tech Blogging</u> Service,
 			<a href='https://github.com/songjein/tdls' target='_blank'>Contribution(github)</a>
 		</div>
@@ -73,8 +73,7 @@
 				<b>blogging</b><br>
 				<div class='code-block'>
 					<code> 
-						td log -f 'markdown file name' </br>
-						마크다운 기반의 블로깅 기능 개발중...
+						td log -f 'markdown file path(absolute path)' </br>
 					</code>
 				</div>
 			</div>
@@ -83,7 +82,6 @@
 				<b style='color:orange'>In development...</b><br>
 				<div class='code-block'>
 					<code> 
-						- markdown-based 블로깅</br>
 						- 현재 로컬에서만 가능한 td push & pull 기능 (tdls.dev에 기록&백업)<br>
 						- 유저가 td add 시 -s(secret) 옵션 명시할 경우 클라이언트 단에서 암/복호화</br>
 						- 유저페이지(todo-list, tech-blog)<br>
@@ -94,7 +92,6 @@
 					</code>
 				</div>
 			</div>
-
 
 
 			<div style='height:20px;'></div>
@@ -111,6 +108,19 @@
 									<a href='#' onclick="alert('준비중 입니다. (3월 초 개발 완료);')">todo-list</a>
 									<a href='#' onclick="alert('준비중 입니다. (3월 초 개발 완료);')">tech-blog</a>
 								) <br>
+						<% } %>
+					</code>
+				</div>
+			</div>
+
+			<div style='height:20px;'></div>
+
+			<div>
+				<b>Latest Articles</b> <a href='/logs'>more...</a><br>
+				<div class='code-block'>
+					<code>
+						<% for (let i = 0 ; i < (logs.length > 5 ? 5 : logs.length); i++) { %>
+							- <b><%= logs[i].title %></b> by <%= logs[i].User.nickName %>, (<%= logs[i].createdAt.toUTCString().split('GMT')[0].split(',')[1].trim() %>) <a href='/logs/<%= logs[i].id %>'>show</a><br>
 						<% } %>
 					</code>
 				</div>

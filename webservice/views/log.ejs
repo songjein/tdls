@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>td-ls</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+		<style>
+			body {
+				max-width: 1024px;	
+				margin: auto;
+				font-family: 'Open Sans', sans-serif;
+			}
+			.header {
+				padding-left: 1rem;	
+			}
+			.container {
+				padding-left: 1rem;	
+			}
+			.code-block {
+				display: inline-block;
+				margin: 0.5rem 0;
+				padding: 0 1rem;	
+				background: rgb(250,250,250);	
+			}
+		</style>
+  </head>
+  <body>
+		<div class='header'>
+			<a href='/' style='text-decoration:none; color: black;'><b style='font-size: 1.5rem;'>td-ls;</b></a>
+			Simple, Lightweight, <u>Command-line Todo-list & Tech Blogging</u> Service,
+			<a href='https://github.com/songjein/tdls' target='_blank'>Contribution(github)</a>
+		</div>
+
+		<div style='height: 20px'></div>
+
+		<div class='container'>
+			<a href='/logs'>Show all articles</a>
+
+			<div style='height: 20px'></div>
+
+			<div>
+				<span>By <b style='font-size:1.2rem;'><%= log.User.nickName %></b></span> , 
+				<span><%= log.createdAt.toUTCString().split('GMT')[0].split(',')[1].trim() %></span>
+				<%- log.htmlBody %>
+			</div>
+
+		</div>
+		<!-- container -->
+  </body>
+</html>

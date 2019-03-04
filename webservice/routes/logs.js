@@ -9,8 +9,33 @@ const { User, Log } = require('../models')
 const { SUCCESS, ERROR } = require('./status');
 
 /* GET users listing. */
-router.get('/', (req, res, next) => {
-  res.send('respond with a resource');
+router.get('/', async (req, res, next) => {
+	try {
+		// ref. http://docs.sequelizejs.com/manual/tutorial/models-usage.html -> eager loading
+		const logs = await Log.findAll({
+			order: [
+				['id', 'DESC'], // ASC
+			],
+			include: [{ model: User, attributes: ['nickName'] }], 
+		});
+		res.render('logs', { logs });
+	} catch (error) {
+		console.error(error);	
+		next(error);
+	}
+});
+
+router.get('/:logId', async (req, res, next) => {
+	try {
+		const log = await Log.find({ 
+			where: { id: req.params.logId },
+			include: [{ model: User, attributes: ['nickName'] }], 
+		});
+		res.render('log', { log });
+	} catch (error) {
+		console.error(error);	
+		next(error);
+	}
 });
 
 router.post('/', async (req, res, next) => {
