@@ -1,4 +1,4 @@
 node_modules/*
-data/*.json
+cmd/data/*.json
 todo
 .env

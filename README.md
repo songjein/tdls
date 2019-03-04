@@ -56,7 +56,7 @@ td-ls ; command line todo-list & blogging tools for engineers
 
   Options:
 
-    -t, --todo <required>  Todo
+    -m, --msg <required>   Todo item (message)
     -s, --secret           Secret mode
     -h, --help             output usage information
 </pre>
