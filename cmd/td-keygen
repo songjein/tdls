@@ -65,6 +65,8 @@ const doSomthing = async () => {
 		console.log('firstKey:', chalk.yellow.bold(firstKey));
 		console.log('secondKey:', chalk.yellow.bold(secondKey));
 		utils.writeFile(KEY_FILE, JSON.stringify({ firstKey, secondKey }), undefined);
+		console.log(chalk.red.bold('[!NOTICE]')); 
+		console.log(chalk.yellow('You should do') + chalk.cyan.bold(' \'td setinfo\' ') + chalk.yellow('after keygen to write a tech-log (https://tdls.dev)'));
 	} catch (error) {
 		console.error(error);
 	}
