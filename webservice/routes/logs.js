@@ -39,10 +39,10 @@ router.get('/:logId', async (req, res, next) => {
 });
 
 router.post('/', async (req, res, next) => {
-	const { firstKey, secondKey, title, htmlBody } = req.body; 
+	const { firstKey, secondKey, title, htmlBody, logId } = req.body; 
 	try {
 		///////////////////////////////////////////////////////////////////////
-		// [TODO] 이 부분 공통되는 부분이라 미들웨어로 빼기
+		// [TODO] 이 부분 공통되는 부분이라 함수로 빼기
 		///////////////////////////////////////////////////////////////////////
 		const user = await User.find({ where: { firstKey } });
 		if (!user) {
@@ -61,15 +61,37 @@ router.post('/', async (req, res, next) => {
 			return;
 		}
 		///////////////////////////////////////////////////////////////////////
-		const log = await Log.create({
+
+		let log = undefined;
+		const updateMode = logId ? true : false;
+		if (updateMode) {
+			log = await Log.find({ 
+				where: { id: logId },  
+				include: [{ model: User, attributes: ['id'] }], 
+			});
+			if (log && (user.id !== log.User.id)) {
+				res.json({
+					status: ERROR,
+					msg: 'You do not have ownership of this article #' + logId,
+				});
+				return;
+			}
+			if (log) {
+				log = await log.update({ title, htmlBody });
+				res.json({
+					status: SUCCESS,
+					msg: 'Successfully updated :)',
+				});
+				return;
+			}
+			// else -> create new one
+		}
+		log = await Log.create({
 			title, htmlBody, UserId: user.id,
 		});
-
-		console.log('@@', log);
-
 		res.json({
 			status: SUCCESS,
-			msg: 'Log successfully created',
+			msg: 'Successfully created :)',
 			log,
 		});
 	} catch (error) {
