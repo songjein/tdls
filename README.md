@@ -1,5 +1,5 @@
 # td-ls;
-Simple, Lightweight, Command-line Todo-list & Tech-blogging service for engineers  
+Simple, Lightweight, Command-line Todo-list & Tech-blogging Service for Engineers  
 
 ## Setting
 - prerequisite: node **8+**
