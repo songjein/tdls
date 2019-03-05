@@ -23,7 +23,7 @@ let options = {
 }
 
 program
-	.description('List todo items')
+	.description('List todo items, max 10 lines')
 	.option('-a, --all', 'Show all items (default: false)', false)
 	.option('-n, --number [optional]', 'Show n-items only', 10) 
 	.option('-c, --channel', 'Show items from channels (default: false)', false)
@@ -46,7 +46,7 @@ if (false) { /* vali */ }
 /**
  *	Verbose	
  */
-console.log(chalk.green.bold('ls command'));
+console.log(chalk.green.bold('ls command (max 10 lines, use -a option to get all)'));
 	
 /**
  *	Read JSON file	
