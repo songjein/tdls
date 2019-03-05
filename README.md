@@ -3,7 +3,7 @@ Simple, Lightweight, Command-line Todo-list & Tech-blogging service for engineer
 
 # md 업데이트중 
 
-## setting
+## Setting
 - prerequisite: node 8+
 - multi-user environment & using global node
   ```
@@ -17,6 +17,30 @@ Simple, Lightweight, Command-line Todo-list & Tech-blogging service for engineer
   git clone https://github.com/songjein/tdls
   cd tdls ; sudo npm i -g
   ```
+
+## Register
+  ```
+  td kegen
+  td setinfo
+  ```
+  
+## Blogging
+  ```
+  td log -f 'markdown_file_abs_path'
+  ```
+
+## Todo-list examples
+  - co ; change order
+  - lsf ; list finished items
+  ```
+  td add -m 'schedule or memo...' 
+  td ls 
+  td fin -i index_of_todo_item 
+  td lsf 
+  td rm -i index_of_todo_item 
+  td co -1 first_index -2 second_index
+  ```
+
 # ↓ Old Version...
 
 ## Motivation
