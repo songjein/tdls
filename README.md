@@ -1,10 +1,8 @@
 # td-ls;
 Simple, Lightweight, Command-line Todo-list & Tech-blogging service for engineers  
 
-# md 업데이트중 
-
 ## Setting
-- prerequisite: node 8+
+- prerequisite: node **8+**
 - multi-user environment & using global node
   ```
   git clone https://github.com/songjein/tdls
