@@ -9,7 +9,8 @@ Simple, Lightweight, Command-line Todo-list & Tech-blogging service for engineer
   ```
   git clone https://github.com/songjein/tdls
   cd tdls ; npm i
-  echo 'export TDLS=<path-to-tdls/cmd>' >> .bashrc
+  echo 'export TDLS=<path-to-tdls/cmd>' >> ~/.bashrc
+  source ~/.bashrc
   ```
 - single-user environment
   ```
