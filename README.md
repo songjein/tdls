@@ -1,4 +1,4 @@
-# td-ls 
+# td-ls;
 Simple, Lightweight, Command-line Todo-list & Tech-blogging service for engineers  
 
 # md 업데이트중 
