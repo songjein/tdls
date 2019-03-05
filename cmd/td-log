@@ -16,12 +16,14 @@ const globals = require('./globals');
 program
 	.description('Write tech-blog article to https://tdls.dev using markdown file\n  the first line of the file should not be blank, it is considered as title of the article.')
 	.option('-f, --file <file-path-required>', 'File path') 
+	.option('-i, --logId <log-id-required>', 'Id of the log which will be updated') 
 	.parse(process.argv);
 
 /**
  *	Options 
  */
 const filePath = program.file; // [TODO] 일단 abs path 를 기대함
+const logId = program.logId;
 
 /**
  *	Validation	
@@ -59,10 +61,12 @@ const doSomthing = async () => {
 	const htmlBody = converter.makeHtml(md);
 
 	try {
-		const payload = { firstKey, secondKey, title, htmlBody };
+		const payload = { firstKey, secondKey, title, htmlBody, logId };
 		const { data } = await axios.post(globals.API + logRoute, payload);
-		console.log(chalk.yellow('Log successfully updated :)'));
-		console.log(data);
+		if (data.status == 'success')
+			console.log(chalk.yellow(data.msg));
+		else 
+			console.log(chalk.red.bold(data.msg));
 
 	} catch (error) {
 		console.error(error);
