@@ -24,7 +24,7 @@ Simple, Lightweight, Command-line Todo-list & Tech-blogging service for engineer
   
 ## Blogging
   ```
-  td log -f 'markdown_file_abs_path'
+  td log -f 'markdown_file_path'
   ```
 
 ## Todo-list examples
