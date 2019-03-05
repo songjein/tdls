@@ -7,7 +7,7 @@ Simple, Lightweight, Command-line Todo-list & Tech-blogging service for engineer
   ```
   git clone https://github.com/songjein/tdls
   cd tdls ; npm i
-  echo 'export PATH=$PATH:<PATH-TO-tdls;tdls-절대경로>/cmd' >> ~/.bashrc
+  echo 'export PATH=$PATH:<PATH-TO-tdls;절대경로>/cmd' >> ~/.bashrc
   source ~/.bashrc
   ```
 - single-user environment
