@@ -1,6 +1,20 @@
-td-ls ; command line todo-list & blogging tools for engineers  
+td-ls ; Simple, Lightweight, Command-line Todo-list & Tech-blogging service for engineers  
 ==================================================
 # md 업데이트중 
+
+## setting
+- prerequisite: node 8+
+- multi-user environment & using global node
+  ```
+  git clone https://github.com/songjein/tdls (추후에 npm에 등록할 예정)
+  cd tdls ; npm i
+  echo 'export TDLS=<path-to-tdls/cmd>' >> .bashrc
+  ```
+- single-user environment
+  ```
+  git clone https://github.com/songjein/tdls
+  cd tdls ; sudo npm i -g
+  ```
 # ↓ Old Version...
 
 ## Motivation
