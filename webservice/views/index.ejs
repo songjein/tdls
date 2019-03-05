@@ -39,17 +39,15 @@
 		<div class='container'>
 
 			<div>
-				<b>User List</b> <br>
+				<b>User List</b> <a href='/users'>more...</a> <br>
 				<div class='code-block'>
 					<code>
-						<% for (let i = 0 ; i < users.length; i++) { %>
+						<% for (let i = 0 ; i < (users.length > 5 ? 5 : users.length); i++) { %>
 							- <b><%= users[i].nickName %></b> 
-								(
+								{	
 									<%= users[i].email %>, 
-									<a href="<%= users[i].githubUrl %>" target="_blank">github</a>, 
-									<a href='#' onclick="alert('준비중 입니다. (3월 초 개발 완료);')">todo-list</a>
-									<a href='#' onclick="alert('준비중 입니다. (3월 초 개발 완료);')">tech-blog</a>
-								) <br>
+									<a href='/users/<%= users[i].nickName %>'>Tech-Blog</a>
+								} <br>
 						<% } %>
 					</code>
 				</div>
@@ -62,7 +60,7 @@
 				<div class='code-block'>
 					<code>
 						<% for (let i = 0 ; i < (logs.length > 5 ? 5 : logs.length); i++) { %>
-							- <b><%= logs[i].title %></b> by <%= logs[i].User.nickName %>, (<%= logs[i].createdAt.toUTCString().split('GMT')[0].split(',')[1].trim() %>) <a href='/logs/<%= logs[i].id %>'>show</a><br>
+							- <b><%= logs[i].title %></b> by <%= logs[i].User.nickName %>, (<%= logs[i].createdAt.toUTCString().split('GMT')[0].split(',')[1].trim() %>) <a href='/logs/<%= logs[i].id %>'>Show</a><br>
 						<% } %>
 					</code>
 				</div>
@@ -95,8 +93,12 @@
 				<b>blogging</b><br>
 				<div class='code-block'>
 					<code> 
+						# create <br>
 						td log -f 'MarkDown file path(absolute or relative path)' </br>
+						# update <br>
 						td log -f 'PATH' -i update_log_id #https://tdls.dev/logs/:log_id</br> 
+						# delete <br>
+						td log -d -i delete_log_id #https://tdls.dev/logs/:log_id</br>
 					</code>
 				</div>
 			</div>
@@ -104,11 +106,17 @@
 				<b>todo-list</b><br>
 				<div class='code-block'>
 					<code> 
+						# create <br>
 						td add -m 'schedule or memo...' <br>
+						# list <br>
 						td ls <br>
+						# finish todo item <br>
 						td fin -i index_of_todo_item <br>
+						# list finished items <br>
 						td lsf <br>
+						# delete item <br>
 						td rm -i index_of_todo_item <br>
+						# change order <br>
 						td co -1 first_index -2 second_index<br>
 					</code>
 				</div>

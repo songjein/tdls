@@ -37,18 +37,20 @@
 		<div style='height: 20px'></div>
 
 		<div class='container'>
-
 			<div>
-				<b>Articles</b> <br> 
+				<b>User List</b> <br> 
 				<div class='code-block'>
 					<code>
-						<% for (let i = 0 ; i < logs.length; i++) { %>
-							- <b><%= logs[i].title %></b> by <%= logs[i].User.nickName %>, (<%= logs[i].createdAt.toUTCString().split('GMT')[0].split(',')[1].trim() %>) <a href='/logs/<%= logs[i].id %>'>Show</a><br>
+						<% for (let i = 0 ; i < users.length; i++) { %>
+							- <b><%= users[i].nickName %></b> 
+								{	
+									<%= users[i].email %>, 
+									<a href='/users/<%= users[i].nickName %>'>Tech-Blog</a>
+								} <br>
 						<% } %>
 					</code>
 				</div>
 			</div>
-
 		</div>
 		<!-- container -->
   </body>

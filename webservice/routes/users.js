@@ -4,13 +4,30 @@ const bcrypt = require('bcrypt');
 
 const router = express.Router();
 
-const { User } = require('../models')
+const { User, Log } = require('../models')
 
 const { SUCCESS, ERROR } = require('./status');
 
-/* GET users listing. */
-router.get('/', (req, res, next) => {
-  res.send('respond with a resource');
+router.get('/', async (req, res, next) => {
+	try {
+		const users = await User.findAll();
+		res.render('users', { users });
+	} catch (error) {
+		console.error(error);
+	}
+});
+
+router.get('/:nickName', async (req, res, next) => {
+	const { nickName } = req.params;
+	try {
+		const user = await User.find({ 
+			where: { nickName },
+			include: [{ model: Log, attributes: ['id', 'title', 'createdAt'] }], 
+		});
+		res.render('user', { user });
+	} catch (error) {
+		console.error(error);
+	}
 });
 
 router.get('/generateKey', (req, res, next) => {

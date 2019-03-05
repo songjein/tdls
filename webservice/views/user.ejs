@@ -37,18 +37,39 @@
 		<div style='height: 20px'></div>
 
 		<div class='container'>
-
 			<div>
-				<b>Articles</b> <br> 
+				<b><%= user.nickName %>'s Profile</b> <br> 
 				<div class='code-block'>
 					<code>
+					{ nickName: <b><%= user.nickName %></b>, 
+						email: <u><%= user.email %></u>, 
+						github: <a href='<%= user.githubUrl %>'><%= user.githubUrl %></a> }
+					</code>
+				</div>
+			</div>
+			<div>
+				<b>Todo-List</b> <br> 
+				<div class='code-block'>
+					backup-todo-list-place-holder
+				</div>
+			</div>
+			<div>
+				<b>Contribution</b> <br> 
+				<div class='code-block'>
+					<code>
+						<% const logs = user.Logs %>
 						<% for (let i = 0 ; i < logs.length; i++) { %>
-							- <b><%= logs[i].title %></b> by <%= logs[i].User.nickName %>, (<%= logs[i].createdAt.toUTCString().split('GMT')[0].split(',')[1].trim() %>) <a href='/logs/<%= logs[i].id %>'>Show</a><br>
+							- <b><%= logs[i].title %></b> (<%= logs[i].createdAt.toUTCString().split('GMT')[0].split(',')[1].trim() %>) <a href='/logs/<%= logs[i].id %>'>Show</a><br>
 						<% } %>
 					</code>
 				</div>
 			</div>
-
+			<div>
+				<b>Achievement</b> <br> 
+				<div class='code-block'>
+					calendar-place-holder
+				</div>
+			</div>
 		</div>
 		<!-- container -->
   </body>
