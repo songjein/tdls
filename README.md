@@ -54,7 +54,6 @@ Simple, Lightweight, Command-line Todo-list & Tech-blogging service for engineer
 2. todo item 공유를 위한 채널 생성 기능 (mkch)
 3. 특정 채널에 todo item 보내기 (pubch)
 4. 채널 구독을 통한 일정 받아 보기 (subch -> ls) 
-5. md 기반의 블로깅 툴 (계획)
 6. 웹 페이지 에서의 데이터 시각화 및 업무 패턴 분석 (계획)
 
 ## Installation
@@ -141,13 +140,3 @@ Changed Successfully
 3.  바로 끝내는 명령어 넣을까
 4.  sub todo item 추가 옵션
 </pre>
-
-## todo
-- 빠른 반응성 위해 서버에 접속할 경우엔 td ls -s 옵션으로 분리
-- 웹 인터페이스 
-- 디비 연동은 고민, 
-
-
-- 제가 써보니 매우 편리하고 효율적인 업무 관리를 가능하게하는 툴임이 분명합니다
-- 커맨드라인 상에서 작업하는 시간이 많은 분일 수록 꼭 써야합니다
-- 안쓰면 바보
