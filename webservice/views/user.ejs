@@ -24,6 +24,18 @@
 				padding: 0 1%;	
 				background: rgba(250,250,250, 0.5);	
 			}
+			.gblue {
+				color: #4285F4;
+			}
+			.ggreen {
+				color: #34A853;	
+			}
+			.gorange {
+				color: #FBBC05;	
+			}
+			.gred {
+				color: #EA4335;	
+			}
 		</style>
   </head>
   <body>
@@ -38,7 +50,7 @@
 
 		<div class='container'>
 			<div>
-				<b><%= user.nickName %>'s Profile</b> <br> 
+				<b>{ <span class='ggreen'><%= user.nickName %></span> }'s Profile</b> <br> 
 				<div class='code-block'>
 					<code>
 					{ nickName: <b><%= user.nickName %></b>, 
@@ -50,16 +62,39 @@
 			<div>
 				<b>Todo-List</b> <br> 
 				<div class='code-block'>
-					backup-todo-list-place-holder
+					<code>
+						<% if (user.todoItems) { %>
+							<% const todoItems = JSON.parse(user.todoItems) %>
+							<% for (let i = 0 ; i < todoItems.length ; i++) { %>
+								<% if (i < 3) { %>
+									<span class='gred'><%= i %></span>. <span class='gred'><%= todoItems[i].todo %></span><br>
+								<% } else { %>
+									<span class=''><%= i %></span>. <span><%= todoItems[i].todo %></span><br>
+								<% } %>
+							<% } %>
+						<% } else { %>
+							todo-list is <b class='gred'>empty</b>; <br> 
+							fill this section by using { <br>
+							&nbsp;&nbsp;<b class='gblue'>td add -m 'message'; td push </b><br>
+							} <br>
+						<% } %>
+					</code>
 				</div>
 			</div>
 			<div>
 				<b>Contribution</b> <br> 
 				<div class='code-block'>
 					<code>
-						<% const logs = user.Logs %>
-						<% for (let i = 0 ; i < logs.length; i++) { %>
-							- <b><%= logs[i].title %></b> (<%= logs[i].createdAt.toUTCString().split('GMT')[0].split(',')[1].trim() %>) <a href='/logs/<%= logs[i].id %>'>Show</a><br>
+						<% if (user.Logs.length > 0) { %>
+							<% const logs = user.Logs %>
+							<% for (let i = 0 ; i < logs.length; i++) { %>
+								- <b><%= logs[i].title %></b> (<%= logs[i].createdAt.toUTCString().split('GMT')[0].split(',')[1].trim() %>) <a href='/logs/<%= logs[i].id %>'>Show</a><br>
+							<% } %>
+						<% } else { %>
+							no contribution yet :(...<br>
+							share <b class='gred'>valuable knowledge</b> by <b>just</b> using { <br>
+							&nbsp;&nbsp;<b class='gblue'>td log -f 'markdown file'</b><br>
+							} <br>
 						<% } %>
 					</code>
 				</div>

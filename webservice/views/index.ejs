@@ -52,14 +52,14 @@
 		<div class='container'>
 
 			<div>
-				<b>User List</b> <a href='/users'>more...</a> <br>
+				<b>User List</b> <code><a href='/users'>showAll()</a></code> <br>
 				<div class='code-block'>
 					<code>
 						<% for (let i = 0 ; i < (users.length > 5 ? 5 : users.length); i++) { %>
 							- <b><%= users[i].nickName %></b> 
 								{	
 									<%= users[i].email %>, 
-									<a href='/users/<%= users[i].nickName %>'>Tech-Blog</a>
+									<a href='/users/<%= users[i].nickName %>'>goto(blog)</a>
 								} <br>
 						<% } %>
 					</code>
@@ -69,11 +69,11 @@
 			<div style='height:20px;'></div>
 
 			<div>
-				<b>Latest Articles</b> <a href='/logs'>more...</a><br>
+				<b>Latest Articles</b> <code><a href='/logs'>showAll()</a></code><br>
 				<div class='code-block'>
 					<code>
 						<% for (let i = 0 ; i < (logs.length > 5 ? 5 : logs.length); i++) { %>
-							- <b><%= logs[i].title %></b> by <%= logs[i].User.nickName %>, (<%= logs[i].createdAt.toUTCString().split('GMT')[0].split(',')[1].trim() %>) <a href='/logs/<%= logs[i].id %>'>Show</a><br>
+							- <b><%= logs[i].title %></b> by <%= logs[i].User.nickName %>, (<%= logs[i].createdAt.toUTCString().split('GMT')[0].split(',')[1].trim() %>) <a href='/logs/<%= logs[i].id %>'>show()</a><br>
 						<% } %>
 					</code>
 				</div>
@@ -85,11 +85,15 @@
 				<b>setting</b><br>
 				<div class='code-block'>
 					<code>
-						* Prerequisite: node  <br>
-						* Recommendation: using conda in muti-user environment <br>
+						<span class='gred'>* Prerequisite: node 8 +</span> <br>
+						<span class='ggreen'># multi-user environment & using global node</span> <br>
+						git clone https://github.com/songjein/tdls <br>
+						cd tdls ; npm i <br>
+						echo 'export PATH=$PATH:<PATH-TO-tdls;절대경로>/cmd' >> ~/.bashrc <br>
+						source ~/.bashrc <br>
+						<span class='ggreen'># single-user environment</span> <br>
 						git clone https://github.com/songjein/tdls<br>
-						cd tdls<br>
-						sudo npm i -g<br>
+						cd tdls; sudo npm i -g<br>
 					</code>
 				</div>
 			</div>
@@ -106,11 +110,11 @@
 				<b>blogging</b><br>
 				<div class='code-block'>
 					<code> 
-						# create <br>
+						<span class='ggreen'># create</span> <br>
 						td log -f 'MarkDown file path(absolute or relative path)' </br>
-						# update <br>
+						<span class='ggreen'># update</span> <br>
 						td log -f 'PATH' -i update_log_id #https://tdls.dev/logs/:log_id</br> 
-						# delete <br>
+						<span class='ggreen'># delete</span> <br>
 						td log -d -i delete_log_id #https://tdls.dev/logs/:log_id</br>
 					</code>
 				</div>
@@ -119,17 +123,17 @@
 				<b>todo-list</b><br>
 				<div class='code-block'>
 					<code> 
-						# create <br>
+						<span class='ggreen'># create</span> <br>
 						td add -m 'schedule or memo...' <br>
-						# list <br>
+						<span class='ggreen'># list</span> <br>
 						td ls <br>
-						# finish todo item <br>
+						<span class='ggreen'># finish todo item</span> <br>
 						td fin -i index_of_todo_item <br>
-						# list finished items <br>
+						<span class='ggreen'># list finished items</span> <br>
 						td lsf <br>
-						# delete item <br>
+						<span class='ggreen'># delete item </span><br>
 						td rm -i index_of_todo_item <br>
-						# change order <br>
+						<span class='ggreen'># change order</span> <br>
 						td co -1 first_index -2 second_index<br>
 					</code>
 				</div>
@@ -139,6 +143,7 @@
 				<b style='color:orange'>In development...</b><br>
 				<div class='code-block'>
 					<code> 
+						- 사이트 컨셉 -> 코딩 <a href='https://tdls.dev/users/master'>tdls.dev/user/master</a> 참고 <br>
 						- 현재 로컬에서만 가능한 td push & pull 기능 (tdls.dev에 기록&백업)<br>
 						- 유저의 td fin 명령에 대한 캘린더(빨래판) 그리기 <br>
 						- team-todo-list를 가능케 하는 channel 생성 기능 <br>
