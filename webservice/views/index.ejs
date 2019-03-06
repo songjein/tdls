@@ -59,7 +59,11 @@
 							- <b><%= users[i].nickName %></b> 
 								{	
 									<%= users[i].email %>, 
-									<a href='/users/<%= users[i].nickName %>'>goto(blog)</a>
+									<% if ( i == 0 ) { %>
+										<a href='/users/<%= users[i].nickName %>' class='gred' style='font-weight:bold;'>goto(blog)</a>
+									<% } else { %>
+										<a href='/users/<%= users[i].nickName %>'>goto(blog)</a>
+									<% } %>
 								} <br>
 						<% } %>
 					</code>
@@ -113,9 +117,9 @@
 						<span class='ggreen'># create</span> <br>
 						td log -f 'MarkDown file path(absolute or relative path)' </br>
 						<span class='ggreen'># update</span> <br>
-						td log -f 'PATH' -i update_log_id #https://tdls.dev/logs/:log_id</br> 
+						td log -f 'PATH' -i update_log_id <span class='ggreen'>#https://tdls.dev/logs/<b>:log_id</b></span></br> 
 						<span class='ggreen'># delete</span> <br>
-						td log -d -i delete_log_id #https://tdls.dev/logs/:log_id</br>
+						td log -d -i delete_log_id <span class='ggreen'>#https://tdls.dev/logs/<b>:log_id</b></span></br>
 					</code>
 				</div>
 			</div>
