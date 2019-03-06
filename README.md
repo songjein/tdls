@@ -1,4 +1,4 @@
-# td-ls;
+# td-ls; https://tdls.dev
 Simple, Lightweight, Command-line Todo-list & Tech-blogging Service for Engineers  
 
 ## Setting
