@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     memo: DataTypes.TEXT,
     email: DataTypes.STRING,
 		githubUrl: DataTypes.STRING,
+		todoItems: DataTypes.TEXT,
   }, {});
   User.associate = function(models) {
     // associations can be defined here

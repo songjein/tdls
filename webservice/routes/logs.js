@@ -122,7 +122,7 @@ router.post('/', async (req, res, next) => {
 			if (log && (user.id !== log.User.id)) {
 				res.json({
 					status: ERROR,
-					msg: 'You do not have ownership of this article #' + logId,
+					msg: 'You do not have ownership of this article ' + logId,
 				});
 				return;
 			}
@@ -130,7 +130,7 @@ router.post('/', async (req, res, next) => {
 				log = await log.update({ title, htmlBody });
 				res.json({
 					status: SUCCESS,
-					msg: 'Successfully updated :)',
+					msg: 'Successfully updated :) https://tdls.dev/logs/' + log.id,
 				});
 				return;
 			}
@@ -141,7 +141,7 @@ router.post('/', async (req, res, next) => {
 		});
 		res.json({
 			status: SUCCESS,
-			msg: 'Successfully created :)',
+			msg: 'Successfully created :) https://tdls.dev/logs/' + log.id,
 			log,
 		});
 	} catch (error) {
