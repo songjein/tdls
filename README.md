@@ -4,8 +4,7 @@ Simple, Lightweight, Command-line Todo-list & Tech-blogging Service for Engineer
 
 ## Contribution
 - tdls는 주로 다음과 같은 라이브러리를 이용해 개발되었습니다. 아이디어가 있으시면 개발에 참여해주세요!
-  - [commander.js](https://github.com/tj/commander.js/)
-  - [inquirer.js](https://github.com/SBoudrias/Inquirer.js)
+  - [commander.js](https://github.com/tj/commander.js/), [inquirer.js](https://github.com/SBoudrias/Inquirer.js)
 - 애플리케이션 서버는 express + ejs + sequelize를 통해 개발되었습니다. 로컬 세팅이 필요하신 분은 문의주세요.
 
 ## Setting
