@@ -30,7 +30,12 @@ Simple, Lightweight, Command-line Todo-list & Tech-blogging Service for Engineer
   
 ## Blogging
   ```
-  td log -f 'markdown_file_path'
+  # create 
+  td log -f 'MarkDown file path(absolute or relative path)' 
+  # update 
+  td log -f 'PATH' -i update_log_id #https://tdls.dev/logs/:log_id
+  # delete 
+  td log -d -i delete_log_id #https://tdls.dev/logs/:log_id
   ```
 
 ## Todo-list examples
