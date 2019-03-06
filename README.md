@@ -1,6 +1,6 @@
 # td-ls; https://tdls.dev
 Simple, Lightweight, Command-line Todo-list & Tech-blogging Service for Engineers.  
-콘솔 인터페이스 상에서 투두리스트 및 메모 및 마크다운 파일을 이용한 블로깅이 가능합니다.
+콘솔 인터페이스 상에서 투두리스트, 메모 작성 및 마크다운 파일을 이용한 블로깅이 가능합니다.
 
 ## Setting
 - prerequisite: node **8+**
