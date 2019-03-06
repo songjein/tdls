@@ -1,0 +1,57 @@
+#!/usr/bin/env node
+
+
+const fs = require('fs');
+const axios = require('axios');
+const chalk = require('chalk');
+const inquirer = require('inquirer');
+const program  = require('commander');
+
+const utils = require('./utils');
+const globals = require('./globals');
+
+program
+	.description('Push local todo-items to remote server ' + globals.API)
+	.parse(process.argv);
+
+/**
+ *	Options
+ */
+
+/**
+ *	Validation	
+ */
+if (false) {
+	console.error(chalk.red.bold('Options required'));
+	program.help();
+	process.exit(1);
+}
+
+/**
+ *	Verbose	
+ */
+console.log(chalk.green.bold('push command'));
+
+/**
+ *	Do something
+ */
+const pushRoute = '/users/setTodoItems';
+
+utils.notExistKeyFileExitProcess();
+
+const doSomthing = async () => {
+	try {
+		const { firstKey, secondKey } = utils.getKeyPairFromFile();
+		const todoItemsJsonString = utils.getTodoItemsFromFile();
+		const payload = {
+			firstKey, secondKey,
+			todoItems: todoItemsJsonString	
+		};
+		const { data } = await axios.post(globals.API + pushRoute, payload);
+		utils.showResult(data);
+
+	} catch (error) {
+		console.error(error);
+	}
+}
+doSomthing();
