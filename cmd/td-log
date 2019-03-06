@@ -60,11 +60,7 @@ const { KEY_FILE } = globals;
 const logRoute= '/logs/';
 const logDeleteRoute= '/logs/delete';
 
-if (!fs.existsSync(KEY_FILE)) {
-	console.log(chalk.red('Key file doesn\'t exist!'));
-	console.log(chalk.yellow('You can get a key-pair using "td keygen"'));
-	process.exit(1);
-}
+utils.notExistKeyFileExitProcess ();
 
 const keyText = fs.readFileSync(KEY_FILE, 'utf-8');
 const { firstKey, secondKey }= JSON.parse(keyText); 
@@ -77,11 +73,7 @@ const createOrUpdateLog = async () => {
 	try {
 		const payload = { firstKey, secondKey, title, htmlBody, logId };
 		const { data } = await axios.post(globals.API + logRoute, payload);
-		// [TODO] refactoring
-		if (data.status == 'success')
-			console.log(chalk.yellow(data.msg));
-		else 
-			console.log(chalk.red.bold(data.msg));
+		utils.showResult(data);
 
 	} catch (error) {
 		console.error(error);
@@ -105,10 +97,7 @@ const deleteLog = async () => {
 			return;
 		}
 		const { data } = await axios.post(globals.API + logDeleteRoute, payload);	
-		if (data.status == 'success')
-			console.log(chalk.yellow(data.msg));
-		else 
-			console.log(chalk.red.bold(data.msg));
+		utils.showResult(data);
 
 	}	catch(error) {
 		console.error(error);	
