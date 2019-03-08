@@ -53,9 +53,12 @@
 				<b>{ <span class='ggreen'><%= user.nickName %></span> }'s Profile</b> <br> 
 				<div class='code-block'>
 					<code>
-					{ nickName: <b><%= user.nickName %></b>, 
-						email: <u><%= user.email %></u>, 
-						github: <a href='<%= user.githubUrl %>'><%= user.githubUrl %></a> }
+					{<br>
+						&nbsp;&nbsp;nickName: <b><%= user.nickName %></b>,  <br>
+						&nbsp;&nbsp;email: <u><%= user.email %></u>, <br>
+						&nbsp;&nbsp;github: <a href='<%= user.githubUrl %>'><%= user.githubUrl %></a> <br>
+						&nbsp;&nbsp;memo: <span class='ggreen'><%= user.memo %></span> <br>
+					}
 					</code>
 				</div>
 			</div>
