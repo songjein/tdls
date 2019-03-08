@@ -52,7 +52,7 @@
 		<div class='container'>
 
 			<div>
-				<b>User List</b> <code><a href='/users'>showAll()</a></code> <br>
+				<b>User List</b>, <code><a href='/users'>showAll()</a></code> <br>
 				<div class='code-block'>
 					<code>
 						<% for (let i = 0 ; i < (users.length > 5 ? 5 : users.length); i++) { %>
@@ -60,9 +60,9 @@
 								{	
 									<%= users[i].email %>, 
 									<% if ( i == 0 ) { %>
-										<a href='/users/<%= users[i].nickName %>' class='gred' style='font-weight:bold;'>goto(blog)</a>
+										<a href='/users/<%= users[i].nickName %>' class='gred' style='font-weight:bold;'>goToBlog(<b>#<%= users[i].nickName %></b>)</a>
 									<% } else { %>
-										<a href='/users/<%= users[i].nickName %>'>goto(blog)</a>
+										<a href='/users/<%= users[i].nickName %>'>goToBlog(<b>#<%= users[i].nickName %></b>)</a>
 									<% } %>
 								} <br>
 						<% } %>
@@ -73,11 +73,12 @@
 			<div style='height:20px;'></div>
 
 			<div>
-				<b>Latest Articles</b> <code><a href='/logs'>showAll()</a></code><br>
+				<b>Latest Articles</b>, <code><a href='/logs'>showAll()</a></code><br>
 				<div class='code-block'>
 					<code>
 						<% for (let i = 0 ; i < (logs.length > 5 ? 5 : logs.length); i++) { %>
-							- <b><%= logs[i].title %></b> by <%= logs[i].User.nickName %>, (<%= logs[i].createdAt.toUTCString().split('GMT')[0].split(',')[1].trim() %>) <a href='/logs/<%= logs[i].id %>'>show()</a><br>
+							- <b><%= logs[i].title %></b>
+								by { <span class='ggreen'><%= logs[i].User.nickName %></span> }, writen at { <b><%= logs[i].createdAt.toUTCString().split('GMT')[0].split(',')[1].trim() %></b> }, <a href='/logs/<%= logs[i].id %>'>show(<b>#<%= logs[i].id %></b>)</a><br>
 						<% } %>
 					</code>
 				</div>
@@ -90,6 +91,7 @@
 				<div class='code-block'>
 					<code>
 						<span class='gred'>* Prerequisite: node 8 +</span> <br>
+						<span class='gorange'>** 주기적으로 git pull origin master를 해주시면 새로운 기능을 사용하실 수 있습니다:)</span> <br>
 						<span class='ggreen'># multi-user environment & using global node</span> <br>
 						git clone https://github.com/songjein/tdls <br>
 						cd tdls ; npm i <br>

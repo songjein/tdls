@@ -43,7 +43,8 @@
 				<div class='code-block'>
 					<code>
 						<% for (let i = 0 ; i < logs.length; i++) { %>
-							- <b><%= logs[i].title %></b> by <%= logs[i].User.nickName %>, (<%= logs[i].createdAt.toUTCString().split('GMT')[0].split(',')[1].trim() %>) <a href='/logs/<%= logs[i].id %>'>show()</a><br>
+							- <b><%= logs[i].title %></b> 
+								by { <span class='ggreen'><%= logs[i].User.nickName %></span> }, writen at { <b><%= logs[i].createdAt.toUTCString().split('GMT')[0].split(',')[1].trim() %></b> }, <a href='/logs/<%= logs[i].id %>'>show(<b>#<%= logs[i].id %></b>)</a><br>
 						<% } %>
 					</code>
 				</div>
