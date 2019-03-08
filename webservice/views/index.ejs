@@ -105,6 +105,9 @@
 				<b>register</b><br>
 				<div class='code-block'>
 					<code>
+						<span class='gred'>* 사용하시는 시스템에 키페어를 발급받고 유저정보를 세팅할 수 있습니다</span><br>
+						<span class='gorange'>** 이후의 td push/pull, td log 기능을 위해 필수과정입니다.</span><br>
+						<span class='gorange'>** setinfo의 횟수 제한은 없습니다. nickName의 경우 유니크하다면 무한 수정이 가능합니다:)</span><br>
 						td keygen <br>
 						td setinfo
 					</code>
@@ -114,12 +117,15 @@
 				<b>blogging</b><br>
 				<div class='code-block'>
 					<code> 
+						<span class='gred'>* md 파일의 첫 번째 줄은 제목으로 간주됩니다.</span><br>
+						<span class='gorange'>** ipynb를 md로 변형하신 경우엔 첫째줄에 #제목을 추가해주세요!</span><br>
 						<span class='ggreen'># create</span> <br>
 						td log -f 'MarkDown file path(absolute or relative path)' </br>
 						<span class='ggreen'># update</span> <br>
-						td log -f 'PATH' -i update_log_id <span class='ggreen'>#https://tdls.dev/logs/<b>:log_id</b></span></br> 
+						<span class='ggreen'>#https://tdls.dev/logs/<b>:log_id</b></span><br>
+						td log -f 'PATH' -i update_log_id </br> 
 						<span class='ggreen'># delete</span> <br>
-						td log -d -i delete_log_id <span class='ggreen'>#https://tdls.dev/logs/<b>:log_id</b></span></br>
+						td log -d -i delete_log_id<br> 
 					</code>
 				</div>
 			</div>
@@ -127,6 +133,8 @@
 				<b>todo-list</b><br>
 				<div class='code-block'>
 					<code> 
+						<span class='gred'>* td 명령어를 사용하여 메모할 수 있습니다.</span><br>
+						<span class='gorange'>** push를 통해 개인 페이지에 백업 및 표시가 가능합니다:)</span><br>
 						<span class='ggreen'># create</span> <br>
 						td add -m 'schedule or memo...' <br>
 						<span class='ggreen'># list</span> <br>
