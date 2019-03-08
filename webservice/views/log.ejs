@@ -22,7 +22,14 @@
 				width: 96%;
 				margin: 1% 0;
 				padding: 0 1%;	
-				background: rgba(250,250,250, 0.5);	
+			}
+			.md-html code {
+				display: block;
+				font-weight: bold;
+				background: rgba(250,250,250, 0.9);
+				width: 98%;
+				padding: 1%;
+				overflow-x: auto;
 			}
 		</style>
   </head>
@@ -41,9 +48,21 @@
 			<div style='height: 20px'></div>
 
 			<div class='code-block'>
-				<span>By <b style='font-size:1.2rem;'><%= log.User.nickName %></b></span> , 
-				<span><%= log.createdAt.toUTCString().split('GMT')[0].split(',')[1].trim() %></span>
-				<%- log.htmlBody %>
+				<span>By { 
+					<b class='ggreen' style='font-size:1.2rem;'>
+						<%= log.User.nickName %>
+					</b> }
+				</span> , 
+				<span>
+					written at { 
+						<b class='gorange'>
+							<%= log.createdAt.toUTCString().split('GMT')[0].split(',')[1].trim() %>
+						</b> 
+					}
+				</span>
+				<div class='md-html'>
+					<%- log.htmlBody %>
+				</div>
 			</div>
 
 		</div>
