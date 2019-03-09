@@ -21,6 +21,7 @@ Simple, Lightweight, Command-line Todo-list & Tech-blogging Service for Engineer
   git clone https://github.com/songjein/tdls
   cd tdls ; sudo npm i -g
   ```
+- update => git pull
 
 ## Register
   ```
