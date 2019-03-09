@@ -60,9 +60,9 @@
 								{	
 									<%= users[i].email %>, 
 									<% if ( i == 0 ) { %>
-										<a href='/users/<%= users[i].nickName %>' class='gred' style='font-weight:bold;'>goToBlog(<b>#<%= users[i].nickName %></b>)</a>
+										<a href='/users/<%= users[i].nickName %>' class='gred'>goto(<b><%= users[i].nickName %></b>'s blog)</a>
 									<% } else { %>
-										<a href='/users/<%= users[i].nickName %>'>goToBlog(<b>#<%= users[i].nickName %></b>)</a>
+										<a href='/users/<%= users[i].nickName %>'>goto(<b><%= users[i].nickName %></b>'s blog)</a>
 									<% } %>
 								} <br>
 						<% } %>
@@ -78,7 +78,7 @@
 					<code>
 						<% for (let i = 0 ; i < (logs.length > 5 ? 5 : logs.length); i++) { %>
 							- <b><%= logs[i].title %></b>
-								by { <span class='ggreen'><%= logs[i].User.nickName %></span> }, writen at { <b><%= logs[i].createdAt.toUTCString().split('GMT')[0].split(',')[1].trim() %></b> }, <a href='/logs/<%= logs[i].id %>'>show(<b>#<%= logs[i].id %></b>)</a><br>
+								by { <b class='ggreen'><%= logs[i].User.nickName %></b> }, written at { <b><%= logs[i].createdAt.toUTCString().split('GMT')[0].split(',')[1].trim() %></b> }, <a href='/logs/<%= logs[i].id %>'>show(<span>#<%= logs[i].id %></span>)</a><br>
 						<% } %>
 					</code>
 				</div>

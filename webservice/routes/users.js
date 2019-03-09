@@ -108,7 +108,7 @@ router.post('/setUserInfo', async (req, res, next) => {
 
 
 router.post('/setTodoItems', async (req, res, next) => {
-	const { firstKey, secondKey, todoItems } = req.body;
+	const { firstKey, secondKey, todoItems, finTodoItems } = req.body;
 	try {
 		///////////////////////////////////////////////////////////////////////
 		// [TODO] 이 부분 공통되는 부분이라 함수로 빼기
@@ -131,14 +131,17 @@ router.post('/setTodoItems', async (req, res, next) => {
 		}
 		///////////////////////////////////////////////////////////////////////
 
-		await user.update({ todoItems });
+		await user.update({ todoItems, finTodoItems });
 		res.json({
 			status: SUCCESS,
 			msg: 'todo-items successfully pushed :)',
 		});
 			
 	} catch (error) {
-	
+		res.json({
+			status: ERROR,
+			msg: error,
+		});		
 	}
 });
 
