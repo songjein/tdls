@@ -43,9 +43,12 @@ const doSomthing = async () => {
 	try {
 		const { firstKey, secondKey } = utils.getKeyPairFromFile();
 		const todoItemsJsonString = utils.getTodoItemsFromFile();
+		const finTodoItemsJsonString = utils.getFinTodoItemsFromFile();
+
 		const payload = {
 			firstKey, secondKey,
-			todoItems: todoItemsJsonString	
+			todoItems: todoItemsJsonString,
+			finTodoItems: finTodoItemsJsonString,
 		};
 		const { data } = await axios.post(globals.API + pushRoute, payload);
 		utils.showResult(data);

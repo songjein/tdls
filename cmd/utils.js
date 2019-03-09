@@ -1,7 +1,7 @@
 const fs = require('fs');
 const chalk = require('chalk');
 
-const { KEY_FILE, TODO_FILE } = require('./globals');
+const { KEY_FILE, TODO_FILE, FIN_FILE } = require('./globals');
 
 module.exports = {
 	writeFile (filename, data, msg) {
@@ -21,6 +21,10 @@ module.exports = {
 	getTodoItemsFromFile() {
 		const todoText = fs.readFileSync(TODO_FILE, 'utf-8');
 		return todoText; 
+	},
+	getFinTodoItemsFromFile() {
+		const finTodoText = fs.readFileSync(FIN_FILE, 'utf-8');
+		return finTodoText; 
 	},
 	notExistKeyFileExitProcess () {
 		if (!fs.existsSync(KEY_FILE)) {

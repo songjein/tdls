@@ -46,7 +46,7 @@ if (false) { /* vali */ }
 /**
  *	Verbose	
  */
-console.log(chalk.green.bold('ls command (max 10 lines, use -a option to get all)'));
+console.log(chalk.green.bold('ls command (max 10 lines, use option -a to get all)'));
 	
 /**
  *	Read JSON file	
