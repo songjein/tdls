@@ -22,6 +22,18 @@ module.exports = (sequelize, DataTypes) => {
   Log.associate = function(models) {
     // associations can be defined here
 		models.Log.belongsTo(models.User, { onDelete: 'CASCADE' });
+
+		models.Log.belongsToMany(models.Log, {
+			foreignKey: 'SourceId',
+			as: 'Targets',
+			through: models.LogGraph,
+		});
+
+		models.Log.belongsToMany(models.Log, {
+			foreignKey: 'TargetId',
+			as: 'Sources',
+			through: models.LogGraph,
+		});
   };
   return Log;
 };

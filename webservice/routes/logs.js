@@ -29,7 +29,9 @@ router.get('/:logId', async (req, res, next) => {
 			where: { id: req.params.logId },
 			include: [{ model: User, attributes: ['nickName'] }], 
 		});
-		res.render('log', { log });
+		const sources = await log.getSources();
+		const targets = await log.getTargets();
+		res.render('log', { log, sources, targets });
 	} catch (error) {
 		console.error(error);	
 		next(error);
@@ -90,7 +92,7 @@ router.post('/delete', async (req, res, next) => {
 });
 
 router.post('/', async (req, res, next) => {
-	const { firstKey, secondKey, title, htmlBody, logId } = req.body; 
+	const { firstKey, secondKey, title, sourceList, htmlBody, logId } = req.body; 
 	try {
 		///////////////////////////////////////////////////////////////////////
 		// [TODO] 이 부분 공통되는 부분이라 함수로 빼기
@@ -128,6 +130,16 @@ router.post('/', async (req, res, next) => {
 			}
 			if (log) {
 				log = await log.update({ title, htmlBody });
+				
+				// [TODO] 중복 연산 + array 체크?
+				if (sourceList) {
+					for (let i = 0 ; i < sourceList.length ; i ++) {
+						const sourceLog = await Log.find({ where: { id: sourceList[i] } });
+						if (sourceLog)
+							await sourceLog.addTarget(log);
+					}
+				}
+
 				res.json({
 					status: SUCCESS,
 					msg: 'Successfully updated :) https://tdls.dev/logs/' + log.id,
@@ -136,9 +148,20 @@ router.post('/', async (req, res, next) => {
 			}
 			// else -> create new one
 		}
+
 		log = await Log.create({
 			title, htmlBody, UserId: user.id,
 		});
+
+		// [TODO] 중복 연산
+		if (sourceList) {
+			for (let i = 0 ; i < sourceList.length ; i ++) {
+				const sourceLog = await Log.find({ where: { id: sourceList[i] } });
+				if (sourceLog)
+					await sourceLog.addTarget(log);
+			}
+		}
+
 		res.json({
 			status: SUCCESS,
 			msg: 'Successfully created :) https://tdls.dev/logs/' + log.id,

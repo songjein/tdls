@@ -64,7 +64,31 @@
 							<%= log.createdAt.toUTCString().split('GMT')[0].split(',')[1].trim() %>
 						</b> 
 					}
-				</span>
+				</span><br>
+				<div style='height: 1rem;'></div>
+				<div>
+					Sources:
+					<% for (let i = 0 ; i < sources.length ; i++) { %>
+						<a href='/logs/<%= sources[i].id %>'><%= sources[i].title %></a> 
+						<% if (i < sources.length - 1) { %>
+						,
+						<% } %>
+					<% } %>
+					<% if (sources.length == 0) { %>
+						<span class='gred'>[ Source links empty ]</span>
+					<% } %>
+				</div>
+				<div>
+					Targets:
+					<% for (let i = 0 ; i < targets.length ; i++) { %>
+						<a href='/logs/<%= targets[i].id %>'><%= targets[i].title %></a>
+						<% if (i < targets.length - 1) { %>
+						,
+						<% } %>
+					<% } %>
+					<% if (targets.length == 0) { %>
+						<span class='gred'>[ target links empty ]</span>
+					<% } %>
 				<div class='md-html'>
 					<%- log.htmlBody %>
 				</div>
