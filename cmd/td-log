@@ -67,11 +67,48 @@ const { firstKey, secondKey }= JSON.parse(keyText);
 
 const createOrUpdateLog = async () => {
 	const md = fs.readFileSync(filePath, 'utf-8');
-	const title = md.split('\n')[0].replace(/#/gi,'').trim();
-	const htmlBody = converter.makeHtml(md);
+
+	// first line
+	const maybeTitle = md.split('\n')[0].replace(/#/gi,'').trim();
+	const titlePattern = /title\s*:\s*.*/;
+	const matchedTitle = titlePattern.exec(maybeTitle); 
+
+	let title = undefined;
+	if (!matchedTitle) {
+		console.log(
+			chalk.red('You must write meta information for the title in the first line of markdown file')
+		);
+		console.log(chalk.yellow('ex) \'title: titleOfYourArticle\''));
+		return;
+	} else {
+		title = matchedTitle[0].split(':')[1].trim();
+		console.log('title:', chalk.yellow(title));	
+	}
+
+	// second line
+	const maybeSourceList = md.split('\n')[1]; 
+	const sourceListPattern = /source\s*:\s*\[.*\]/;
+	const matchedSourceList = sourceListPattern.exec(maybeSourceList);
+
+	let sourceList = undefined;
+	if (matchedSourceList) {
+		sourceList = JSON.parse(matchedSourceList[0].split(':')[1].trim());
+		console.log('Source list detected:', sourceList);
+	} else {
+		console.log(chalk.red(chalk.yellow('Source list') + ' is not detected'));
+		console.log(chalk.yellow(' ex) source: [log_id1, log_id2] (in second line of md file)'));	
+	}
+	
+	// content of an article
+	let htmlBody = undefined;	
+	if (sourceList) {
+		htmlBody = converter.makeHtml(md.split('\n').slice(2).join('\n'));
+	} else {
+		htmlBody = converter.makeHtml(md.split('\n').slice(1).join('\n'));
+	}
 
 	try {
-		const payload = { firstKey, secondKey, title, htmlBody, logId };
+		const payload = { firstKey, secondKey, title, sourceList, htmlBody, logId };
 		const { data } = await axios.post(globals.API + logRoute, payload);
 		utils.showResult(data);
 
