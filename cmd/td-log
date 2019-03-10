@@ -87,7 +87,7 @@ const createOrUpdateLog = async () => {
 
 	// second line
 	const maybeSourceList = md.split('\n')[1]; 
-	const sourceListPattern = /source\s*:\s*\[.*\]/;
+	const sourceListPattern = /sources\s*:\s*\[.*\]/;
 	const matchedSourceList = sourceListPattern.exec(maybeSourceList);
 
 	let sourceList = undefined;
