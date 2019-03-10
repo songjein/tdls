@@ -32,6 +32,9 @@
 				margin-bottom: 1.5rem;
 				overflow-x: auto;
 			}
+			.title {
+				font-size: 1.5rem;	
+			}
 		</style>
   </head>
   <body>
@@ -49,6 +52,7 @@
 			<div style='height: 20px'></div>
 
 			<div class='code-block'>
+				<b class='title'><%= log.title %></b> <br>
 				<span>By { 
 					<b class='ggreen'>
 						<%= log.User.nickName %>
