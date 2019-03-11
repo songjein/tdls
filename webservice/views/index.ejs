@@ -52,7 +52,21 @@
 		<div class='container'>
 
 			<div>
-				<b>User List</b>, <code><a href='/users'>showAll()</a></code> <br>
+				<b>Latest-Logs</b>, <code><a href='/logs'>showAll(logs)</a></code><br>
+				<div class='code-block'>
+					<code>
+						<% for (let i = 0 ; i < (logs.length > 10 ? 10 : logs.length); i++) { %>
+							- <b><%= logs[i].title %></b>
+								by { <b><a class='ggreen' href='/users/blog/<%= logs[i].User.nickName %>'><%= logs[i].User.nickName %></a></b> }, written at { <b><%= logs[i].createdAt.toUTCString().split('GMT')[0].split(',')[1].trim() %></b> }, <a href='/logs/<%= logs[i].id %>'>show(<span>#<%= logs[i].id %></span>)</a><br>
+						<% } %>
+					</code>
+				</div>
+			</div>
+
+			<div style='height:20px;'></div>
+
+			<div>
+				<b>User-List</b>, <code><a href='/users'>showAll()</a></code> <br>
 				<div class='code-block'>
 					<code>
 						<% for (let i = 0 ; i < (users.length > 5 ? 5 : users.length); i++) { %>
@@ -73,13 +87,10 @@
 			<div style='height:20px;'></div>
 
 			<div>
-				<b>Latest Articles</b>, <code><a href='/logs'>showAll()</a></code><br>
+				<b>Identity of { <span class='ggreen'>tdls</span> }</b><br>
 				<div class='code-block'>
 					<code>
-						<% for (let i = 0 ; i < (logs.length > 5 ? 5 : logs.length); i++) { %>
-							- <b><%= logs[i].title %></b>
-								by { <b class='ggreen'><%= logs[i].User.nickName %></b> }, written at { <b><%= logs[i].createdAt.toUTCString().split('GMT')[0].split(',')[1].trim() %></b> }, <a href='/logs/<%= logs[i].id %>'>show(<span>#<%= logs[i].id %></span>)</a><br>
-						<% } %>
+						Connect all the technologies in the world.
 					</code>
 				</div>
 			</div>
@@ -87,7 +98,7 @@
 			<div style='height:20px;'></div>
 
 			<div>
-				<b>setting</b><br>
+				<b>Setting</b><br>
 				<div class='code-block'>
 					<code>
 						<span class='gred'>* Prerequisite: node 8 +</span> <br>
@@ -104,7 +115,7 @@
 				</div>
 			</div>
 			<div>
-				<b>register</b><br>
+				<b>Register</b><br>
 				<div class='code-block'>
 					<code>
 						<span class='gred'>* 사용하시는 시스템에 키페어를 발급받고 유저정보를 세팅할 수 있습니다</span><br>
@@ -116,7 +127,7 @@
 				</div>
 			</div>
 			<div>
-				<b>blogging</b><br>
+				<b>Blogging</b><br>
 				<div class='code-block'>
 					<code> 
 						<span class='gred'>* md 파일의 첫 번째 줄은 제목으로 간주됩니다.</span><br>
@@ -132,7 +143,7 @@
 				</div>
 			</div>
 			<div>
-				<b>todo-list</b><br>
+				<b>Todo-list</b><br>
 				<div class='code-block'>
 					<code> 
 						<span class='gred'>* td 명령어를 사용하여 메모할 수 있습니다.</span><br>
