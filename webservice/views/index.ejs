@@ -69,9 +69,9 @@
 								{	
 									<%= users[i].email %>, 
 									<% if ( i == 0 ) { %>
-										<a href='/users/blog/<%= users[i].nickName %>' class='gred'>goto(<b><%= users[i].nickName %></b>'s blog)</a>
+										<a href='/users/blog/<%= users[i].nickName %>' class='gred'>visit(<b><%= users[i].nickName %></b>)</a>
 									<% } else { %>
-										<a href='/users/blog/<%= users[i].nickName %>'>goto(<b><%= users[i].nickName %></b>'s blog)</a>
+										<a href='/users/blog/<%= users[i].nickName %>'>visit(<%= users[i].nickName %>)</a>
 									<% } %>
 								} <br>
 						<% } %>
@@ -109,6 +109,9 @@
 					</code>
 				</div>
 			</div>
+
+			<div style='height: 20px'></div>
+
 			<div>
 				<b>Register</b><br>
 				<div class='code-block'>
@@ -119,6 +122,9 @@
 					</code>
 				</div>
 			</div>
+
+			<div style='height: 20px'></div>
+
 			<div>
 				<b>Blogging</b><br>
 				<div class='code-block'>
@@ -138,6 +144,9 @@
 					</code>
 				</div>
 			</div>
+
+			<div style='height: 20px'></div>
+
 			<div>
 				<b>Todo-List</b><br>
 				<div class='code-block'>
@@ -159,6 +168,8 @@
 					</code>
 				</div>
 			</div>
+
+			<div style='height: 20px'></div>
 
 			<div>
 				<b style='color:orange'>In development...</b><br>
