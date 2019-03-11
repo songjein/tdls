@@ -86,7 +86,7 @@
 						<% if (user.Logs.length > 0) { %>
 							<% const logs = user.Logs %>
 							<% for (let i = 0 ; i < logs.length; i++) { %>
-								- <b><%= logs[i].title %></b> (<%= logs[i].createdAt.toUTCString().split('GMT')[0].split(',')[1].trim() %>) <a href='/logs/<%= logs[i].id %>'>show(#<%= logs[i].id %>)</a><br>
+								- { <b><%= logs[i].title %></b> } written at { <b><%= logs[i].createdAt.toUTCString().split('GMT')[0].split(',')[1].trim() %></b> } <a href='/logs/<%= logs[i].id %>'>show(#<%= logs[i].id %>)</a><br>
 							<% } %>
 						<% } else { %>
 							no contribution yet :(...<br>

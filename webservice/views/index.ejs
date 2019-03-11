@@ -47,12 +47,12 @@
 		<div class='container'>
 
 			<div>
-				<b>Latest Contributions</b>, <code><a href='/logs'>showAll(logs)</a></code><br>
+				<b>Recent Contributions</b>, <code><a href='/logs'>showAll(logs)</a></code><br>
 				<div class='code-block'>
 					<code>
 						<% for (let i = 0 ; i < (logs.length > 10 ? 10 : logs.length); i++) { %>
-							- <b><%= logs[i].title %></b>
-								by { <b><a class='ggreen' href='/users/blog/<%= logs[i].User.nickName %>'><%= logs[i].User.nickName %></a></b> }, written at { <b><%= logs[i].createdAt.toUTCString().split('GMT')[0].split(',')[1].trim() %></b> }, <a href='/logs/<%= logs[i].id %>'>show(<span>#<%= logs[i].id %></span>)</a><br>
+							- { <b><%= logs[i].title %></b> } 
+								by { <b><a class='ggreen' href='/users/blog/<%= logs[i].User.nickName %>'><%= logs[i].User.nickName %></a></b> } written at { <b><%= logs[i].createdAt.toUTCString().split('GMT')[0].split(',')[1].trim() %></b> }; <a href='/logs/<%= logs[i].id %>'>show(<span>#<%= logs[i].id %></span>)</a><br>
 						<% } %>
 					</code>
 				</div>
@@ -61,7 +61,7 @@
 			<div style='height:20px;'></div>
 
 			<div>
-				<b>Members</b>, <code><a href='/users'>showAll(users)</a></code> <br>
+				<b>Our Members</b>, <code><a href='/users'>showAll(users)</a></code> <br>
 				<div class='code-block'>
 					<code>
 						<% for (let i = 0 ; i < (users.length > 5 ? 5 : users.length); i++) { %>
@@ -96,14 +96,14 @@
 				<b>Setting</b><br>
 				<div class='code-block'>
 					<code>
-						<span class='gred'>* Prerequisite: node 8 +</span> <br>
-						<span class='gorange'>** 주기적으로 git pull origin master를 해주시면 새로운 기능을 사용하실 수 있습니다:)</span> <br>
-						<span class='ggreen'># multi-user environment & using global node</span> <br>
+						<span class='gred'>[ Prerequisite: node 8 + ]</span> <br>
+						<span class='gorange'>[ Update: cd tdls; git pull origin master ]</span> <br>
+						<span class='ggreen'>[ multi-user environment & using global node ]</span> <br>
 						git clone https://github.com/songjein/tdls <br>
 						cd tdls ; npm i <br>
 						echo 'export PATH=$PATH:<PATH-TO-tdls;절대경로>/cmd' >> ~/.bashrc <br>
 						source ~/.bashrc <br>
-						<span class='ggreen'># single-user environment</span> <br>
+						<span class='ggreen'>[ single-user environment ]</span> <br>
 						git clone https://github.com/songjein/tdls<br>
 						cd tdls; sudo npm i -g<br>
 					</code>
@@ -113,11 +113,9 @@
 				<b>Register</b><br>
 				<div class='code-block'>
 					<code>
-						<span class='gred'>* 사용하시는 시스템에 키페어를 발급받고 유저정보를 세팅할 수 있습니다</span><br>
-						<span class='gorange'>** 이후의 td push/pull, td log 기능을 위해 필수과정입니다.</span><br>
-						<span class='gorange'>** setinfo의 횟수 제한은 없습니다. nickName의 경우 유니크하다면 무한 수정이 가능합니다:)</span><br>
 						td keygen <br>
-						td setinfo
+						td setinfo 
+						<span class='ggreen'># Can setinfo multiple times :) </span><br>
 					</code>
 				</div>
 			</div>
@@ -125,36 +123,39 @@
 				<b>Blogging</b><br>
 				<div class='code-block'>
 					<code> 
-						<span class='gred'>* md 파일의 첫 번째 줄은 제목으로 간주됩니다.</span><br>
-						<span class='gorange'>** ipynb를 md로 변형하신 경우엔 첫째줄에 #제목을 추가해주세요!</span><br>
-						<span class='ggreen'># create</span> <br>
+						<span class='gred'>[ markdown file format ] </span><br>
+						<span class='gred'>-------------------------------------------------------------</span><br>
+						<span class='gblue'>title: 로그 제목 입력</span><br>
+						<span class='gblue'>sources: [ 1, 2, 3 ]</span> <span class='ggreen'># in-bound link log_id 리스트 (Optional)</span><br>
+						<span class='gblue'>마크다운 문서</span><br>
+						<span class='gred'>-------------------------------------------------------------</span><br>
+						<span class='ggreen'>[ create ]</span> <br>
 						td log -f 'MarkDown file path(absolute or relative path)' </br>
-						<span class='ggreen'># update</span> <br>
-						<span class='ggreen'>#https://tdls.dev/logs/<b>:log_id</b></span><br>
+						<span class='ggreen'>[ update ] ; https://tdls.dev/logs/<b>:log_id</b></span> <br>
 						td log -f 'PATH' -i update_log_id </br> 
-						<span class='ggreen'># delete</span> <br>
+						<span class='ggreen'>[ delete ]</span> <br>
 						td log -d -i delete_log_id<br> 
 					</code>
 				</div>
 			</div>
 			<div>
-				<b>Todo-list</b><br>
+				<b>Todo-List</b><br>
 				<div class='code-block'>
 					<code> 
-						<span class='gred'>* td 명령어를 사용하여 메모할 수 있습니다.</span><br>
-						<span class='gorange'>** push를 통해 개인 페이지에 백업 및 표시가 가능합니다:)</span><br>
-						<span class='ggreen'># create</span> <br>
+						<span class='ggreen'>[ create ]</span> <br>
 						td add -m 'schedule or memo...' <br>
-						<span class='ggreen'># list</span> <br>
+						<span class='ggreen'>[ list ]</span> <br>
 						td ls <br>
-						<span class='ggreen'># finish todo item</span> <br>
+						<span class='ggreen'>[ finish todo item ]</span> <br>
 						td fin -i index_of_todo_item <br>
-						<span class='ggreen'># list finished items</span> <br>
+						<span class='ggreen'>[ list finished items ]</span> <br>
 						td lsf <br>
-						<span class='ggreen'># delete item </span><br>
+						<span class='ggreen'>[ delete item ]</span><br>
 						td rm -i index_of_todo_item <br>
-						<span class='ggreen'># change order</span> <br>
+						<span class='ggreen'>[ change order ]</span> <br>
 						td co -1 first_index -2 second_index<br>
+						<span class='ggreen'>[ push to remote server ]</span> <br>
+						td push <br> 
 					</code>
 				</div>
 			</div>
