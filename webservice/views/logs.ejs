@@ -39,7 +39,7 @@
 					<code>
 						<% for (let i = 0 ; i < logs.length; i++) { %>
 							- { <b><%= logs[i].title %></b> } 
-								by { <b class='ggreen'><%= logs[i].User.nickName %></b> } written at { <b><%= logs[i].createdAt.toUTCString().split('GMT')[0].split(',')[1].trim() %></b> }; <a href='/logs/<%= logs[i].id %>'>show(<span>#<%= logs[i].id %></span>)</a><br>
+								by { <b><a class='ggreen' href='/users/blog/<%= logs[i].User.nickName %>'><%= logs[i].User.nickName %></a></b> } written at { <b><%= logs[i].createdAt.toUTCString().split('GMT')[0].split(',')[1].trim() %></b> }; <a href='/logs/<%= logs[i].id %>'>show(<span>#<%= logs[i].id %></span>)</a><br>
 						<% } %>
 					</code>
 				</div>
