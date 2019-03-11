@@ -22,6 +22,9 @@ router.get('/blog/:nickName', async (req, res, next) => {
 	try {
 		const user = await User.find({ 
 			where: { nickName },
+			order: [
+				[Log, 'id', 'DESC'],	
+			],
 			include: [{ model: Log, attributes: ['id', 'title', 'createdAt'] }], 
 		});
 		res.render('user', { user });
@@ -84,7 +87,7 @@ router.post('/setUserInfo', async (req, res, next) => {
 				res.json({
 					status: SUCCESS,
 					msg: 'user info successfully updated',
-					user: user,
+					user: { nickName, company, email, githubUrl, memo },
 				});
 			});
 		return;

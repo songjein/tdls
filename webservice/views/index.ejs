@@ -39,20 +39,15 @@
 		</style>
   </head>
   <body>
-		<div class='header'>
-			<a href='/' style='text-decoration:none; color: black;'><b style='font-size: 1.5rem;'>td-ls;</b></a>
-			Simple, Lightweight, <u>Command-line Todo-list & Tech Blogging</u> 
-			<b><span class='gblue'>S</span><span class='gred'>e</span><span class='gorange'>rv</span><span class='gblue'>i</span><span class='ggreen'>c</span><span class='gred'>e</span></b>,
-			<a href='https://github.com/songjein/tdls' target='_blank'>Contribution(github)</a>
-		</div>
 
+		<%- include nav.ejs %>
 
 		<div style='height: 20px'></div>
 
 		<div class='container'>
 
 			<div>
-				<b>Latest-Logs</b>, <code><a href='/logs'>showAll(logs)</a></code><br>
+				<b>Latest Contributions</b>, <code><a href='/logs'>showAll(logs)</a></code><br>
 				<div class='code-block'>
 					<code>
 						<% for (let i = 0 ; i < (logs.length > 10 ? 10 : logs.length); i++) { %>
@@ -66,7 +61,7 @@
 			<div style='height:20px;'></div>
 
 			<div>
-				<b>User-List</b>, <code><a href='/users'>showAll()</a></code> <br>
+				<b>Members</b>, <code><a href='/users'>showAll(users)</a></code> <br>
 				<div class='code-block'>
 					<code>
 						<% for (let i = 0 ; i < (users.length > 5 ? 5 : users.length); i++) { %>
