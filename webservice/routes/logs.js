@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 
 const router = express.Router();
 
-const { User, Log } = require('../models')
+const { User, Log, LogGraph } = require('../models')
 const { SUCCESS, ERROR } = require('./status');
 
 router.get('/', async (req, res, next) => {
@@ -77,6 +77,10 @@ router.post('/delete', async (req, res, next) => {
 			return;
 		}
 		if (log) {
+			const sources = await log.getSources();
+			const targets = await log.getTargets();
+			await log.removeSources(sources);
+			await log.removeTargets(targets);
 			log = await log.destroy();
 			res.json({
 				status: SUCCESS,
