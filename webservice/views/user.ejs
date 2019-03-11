@@ -3,8 +3,15 @@
   <head>
     <title>td-ls</title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/calendar-heatmap.css' />
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+		<script src="/javascripts/moment.min.js"></script>
+		<script
+		  src="https://code.jquery.com/jquery-3.3.1.min.js"
+			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+				  crossorigin="anonymous"></script>
+
 		<style>
 			body {
 				max-width: 1024px;	
@@ -36,6 +43,15 @@
 			.gred {
 				color: #EA4335;	
 			}
+			.bgred {
+				background: rgba(255, 0, 0, 0.15);	
+			}
+			.bggreen {
+				background: rgba(0, 255, 0, 0.1);	
+			}
+			.bgblue {
+				background: rgba(0, 0, 255, 0.12);	
+			}
 		</style>
   </head>
   <body>
@@ -51,7 +67,7 @@
 					{<br>
 						&nbsp;&nbsp;nickName: <b><%= user.nickName %></b>,  <br>
 						&nbsp;&nbsp;email: <u><%= user.email %></u>, <br>
-						&nbsp;&nbsp;github: <a href='<%= user.githubUrl %>'><%= user.githubUrl %></a> <br>
+						&nbsp;&nbsp;github: <a href='<%= user.githubUrl %>' target='_blank'><%= user.githubUrl %></a> <br>
 						&nbsp;&nbsp;memo: <span class='ggreen'><%= user.memo %></span> <br>
 					}
 					</code>
@@ -100,8 +116,68 @@
 			<div>
 				<b>Achievement</b> <br> 
 				<div class='code-block'>
-					calendar-place-holder
+					<code>
+						<div id='text-calendar'>placeholder</div>
+					</code>
 				</div>
+				<script>
+					$(function() {
+						var chartData = [{
+							date: new Date(),
+							count: 3 
+						}];
+						function getRandomIntInclusive(min, max) {
+						  return Math.floor(Math.random() * (max - min + 1)) + min;
+						}
+						function textCalendar () {
+							var now = new Date(); //moment().endOf('day').toDate();
+							console.log('오늘', now)
+							var yearAgo = moment().startOf('day').subtract(1, 'year').toDate();
+							var dateArrayFor1Year = [];
+							var s = yearAgo, e = now;
+							while(s < e) {
+									dateArrayFor1Year.push(s);
+									s = new Date(s.setDate(
+											s.getDate() + 1
+									))
+							}
+
+							var dayMatrix = [[],[],[],[],[],[],[]];
+
+							var firstDate = dateArrayFor1Year[0];
+							// 빈칸 채우기
+							if (firstDate.getDay() > 0) {
+								for (var i = 0 ; i < firstDate.getDay(); i ++) {
+									var tmp = new Date(firstDate);
+									tmp = new Date(tmp.setDate(tmp.getDate() - (tmp.getDay() - i)));
+									dayMatrix[i].push({ date: tmp, count: 0 });
+								}
+							}
+							for (var i = 0 ; i < dateArrayFor1Year.length ; i ++) {
+								var currentDate = dateArrayFor1Year[i];							
+								dayMatrix[currentDate.getDay()].push({ date: currentDate, count: getRandomIntInclusive(0,3) });
+							}
+							console.log('365일 date 객체:', dayMatrix); // TODO (node 서버에서 계산 가능할 것 같은데 ?)
+							var finalHTML = "";
+							for (var r = 0 ; r < 7 ; r ++) {
+								for (var c = 0 ; c < dayMatrix[r].length ; c ++) {
+									if (dayMatrix[r][c].count == 0)
+										finalHTML += "<span style='color:gray'>x</span> " ;
+									else if (dayMatrix[r][c].count == 1)
+										finalHTML += "<span class='ggreen bggreen'>o</span> ";
+									else if (dayMatrix[r][c].count == 2)
+										finalHTML += "<span class='gblue bgblue'>o</span> ";
+									else
+										finalHTML += "<span class='gred bgred'>o</span> ";
+								}	
+								finalHTML += "<br>";
+							}
+							$("#text-calendar").html(finalHTML);
+
+						};
+						textCalendar();
+					});
+				</script>
 			</div>
 		</div>
 		<!-- container -->
