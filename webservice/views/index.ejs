@@ -60,9 +60,9 @@
 								{	
 									<%= users[i].email %>, 
 									<% if ( i == 0 ) { %>
-										<a href='/users/<%= users[i].nickName %>' class='gred'>goto(<b><%= users[i].nickName %></b>'s blog)</a>
+										<a href='/users/blog/<%= users[i].nickName %>' class='gred'>goto(<b><%= users[i].nickName %></b>'s blog)</a>
 									<% } else { %>
-										<a href='/users/<%= users[i].nickName %>'>goto(<b><%= users[i].nickName %></b>'s blog)</a>
+										<a href='/users/blog/<%= users[i].nickName %>'>goto(<b><%= users[i].nickName %></b>'s blog)</a>
 									<% } %>
 								} <br>
 						<% } %>

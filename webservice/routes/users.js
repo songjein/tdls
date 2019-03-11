@@ -17,7 +17,7 @@ router.get('/', async (req, res, next) => {
 	}
 });
 
-router.get('/:nickName', async (req, res, next) => {
+router.get('/blog/:nickName', async (req, res, next) => {
 	const { nickName } = req.params;
 	try {
 		const user = await User.find({ 
