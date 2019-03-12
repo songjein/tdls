@@ -1,6 +1,7 @@
 const express = require('express');
 const uuid = require('uuid/v4');
 const bcrypt = require('bcrypt');
+const moment = require('moment');
 
 const router = express.Router();
 
@@ -16,7 +17,7 @@ router.get('/', async (req, res, next) => {
 			],
 			include: [{ model: User, attributes: ['nickName'] }], 
 		});
-		res.render('logs', { logs });
+		res.render('logs', { logs, moment });
 	} catch (error) {
 		console.error(error);	
 		next(error);

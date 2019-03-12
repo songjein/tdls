@@ -18,3 +18,15 @@ a {
 .gred {
 	color: #EA4335;	
 }
+.gray {
+	color: #999999;
+}
+.bgred {
+	background: rgba(255, 0, 0, 0.15);	
+}
+.bggreen {
+	background: rgba(0, 255, 0, 0.1);	
+}
+.bgblue {
+	background: rgba(0, 0, 255, 0.12);	
+}

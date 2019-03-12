@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
+const moment = require('moment');
+
 const { User, Log } = require('../models')
 
 /* GET home page. */
@@ -13,7 +15,7 @@ router.get('/', async (req, res, next) => {
 			],	
 			include: [{ model: User, attributes: ['nickName'] }],
 		});
-		res.render('index', { users, logs });
+		res.render('index', { users, logs, moment });
 	} catch (error) {
 		console.log(error);
 		next(error);	

@@ -51,8 +51,9 @@
 				<div class='code-block'>
 					<code>
 						<% for (let i = 0 ; i < (logs.length > 10 ? 10 : logs.length); i++) { %>
-							- { <b><%= logs[i].title %></b> } 
-								by { <b><a class='ggreen' href='/users/blog/<%= logs[i].User.nickName %>'><%= logs[i].User.nickName %></a></b> } written at { <b><%= logs[i].createdAt.toUTCString().split('GMT')[0].split(',')[1].trim() %></b> }; <a href='/logs/<%= logs[i].id %>'>show(<span>#<%= logs[i].id %></span>)</a><br>
+							- <b><%= logs[i].title %></b>
+								by <b><a class='ggreen' href='/users/blog/<%= logs[i].User.nickName %>'><%= logs[i].User.nickName %></a></b>, <span class='gray'><%= moment(logs[i].createdAt).fromNow() %></span> ; <a href='/logs/<%= logs[i].id %>'>show(<span>#<%= logs[i].id %></span>)</a><br>
+								
 						<% } %>
 					</code>
 				</div>
