@@ -1,4 +1,7 @@
 body {
+	max-width: 1024px;	
+	margin: auto;
+	font-family: 'Open Sans', sans-serif;
 }
 
 a {
@@ -7,16 +10,16 @@ a {
 }
 
 .gblue {
-	color: #4285F4;
+	color: #4285F4; /*66,133,244*/
 }
 .ggreen {
-	color: #34A853;	
+	color: #34A853;	 /*52,168,83*/
 }
 .gorange {
-	color: #FBBC05;	
+	color: #FBBC05;	 /* 251,188,5*/
 }
 .gred {
-	color: #EA4335;	
+	color: #EA4335;	 /* 234,67,53*/
 }
 .gray {
 	color: #999999;
