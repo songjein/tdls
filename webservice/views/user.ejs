@@ -26,15 +26,19 @@
 				padding: 0 1%;	
 				background: rgba(250,250,250, 0.5);	
 			}
-			#text-calendar span {
+			#achivement-calendar {
+				margin-left: 0.5rem;	
+				margin-top: 0.5rem;	
+			}
+			#achivement-calendar .day-item{
 				cursor: pointer;	
 				display: inline-block;
 				width: 12px;
 				height: 12px;
-				border-left: 1px solid white;
-				border-right: 1px solid white;
+				border-right: 1px solid rgb(200,200,200);
+				border-bottom: 1px solid rgb(200,200,200);
 			}
-			#text-calendar span:hover {
+			#achivement-calendar .day-item:hover {
 				background: rgba(234,67,53,0.7) !important;
 			}
 		</style>
@@ -58,6 +62,9 @@
 					</code>
 				</div>
 			</div>
+
+			<div style='height:10px'></div>
+
 			<div>
 				<b>Todo-List</b> <br> 
 				<div class='code-block'>
@@ -81,8 +88,11 @@
 					</code>
 				</div>
 			</div>
+
+			<div style='height:10px'></div>
+
 			<div>
-				<b>Contribution</b> <br> 
+				<b>Tech-Logs</b> <br> 
 				<div class='code-block'>
 					<code>
 						<% if (user.Logs.length > 0) { %>
@@ -99,75 +109,98 @@
 					</code>
 				</div>
 			</div>
+
+			<div style='height:10px'></div>
+
 			<div>
-				<b>Achievement</b> <br> 
+				<b>Statistics</b> <br> 
 				<div class='code-block'>
 					<code>
+						Average todo-item<span class='gblue'>/day</span> Creation: <span class='gred'>x</span> todos<br>
+						Average Finish Time: <span class='gred'>x</span> days <br>
+						Average logs<span class='gblue'>/week(month)</span> Creation: <span class='gred'>x(x')</span> logs<br>
 						<div style='height:5px;'></div>
-						<div id='text-calendar'></div>
+						<div id='achivement-calendar'></div>
 						<div style='height:20px;'></div>
 					</code>
 				</div>
 				<script>
+					function dateToFormat(d) {
+						return d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate();
+					}
+					function getRandomIntInclusive(min, max) {
+						return Math.floor(Math.random() * (max - min + 1)) + min;
+					}
+					function clickDate(d) {
+						alert(d);
+					}
+					function textCalendar (dateToCnt) {
+						var now = new Date(); 
+						var yearAgo = moment().startOf("day").subtract(1, "year").toDate();
+						var dateArrayFor1Year = [];
+						var s = yearAgo, e = now;
+						while(s < e) {
+								dateArrayFor1Year.push(s);
+								s = new Date(s.setDate(
+										s.getDate() + 1
+								))
+						}
+						var dayMatrix = [[],[],[],[],[],[],[]]; // sun, mon, tue, wed, thu, fri, sat
+						var firstDate = dateArrayFor1Year[0];
+						// fill blank 
+						if (firstDate.getDay() > 0) {
+							for (var i = 0 ; i < firstDate.getDay(); i ++) {
+								var tmp = new Date(firstDate);
+								tmp = new Date(tmp.setDate(tmp.getDate() - (tmp.getDay() - i)));
+								dayMatrix[i].push({ date: tmp, count: 0 });
+							}
+							console.log('fill', dayMatrix);
+						}
+						var MAX_COUNT = 5;
+						for (var i = 0 ; i < dateArrayFor1Year.length ; i ++) {
+							var currentDate = dateArrayFor1Year[i];							
+							dayMatrix[currentDate.getDay()].push({ date: currentDate, count: dateToCnt[dateToFormat(currentDate)] });
+							//dayMatrix[currentDate.getDay()].push({ date: currentDate, count: getRandomIntInclusive(0,MAX_COUNT) });
+						}
+						// console.log('365일 date 객체:', dayMatrix); // [TODO] node 서버에서 계산 가능할 것 같은데 ? - 굳이
+						var finalHTML = "";
+						var days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+						for (var r = 0 ; r < 7 ; r ++) {
+							finalHTML += "<span class='ggreen'>" + days[r] + "</span> "; 
+							for (var c = 0 ; c < dayMatrix[r].length ; c ++) {
+								var cnt = dayMatrix[r][c].count;
+								var colorStrength = (dayMatrix[r][c].count / MAX_COUNT);
+								if (dayMatrix[r][c].count == 0)
+									finalHTML += "<span class='day-item' style='background:rgba(230,230,230,0.2);' data-date='"+ dayMatrix[r][c].date +"'></span>";
+								else 
+									finalHTML += "<span class='day-item' style='background:rgba(170,170,170," + colorStrength + ");' data-date='"+ dayMatrix[r][c].date +"'></span>";	
+							}	
+							finalHTML += "<br>";
+						}
+						$("#achivement-calendar").html(finalHTML);
+
+					};
+
+					var emptyHtml = `
+						draw your calendar by <b class='gred'>writing logs</b> 
+						or <b class='gred'>finishing todo-items</b> { <br>
+						&nbsp;&nbsp;<b class='gblue'>td fin -i todo_item_idx ; td push </b><br>
+						} <br>
+					`;
+
+					/* MAIN script */
 					$(function() {
-						var chartData = [{
-							date: new Date(),
-							count: 3 
-						}];
 
-						function getRandomIntInclusive(min, max) {
-						  return Math.floor(Math.random() * (max - min + 1)) + min;
-						}
-
-						function clickDate(d) {
-							alert(d);
-						}
-
-						function textCalendar () {
-							var now = new Date(); //moment().endOf('day').toDate();
-							var yearAgo = moment().startOf('day').subtract(1, 'year').toDate();
-							var dateArrayFor1Year = [];
-							var s = yearAgo, e = now;
-							while(s < e) {
-									dateArrayFor1Year.push(s);
-									s = new Date(s.setDate(
-											s.getDate() + 1
-									))
+						$.ajax({
+							url: "/users/stats/<%- user.nickName %>" 
+						}).done(function(dateToCnt) {
+							if (JSON.stringify(dateToCnt) === '{}') {
+								$('#achivement-calendar').html(emptyHtml);
+								return;
 							}
-
-							var dayMatrix = [[],[],[],[],[],[],[]];
-
-							var firstDate = dateArrayFor1Year[0];
-							// 빈칸 채우기
-							if (firstDate.getDay() > 0) {
-								for (var i = 0 ; i < firstDate.getDay(); i ++) {
-									var tmp = new Date(firstDate);
-									tmp = new Date(tmp.setDate(tmp.getDate() - (tmp.getDay() - i)));
-									dayMatrix[i].push({ date: tmp, count: 0 });
-								}
-							}
-							var MAX_COUNT = 5;
-							for (var i = 0 ; i < dateArrayFor1Year.length ; i ++) {
-								var currentDate = dateArrayFor1Year[i];							
-								dayMatrix[currentDate.getDay()].push({ date: currentDate, count: getRandomIntInclusive(0,MAX_COUNT) });
-							}
-							console.log('365일 date 객체:', dayMatrix); // TODO (node 서버에서 계산 가능할 것 같은데 ?)
-							var finalHTML = "";
-							for (var r = 0 ; r < 7 ; r ++) {
-								for (var c = 0 ; c < dayMatrix[r].length ; c ++) {
-									var cnt = dayMatrix[r][c].count;
-									var colorStrength = (dayMatrix[r][c].count / MAX_COUNT);
-									if (dayMatrix[r][c].count == 0)
-										finalHTML += "<span style='background:rgba(230,230,230,0.2);' data-date='"+ dayMatrix[r][c].date +"'></span>";
-									else 
-										finalHTML += "<span style='background:rgba(170,170,170," + colorStrength + ");' data-date='"+ dayMatrix[r][c].date +"'></span>";	
-								}	
-								finalHTML += "<br>";
-							}
-							$("#text-calendar").html(finalHTML);
-
-						};
-						textCalendar();
+							textCalendar(dateToCnt);
+						});
+						
 					});
 				</script>
 			</div>
