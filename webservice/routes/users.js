@@ -18,6 +18,50 @@ router.get('/', async (req, res, next) => {
 	}
 });
 
+
+router.get('/stats/:nickName', async (req, res, next) => {
+	const { nickName } = req.params;
+	try {
+		const user = await User.find({ 
+			where: { nickName },
+			order: [
+				[Log, 'id', 'DESC'],	
+			],
+			include: [{ model: Log, attributes: ['id', 'title', 'createdAt'] }], 
+		});
+
+		const dateToFormat = (d) => {
+			return d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate();
+		}
+
+		const dateToCnt = {};
+
+		if (user.Logs) {
+			for (let i = 0 ; i < user.Logs.length ; i ++) {
+				const d = new Date(user.Logs[i].createdAt);
+				const ds = dateToFormat(d);
+				if (ds in dateToCnt) dateToCnt[ds] += 1;
+				else dateToCnt[ds] = 1;
+			}
+		}
+		
+		if (user.finTodoItems) {
+			const finTodoItems = JSON.parse(user.finTodoItems);
+
+			for (let i = 0 ; i < finTodoItems.length ; i ++) {
+				const d = new Date(finTodoItems[i].finishedAt);
+				const ds = dateToFormat(d);
+				if (ds in dateToCnt) dateToCnt[ds] += 1;
+				else dateToCnt[ds] = 1;
+			}
+		}
+		res.json(dateToCnt);
+
+	} catch (error) {
+		console.error(error);
+	}
+});
+
 router.get('/blog/:nickName', async (req, res, next) => {
 	const { nickName } = req.params;
 	try {
