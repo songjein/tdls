@@ -23,6 +23,8 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
 		models.Log.belongsTo(models.User, { onDelete: 'CASCADE' });
 
+		models.Log.belongsToMany(models.Tag, { through: models.LogTag });
+
 		models.Log.belongsToMany(models.Log, {
 			foreignKey: 'SourceId',
 			as: 'Targets',
