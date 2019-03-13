@@ -76,7 +76,7 @@ fs.readFile(TODO_FILE, 'utf-8', (err, data) => {
 			fins = JSON.parse(fs.readFileSync(FIN_FILE, 'utf8'));
 		}
 		fins.push(finItem);
-		utils.writeFile(FIN_FILE, JSON.stringify(fins), "Finished Successfully");
+		utils.writeFile(FIN_FILE, JSON.stringify(fins), "Finished Successfully\n" + chalk.yellow('items\' index have been updated, check them by td ls'));
 	});
 
 	// fin write
