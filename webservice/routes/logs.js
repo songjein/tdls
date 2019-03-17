@@ -5,8 +5,11 @@ const moment = require('moment');
 
 const router = express.Router();
 
-const { User, Log, LogGraph } = require('../models')
+const { User, Log, Tag, LogGraph } = require('../models')
 const { SUCCESS, ERROR } = require('./status');
+
+// [TODO] find -> findOne
+// [TODO] sources, targets 도 include 기반으로 리팩터링?
 
 router.get('/', async (req, res, next) => {
 	try {
@@ -15,7 +18,10 @@ router.get('/', async (req, res, next) => {
 			order: [
 				['id', 'DESC'], // ASC
 			],
-			include: [{ model: User, attributes: ['nickName'] }], 
+			include: [
+				{ model: User, attributes: ['nickName'] },
+				{ model: Tag, attributes: ['name'] },
+			], 
 		});
 		res.render('logs', { logs, moment });
 	} catch (error) {
@@ -28,7 +34,10 @@ router.get('/:logId', async (req, res, next) => {
 	try {
 		const log = await Log.find({ 
 			where: { id: req.params.logId },
-			include: [{ model: User, attributes: ['nickName'] }], 
+			include: [
+				{ model: User, attributes: ['nickName'] },
+				{ model: Tag, attributes: ['name'] },
+			], 
 		});
 		const sources = await log.getSources();
 		const targets = await log.getTargets();
@@ -73,15 +82,17 @@ router.post('/delete', async (req, res, next) => {
 		if (log && (user.id !== log.User.id)) {
 			res.json({
 				status: ERROR,
-				msg: 'You do not have ownership of this article #' + logId,
+				msg: 'You do not have ownership of this log #' + logId,
 			});
 			return;
 		}
 		if (log) {
 			const sources = await log.getSources();
 			const targets = await log.getTargets();
+			const tags = await log.getTags();
 			await log.removeSources(sources);
 			await log.removeTargets(targets);
+			await log.removeTags(tags);
 			log = await log.destroy();
 			res.json({
 				status: SUCCESS,
@@ -97,7 +108,7 @@ router.post('/delete', async (req, res, next) => {
 });
 
 router.post('/', async (req, res, next) => {
-	const { firstKey, secondKey, title, sourceList, htmlBody, logId } = req.body; 
+	const { firstKey, secondKey, title, sourceList, tagList, htmlBody, logId } = req.body; 
 	try {
 		///////////////////////////////////////////////////////////////////////
 		// [TODO] 이 부분 공통되는 부분이라 함수로 빼기
@@ -129,12 +140,19 @@ router.post('/', async (req, res, next) => {
 			if (log && (user.id !== log.User.id)) {
 				res.json({
 					status: ERROR,
-					msg: 'You do not have ownership of this article ' + logId,
+					msg: 'You do not have ownership of this log ' + logId,
 				});
 				return;
 			}
 			if (log) {
+				// [TODO] 참조 리스트를 업데이트 할 때 혹시 이전게 빠지면 어떻게 됨? 자동으로 삭제되나
+				const tags = await Promise.all(
+					tagList.map(tag => Tag.findOrCreate({ where: { name: tag } }))
+				);
 				log = await log.update({ title, htmlBody });
+
+				const tagIdList = tags.map(tag => tag[0].id); // findOrCreate이 배열을 리턴하는 듯
+				await log.setTags(tagIdList); // [TODO] set??
 				
 				// [TODO] 중복 연산 + array 체크?
 				if (sourceList) {
@@ -153,12 +171,17 @@ router.post('/', async (req, res, next) => {
 			}
 			// else -> create new one
 		}
-
-		log = await Log.create({
+		
+		const tags = await Promise.all(
+			tagList.map(tag => Tag.findOrCreate({ where: { name: tag } }))
+		);
+		log = await Log.create({ 
 			title, htmlBody, UserId: user.id,
 		});
+		tagIdList = tags.map(tag => tag[0].id); // findOrCreate이 배열을 리턴하는 듯
+		await log.addTags(tagIdList);
 
-		// [TODO] 중복 연산
+		// [TODO] 중복 연산, 얘도 위처럼 프로미스 기반으로 바꾸면 깔끔한가
 		if (sourceList) {
 			for (let i = 0 ; i < sourceList.length ; i ++) {
 				const sourceLog = await Log.find({ where: { id: sourceList[i] } });

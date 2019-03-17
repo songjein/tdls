@@ -3,7 +3,7 @@ var router = express.Router();
 
 const moment = require('moment');
 
-const { User, Log } = require('../models')
+const { User, Log, Tag } = require('../models')
 
 /* GET home page. */
 router.get('/', async (req, res, next) => {
@@ -13,7 +13,10 @@ router.get('/', async (req, res, next) => {
 			order: [
 				['id', 'DESC'], // ASC
 			],	
-			include: [{ model: User, attributes: ['nickName'] }],
+			include: [
+				{ model: User, attributes: ['nickName'] },
+				{ model: Tag, attributes: ['name'] },
+			],
 		});
 		res.render('index', { users, logs, moment });
 	} catch (error) {
