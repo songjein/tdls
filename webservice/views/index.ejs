@@ -30,11 +30,27 @@
 		<div class='container'>
 
 			<div>
+				<b>Identity of { <span class='ggreen'>tdls</span> }</b><br>
+				<div class='code-block'>
+					<code>
+						Connect all the technologies in the world.
+					</code>
+				</div>
+			</div>
+
+			<div style='height:20px;'></div>
+
+
+			<div>
 				<b>Recent Contributions</b>, <code><a href='/logs'>showAll(logs)</a></code><br>
 				<div class='code-block'>
 					<code>
 						<% for (let i = 0 ; i < (logs.length > 10 ? 10 : logs.length); i++) { %>
-							- <b><%= logs[i].title %></b>
+							- 
+								<% for (let j = 0 ; j < logs[i].Tags.length ; j++) { %>
+									<span class='tag'><%= logs[i].Tags[j].name %></span>
+								<% } %>
+								<b><%= logs[i].title %></b>
 								by <b><a class='ggreen' href='/users/blog/<%= logs[i].User.nickName %>'><%= logs[i].User.nickName %></a></b>, <span class='gray'><%= moment(logs[i].createdAt).fromNow() %></span> ; <a href='/logs/<%= logs[i].id %>'>show(<span>#<%= logs[i].id %></span>)</a><br>
 								
 						<% } %>
@@ -59,17 +75,6 @@
 									<% } %>
 								} <br>
 						<% } %>
-					</code>
-				</div>
-			</div>
-
-			<div style='height:20px;'></div>
-
-			<div>
-				<b>Identity of { <span class='ggreen'>tdls</span> }</b><br>
-				<div class='code-block'>
-					<code>
-						Connect all the technologies in the world.
 					</code>
 				</div>
 			</div>
@@ -116,8 +121,12 @@
 						<span class='gred'>[ markdown file format ] </span><br>
 						<span class='gred'>-------------------------------------------------------------</span><br>
 						<span class='gblue'>title: 로그 제목 입력</span><br>
-						<span class='gblue'>sources: [ 1, 2, 3 ]</span> <span class='ggreen'># in-bound link log_id 리스트 (Optional)</span><br>
-						<span class='gblue'>마크다운 문서</span><br>
+						<span class='gblue'>tags: tag_A, tag_B, tag_C </span> <span class='ggreen'># 태그 리스트 (Optional)</span><br>
+						<span class='gblue'>sources: 1, 2, 3 </span> <span class='ggreen'># in-bound link log_id 리스트 (Optional)</span><br>
+						<div style='height:5px;'></div>
+						<span class='gblue'>;;;</span> <span class='ggreen'># 메타 데이터 끝 표시 <br>
+						<div style='height:5px;'></div>
+						<span class='gblue'>마크다운 문서 본문</span><br>
 						<span class='gred'>-------------------------------------------------------------</span><br>
 						<span class='ggreen'>[ create ]</span> <br>
 						td log -f 'MarkDown file path(absolute or relative path)' </br>
@@ -159,16 +168,8 @@
 				<b style='color:orange'>In development...</b><br>
 				<div class='code-block'>
 					<code> 
-						- 사이트 컨셉 -> 코딩 <a href='https://tdls.dev/users/master'>tdls.dev/user/master</a> 참고 <br>
-						- 현재 로컬에서만 가능한 td push & pull 기능 (tdls.dev에 기록&백업)<br>
-						- 유저의 td fin 명령에 대한 캘린더(빨래판) 그리기 <br>
-						- team-todo-list를 가능케 하는 channel 생성 기능 <br>
-						- graph-based blog, 블로그 글끼리 링크 가능, 트리를 이용한 상호 관계 시각화 <br>
-						- 웹페이지 댓글 및 채팅 기능 + 콘솔 상에서 채팅도? <br>
-						- 유저가 td add 시 -s(secret) 옵션 명시할 경우 클라이언트 단에서 암/복호화</br>
-						- todo-item 생성시 태그(대분류; ex.캐글, 수학공부) 포함, 조회시 그루핑 기능 <br>
-						- 페이지네이션<br>
-						- 이스터에그<br>
+						- <a href='https://tdls.dev/logs/54'>참조</a>  <br>
+						- <a href='https://tdls.dev/users/blog/dev'>개발자 블로그</a>
 					</code>
 				</div>
 			</div>

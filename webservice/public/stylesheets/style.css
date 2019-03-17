@@ -33,3 +33,12 @@ a {
 .bgblue {
 	background: rgba(0, 0, 255, 0.12);	
 }
+
+.tag {
+	display: inline-block;
+	background: rgba(52,168,83,0.2);
+	font-size: 0.7rem;
+	height: 1rem;
+	padding: 0 0.3rem;
+	line-height: 1rem;
+}

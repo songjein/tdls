@@ -58,6 +58,14 @@
 				</span><br>
 				<div style='height: 1rem;'></div>
 				<div>
+					<% if (log.Tags && log.Tags.length > 0) { %>
+					Tags: 
+						<% for (let i = 0; i < log.Tags.length ; i ++) { %>
+							<code><span class='tag'><%= log.Tags[i].name %></span></code>
+						<% } %>
+					<% } %>
+				</div>
+				<div>
 					Sources:
 					<% for (let i = 0 ; i < sources.length ; i++) { %>
 						<a href='/logs/<%= sources[i].id %>'><%= sources[i].title %></a> 
