@@ -30,6 +30,7 @@ router.get('/', async (req, res, next) => {
 	}
 });
 
+
 router.get('/:logId', async (req, res, next) => {
 	try {
 		const log = await Log.find({ 
@@ -47,6 +48,21 @@ router.get('/:logId', async (req, res, next) => {
 		next(error);
 	}
 });
+
+
+router.get('/raw/:logId', async (req, res, next) => {
+	try {
+		const log = await Log.find({ 
+			where: { id: req.params.logId }
+		});
+		res.send(log.rawMarkdown);
+	} catch (error) {
+		console.error(error);	
+		next(error);
+	}
+});
+
+
 
 // https://stackoverflow.com/questions/37796227/body-is-empty-when-parsing-delete-request-with-express-and-body-parser
 router.post('/delete', async (req, res, next) => {
@@ -108,7 +124,7 @@ router.post('/delete', async (req, res, next) => {
 });
 
 router.post('/', async (req, res, next) => {
-	const { firstKey, secondKey, title, sourceList, tagList, htmlBody, logId } = req.body; 
+	const { firstKey, secondKey, title, sourceList, tagList, htmlBody, rawMarkdown, logId } = req.body; 
 	try {
 		///////////////////////////////////////////////////////////////////////
 		// [TODO] 이 부분 공통되는 부분이라 함수로 빼기
@@ -149,7 +165,7 @@ router.post('/', async (req, res, next) => {
 				const tags = await Promise.all(
 					tagList.map(tag => Tag.findOrCreate({ where: { name: tag } }))
 				);
-				log = await log.update({ title, htmlBody });
+				log = await log.update({ title, htmlBody, rawMarkdown });
 
 				const tagIdList = tags.map(tag => tag[0].id); // findOrCreate이 배열을 리턴하는 듯
 				await log.setTags(tagIdList); // [TODO] set??
@@ -176,7 +192,7 @@ router.post('/', async (req, res, next) => {
 			tagList.map(tag => Tag.findOrCreate({ where: { name: tag } }))
 		);
 		log = await Log.create({ 
-			title, htmlBody, UserId: user.id,
+			title, htmlBody, rawMarkdown, UserId: user.id,
 		});
 		tagIdList = tags.map(tag => tag[0].id); // findOrCreate이 배열을 리턴하는 듯
 		await log.addTags(tagIdList);

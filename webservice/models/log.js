@@ -9,6 +9,10 @@ module.exports = (sequelize, DataTypes) => {
 			allowNull: false,
 			type: DataTypes.TEXT,
 		},
+    rawMarkdown: { 
+			allowNull: false,
+			type: DataTypes.TEXT,
+		},
 		UserId: {
 			type: DataTypes.INTEGER,
 			references: {

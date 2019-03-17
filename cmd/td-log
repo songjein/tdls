@@ -134,7 +134,7 @@ const createOrUpdateLog = async () => {
 	}
 
 	try {
-		const payload = { firstKey, secondKey, title, sourceList, tagList, htmlBody, logId };
+		const payload = { firstKey, secondKey, title, sourceList, tagList, htmlBody, rawMarkdown:md, logId };
 		const { data } = await axios.post(globals.API + logRoute, payload);
 		utils.showResult(data);
 

@@ -43,7 +43,7 @@
 			<div style='height: 20px'></div>
 
 			<div class='code-block'>
-				<b class='title'><%= log.title %></b> <br>
+				<b class='title'><%= log.title %></b><br>
 				<span>By { 
 					<b>
 						<a class='ggreen' href='/users/blog/<%= log.User.nickName %>'><%= log.User.nickName %></a>
@@ -55,7 +55,9 @@
 							<%= log.createdAt.toUTCString().split('GMT')[0].split(',')[1].trim() %>
 						</b> 
 					}
-				</span><br>
+				</span> ,
+				<a href='/logs/raw/<%= log.id %>'>markdown()</a> 
+				<br>
 				<div style='height: 1rem;'></div>
 				<div>
 					<% if (log.Tags && log.Tags.length > 0) { %>
