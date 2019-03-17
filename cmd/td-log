@@ -72,7 +72,7 @@ const createOrUpdateLog = async () => {
 	const titlePattern = /title\s*:\s*.*\n/;
 	const matchedTitle = titlePattern.exec(md); 
 
-	// find title
+	// find title [TODO] 비어있을 경우 예외 추가
 	let title = undefined;
 	if (!matchedTitle) {
 		console.log(
@@ -91,7 +91,7 @@ const createOrUpdateLog = async () => {
 
 	let sourceList = undefined;
 	if (matchedSourceList) {
-		sourceList = matchedSourceList[0].split(':')[1].split(',').map(word => parseInt(word.trim()));
+		sourceList = matchedSourceList[0].split(':')[1].split(',').map(word => parseInt(word.trim())).filter(num => !isNaN(num));
 		console.log('Source list detected:', sourceList);
 	} else {
 		console.log(chalk.red(chalk.yellow('Source list') + ' is not detected'));
@@ -104,7 +104,7 @@ const createOrUpdateLog = async () => {
 
 	let tagList = undefined;
 	if (matchedTagList) {
-		tagList = matchedTagList[0].split(':')[1].split(',').map(word => word.trim());	
+		tagList = matchedTagList[0].split(':')[1].split(',').map(word => word.trim()).filter(word => word.length > 0);	
 		console.log('Tag list detected:', tagList);
 	} else {
 		console.log(chalk.red(chalk.yellow('Tag list') + ' is not detected'));
@@ -116,6 +116,22 @@ const createOrUpdateLog = async () => {
 	let htmlBody = undefined;	
 	htmlBody = converter.makeHtml(md.split(';;;').slice(1).join(';;;'));
 	console.log(htmlBody);
+	
+	if (logId) {
+		const questions = [
+			{
+				message: 'You really want to update ' + chalk.yellow('https://tdls.dev/logs/' + chalk.red.bold(logId) + ' ?') + '\n' + chalk.yellow('log ' + chalk.red.bold('#' + logId) + ' will be overwritten'),
+				type: 'confirm',
+				name: 'confirm',
+				default: false,
+			}	
+		];
+		const answers = await inquirer.prompt(questions);
+		if (!answers.confirm) {
+			console.log(chalk.yellow.bold(globals.NH_MSG));	
+			return;
+		}
+	}
 
 	try {
 		const payload = { firstKey, secondKey, title, sourceList, tagList, htmlBody, logId };
@@ -132,7 +148,7 @@ const deleteLog = async () => {
 		const payload = { firstKey, secondKey, logId };
 		const questions = [
 			{
-				message: 'You really want to delete ' + chalk.yellow('https://tdls.dev/logs/' + chalk.red.bold(logId)),
+				message: 'You really want to delete ' + chalk.yellow('https://tdls.dev/logs/' + chalk.red.bold(logId) + ' ?'),
 				type: 'confirm',
 				name: 'confirm',
 				default: false,
