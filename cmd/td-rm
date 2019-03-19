@@ -85,7 +85,10 @@ fs.readFile(TODO_FILE, 'utf-8', (err, data) => {
 			if (err) {
 				console.error(chalk.red.bold(err));	
 			} else {
-				console.log(chalk.green.bold('Removed Successfully'));	
+				console.log(
+					chalk.green.bold('Removed Successfully\n')
+					+ chalk.yellow('items\' index have been updated, check them by td ls')
+				);	
 			}
 		});
 	});

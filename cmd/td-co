@@ -11,9 +11,9 @@ const fs = require('fs');
 const globals = require('./globals');
 
 program
-	.description('Change two item\'s order(idx)')
-	.option('-1, --first <required>', 'first item') 
-	.option('-2, --second <required>', 'second item', 0) 
+	.description('Change the order of two items (idx)\n  or, give it the highest priority if you set --first(-f) option only')
+	.option('-f, --first <required>', 'first item') 
+	.option('-s, --second <required>', 'second item', -1) 
 	.parse(process.argv);
 
 /**
@@ -21,7 +21,6 @@ program
  */
 const first = program.first;
 const second = program.second;
-
 
 /**
  *	Validation	
@@ -35,8 +34,16 @@ if (!first && !second) {
 /**
  *	Verbose	
  */
-console.log(chalk.green.bold('co command ; '), chalk.green.underline(first) , chalk.magenta(" <---> "), chalk.green.underline(second));
-	
+if (second == -1) { 
+	console.log(
+		chalk.green.bold('co command ; '), 
+		chalk.green.bold('put highest priority on ' + chalk.yellow('#' + first)), 
+	);	
+} else if (first >= 0 && second >= 0) {
+	console.log(
+		chalk.green.bold('co command ; '), 
+		chalk.green.underline(first) , chalk.magenta(" <---> "), chalk.green.underline(second));
+}
 
 /**
  *	Read JSON file	
@@ -52,8 +59,13 @@ fs.readFile(TODO_FILE, 'utf-8', (err, data) => {
 	}
 
 	const tmp = todos[first];
-	todos[first] = todos[second];
-	todos[second] = tmp;
+	if (first >= 0 && second >= 0) {
+		todos[first] = todos[second];
+		todos[second] = tmp;
+	} else {
+		todos.splice(first, 1);
+		todos.unshift(tmp);
+	}
 	
 	fs.writeFile(TODO_FILE, JSON.stringify(todos), 'utf-8', (err) => {
 		if (err) {
