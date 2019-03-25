@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>td-ls</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+		<style>
+			.header {
+				padding-left: 1rem;	
+			}
+			.container {
+				padding-left: 1rem;	
+			}
+			.code-block {
+				display: inline-block;
+				width: 96%;
+				margin: 1% 0;
+				padding: 0 1%;	
+				background: rgba(250,250,250, 0.5);	
+			}
+		</style>
+  </head>
+  <body>
+		<%- include nav.ejs %>
+
+		<div style='height: 20px'></div>
+
+		<div class='container'>
+			<div>
+				<b>Search By { <%= tag.name %> }</b> <br> 
+				<div class='code-block'>
+					<code>
+						<% const logs = tag.Logs %>
+						<% for (let i = 0 ; i < logs.length; i++) { %>
+							- 
+							<b><%= logs[i].title %></b> 
+								by <b><a class='ggreen' href='/users/blog/<%= logs[i].User.nickName %>'><%= logs[i].User.nickName %></a></b>, <span class='gray'><%= moment(logs[i].createdAt).fromNow() %></span> ; <a href='/logs/<%= logs[i].id %>'>show(<span>#<%= logs[i].id %></span>)</a><br>
+						<% } %>
+					</code>
+				</div>
+			</div>
+
+		</div>
+		<!-- container -->
+
+  </body>
+</html>

@@ -50,6 +50,40 @@ router.get('/:logId', async (req, res, next) => {
 });
 
 
+router.get('/search/:tag', async (req, res, next) => {
+	try {
+		const tag = await Tag.find({
+			where: { name: req.params.tag },
+			include: [
+				{ model: Log, include: [User] },	
+			],
+		});	
+		res.render('search',{ tag, moment });
+	}	catch (error) {
+		console.error(error);	
+		next(error);
+	}
+});
+
+router.get('/telegram/search/:tag', async (req, res, next) => {
+	try {
+		const tag = await Tag.find({
+			where: { name: req.params.tag },
+			attributes: ['name', 'createdAt'],
+			include: [
+				{ model: Log },	
+			],
+		});	
+		res.json(tag);
+	}	catch (error) {
+		console.error(error);	
+		next(error);
+	}
+});
+
+
+
+
 router.get('/raw/:logId', async (req, res, next) => {
 	try {
 		const log = await Log.find({ 
