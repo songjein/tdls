@@ -5,7 +5,7 @@ const moment = require('moment');
 
 const router = express.Router();
 
-const { User, Log } = require('../models')
+const { User, Log, Tag } = require('../models')
 
 const { SUCCESS, ERROR } = require('./status');
 
@@ -15,6 +15,20 @@ router.get('/', async (req, res, next) => {
 		res.render('users', { users });
 	} catch (error) {
 		console.error(error);
+	}
+});
+
+
+router.get('/telegram/todos/:nickName', async (req, res, next) => {
+	const { nickName } = req.params;
+	try {
+		const user = await User.find({
+			where: { nickName }	
+		});
+		res.json({ nickName, todoItems: user.todoItems });
+	} catch (error) {
+		console.log(error);
+		next(error);
 	}
 });
 
@@ -59,6 +73,7 @@ router.get('/stats/:nickName', async (req, res, next) => {
 
 	} catch (error) {
 		console.error(error);
+		next(error);
 	}
 });
 
@@ -70,7 +85,9 @@ router.get('/blog/:nickName', async (req, res, next) => {
 			order: [
 				[Log, 'id', 'DESC'],	
 			],
-			include: [{ model: Log, attributes: ['id', 'title', 'createdAt'] }], 
+			include: [
+				{ model: Log, attributes: ['id', 'title', 'createdAt'], include: [Tag] }
+			], 
 		});
 		res.render('user', { user, moment });
 	} catch (error) {
