@@ -20,21 +20,23 @@
 $(function(){
 	var shiftDown = false;
 	$('body').keydown(function(e){
-		if (e.keyCode == 16) {
+		if (!$('#search-bar').is(":focus") && e.keyCode == 16) {
 			shiftDown = true;	
 		}
 		if (shiftDown && e.keyCode == 67) {
 			setTimeout(function(){
-				$('#search-bar').focus();
+				$('#search-bar').focus().val('');
 			}, 200);
 			shiftDown = false;
-		}
+		} 
 	});
 	function executeCmd(cmd){
 		var matchSBT = cmd.toLowerCase().match(/searchbytag\((.*)\)/);
 		var matchSearch = cmd.toLowerCase().match(/search\((.*)\)/);
 		var matchShow = cmd.toLowerCase().match(/show\((.*)\)/);
 		var matchHome = cmd.toLowerCase().match(/home\((.*)\)/);
+		var matchShowAll = cmd.toLowerCase().match(/showall\((.*)\)/);
+		var matchVisit = cmd.toLowerCase().match(/visit\((.*)\)/);
 
 		if (matchSBT) {
 			var param = matchSBT[1].replace(/["']/g,'');
@@ -47,6 +49,16 @@ $(function(){
 			window.location = "/logs/" + param;
 		} else if (matchHome) {
 			window.location = "/";
+		} else if (matchShowAll) {
+			var param = matchShowAll[1].replace(/["']/g,'');
+			if (param === 'logs') {
+				window.location = "/logs";	
+			} else if (param === 'users') {
+				window.location = "/users";	
+			}
+		} else if (matchVisit) {
+			var param = matchVisit[1].replace(/["']/g,'');	
+			window.location = '/users/blog/' + param;
 		}
 	}
 	$('#search-bar').keyup(function(e) {
