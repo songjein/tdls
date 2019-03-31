@@ -25,9 +25,9 @@
 
 		<%- include nav.ejs %>
 
-		<div style='height: 20px'></div>
-
 		<div class='container'>
+
+			<div style='height:10px;'></div>
 
 			<div>
 				<b>Identity of { <span class='ggreen'>tdls</span> }</b><br>
@@ -155,7 +155,7 @@
 						<span class='ggreen'>[ delete item ]</span><br>
 						td rm -i index_of_todo_item <br>
 						<span class='ggreen'>[ change order ]</span> <br>
-						td co -1 first_index -2 second_index<br>
+						td co -f first_index -s second_index<br>
 						<span class='ggreen'>[ push to remote server ]</span> <br>
 						td push <br> 
 					</code>

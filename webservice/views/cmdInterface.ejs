@@ -1,0 +1,57 @@
+<script
+	src="https://code.jquery.com/jquery-3.3.1.min.js"
+		integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+			crossorigin="anonymous"></script>
+<style>
+	#search-bar {
+		width: 968px; 
+		background: rgb(40,41,35);	
+		color: rgb(255,216,102);
+		border: none;
+		padding: 10px;
+		margin: 10px 16px;
+	}
+	input#search-bar:focus {
+		outline: none;
+	}
+</style>
+<input id='search-bar' type='text' placeholder='Type the command... ex) search(Linked List)  or  help(),  shift+c: focus on cmd interface'></input>
+<script>
+$(function(){
+	var shiftDown = false;
+	$('body').keydown(function(e){
+		if (e.keyCode == 16) {
+			shiftDown = true;	
+		}
+		if (shiftDown && e.keyCode == 67) {
+			setTimeout(function(){
+				$('#search-bar').focus();
+			}, 200);
+			shiftDown = false;
+		}
+	});
+	function executeCmd(cmd){
+		var matchSBT = cmd.toLowerCase().match(/searchbytag\((.*)\)/);
+		var matchSearch = cmd.toLowerCase().match(/search\((.*)\)/);
+		var matchShow = cmd.toLowerCase().match(/show\((.*)\)/);
+		var matchHome = cmd.toLowerCase().match(/home\((.*)\)/);
+
+		if (matchSBT) {
+			var param = matchSBT[1].replace(/["']/g,'');
+			window.location = "/logs/search/" + param;
+		} else if (matchSearch) {
+			var param = matchSearch[1].replace(/["']/g,'');
+			window.location = "/logs/search/" + param;
+		} else if (matchShow) {
+			var param = matchShow[1].replace(/["'#]/g,'');
+			window.location = "/logs/" + param;
+		} else if (matchHome) {
+			window.location = "/";
+		}
+	}
+	$('#search-bar').keyup(function(e) {
+		var cmd = $('#search-bar').val()
+		if (e.keyCode == 13) executeCmd(cmd);
+	});
+});
+</script>
