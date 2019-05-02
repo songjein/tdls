@@ -8,7 +8,7 @@ program
 	.command('add', 'add todo item').alias('a')
 	.command('ls', 'list todo items').alias('l')
 	.command('lsf', 'list finished todo items').alias('lf')
-	.command('co', 'change order of two items').alias('c')
+	.command('cpr', 'change the priority of an item').alias('cp')
 	.command('fin', 'finish todo item').alias('f')
 	.command('rm', 'remove todo item').alias('r') 
 	.command('push', 'push local todo items to remote server https://tdls.dev').alias('p') 
