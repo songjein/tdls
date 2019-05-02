@@ -67,6 +67,30 @@ fs.readFile(TODO_FILE, 'utf-8', (err, data) => {
 	} 
 });
 
+// [TODO] createdAt 으로 정렬할 필요는 업겠지 
+function countingSort(todos) {
+	const buf = [];
+	const ret = [];
+	const MAX_PRIORITY_NUM = 5;
+	for (let i = 0 ; i <= MAX_PRIORITY_NUM ; i++) {
+		buf.push([]);	
+	}
+	for (let i = 0 ; i < todos.length ; i++) {
+		// 하위 호환을 위해 체크
+		if ('priority' in todos[i]) {
+			buf[todos[i].priority].push(todos[i]);	
+		} else {
+			buf[3].push(todos[i]);
+		}
+	}
+	for (let i = 0 ; i < buf.length ; i++) {
+		for (let j = 0 ; j < buf[i].length ; j++) {
+			ret.push(buf[i][j]);	
+		}	
+	}
+	return ret;
+}
+
 /**
  *	show todo
  *	using global variable '_todos'
@@ -78,6 +102,9 @@ function showTodos(todos) {
 		console.log(chalk.yellow.bold(globals.EMPTY_MSG));
 		return;
 	}
+	todos = countingSort(todos);
+	fs.writeFileSync(TODO_FILE, JSON.stringify(todos));
+	let cnt = 0;
 	todos.forEach((item, idx) => {
 		if (!all && (number > 0 && number <= idx)) return false;
 		// [TODO-deprecated] 기존의 채널에 대한 처리 
@@ -94,11 +121,23 @@ function showTodos(todos) {
 			const date = new Date(item[globals.ADD_AT]);
 			msg += ' - ' + date;
 		}
-
-		if (idx < 3) 
-			console.log(chalk.red(idx + "."), msg);
-		else
+		
+		if ('priority' in item) {
+			switch (item.priority) {
+				case 1:
+					console.log(chalk.red(idx + "."), msg);
+					break;
+				case 2:case 3:
+					console.log(chalk.green(idx + "."), msg);
+					break;
+				case 4:case 5:
+					console.log(chalk.cyan(idx + "."), msg);
+					break;
+			}	
+		} else {
 			console.log(chalk.cyan(idx + "."), msg);
+		}
+		cnt++;
 	});
 }
 

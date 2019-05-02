@@ -17,9 +17,9 @@ program
 /**
  *	Options
  */
-const todo = program.msg;
+const todo = program.msg.trim();
 const secret = program.secret; 
-const priority = program.priority;
+const priority = parseInt(program.priority);
 // const secret = program.secret ? program.secret : false;
 
 
@@ -54,7 +54,7 @@ fs.readFile(TODO_FILE, 'utf-8', (err, data) => {
 	if (!err) {
 		todos = JSON.parse(data);
 	}
-
+	
 	const item = { todo, secret, priority };
 	item[globals.ADD_AT] = Date.now();
 	todos.push(item);
