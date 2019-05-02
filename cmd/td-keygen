@@ -42,7 +42,7 @@ const doSomthing = async () => {
 		if (fs.existsSync(KEY_FILE)) {
 			const questions = [
 				{
-					message: 'key pair already exist, you really want re-generate it?',
+					message: 'key pair already exist, you really want to re-generate it?',
 					type: 'confirm',
 					name: 'confirm',
 					default: false,
