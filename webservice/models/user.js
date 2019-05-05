@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
 			unique: true,
 		},
     secondKeyHash: DataTypes.STRING,
+		telegramId: DataTypes.INTEGER,
     nickName: { 
 			type: DataTypes.STRING,
 			unique: true,

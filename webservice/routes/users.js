@@ -9,6 +9,37 @@ const { User, Log, Tag } = require('../models')
 
 const { SUCCESS, ERROR } = require('./status');
 
+
+const authUserKey = async (firstKey, secondKey, msgs, flags) => {
+	const user = await User.find({ where: { firstKey } });
+	if (!user) {
+		return {
+			user,
+			resObj: {
+				status: flags.ERROR,
+				msg: msgs.Error,	
+			},
+		}
+	}
+	const valid = await bcrypt.compare(secondKey, user.secondKeyHash);
+	if(!valid) {
+		return {
+			user,
+			resObj: {
+				status: flags.ERROR,
+				msg: 'invalid key-pair',
+			},
+		};
+	}
+	return {
+		user, 
+		resObj: { 
+			status: flags.SUCCESS,	
+			msg: msgs.SUCCESS,
+		},
+	};
+};
+
 router.get('/', async (req, res, next) => {
 	try {
 		const users = await User.findAll();
@@ -26,6 +57,32 @@ router.get('/telegram/todos/:nickName', async (req, res, next) => {
 			where: { nickName }	
 		});
 		res.json({ nickName, todoItems: user.todoItems });
+	} catch (error) {
+		console.log(error);
+		next(error);
+	}
+});
+
+router.post('/telegram/link', async (req, res, next) => {
+	const { firstKey, secondKey, telegramId } = req.body;
+
+	try {
+		const { user, resObj } = await authUserKey(
+			firstKey, secondKey,
+			{ 
+				SUCCESS: 'Now you can enjoy tdls in Telegram',
+				ERROR: 'You should register tdls first! by "/td keyGen", "/td setUserInfo"',
+			},
+			{ SUCCESS, ERROR }
+		);
+
+		if (resObj.stats = ERROR) {
+			res.json(resObj);	
+			return;
+		}
+		await user.update({ telegramId });
+		res.json(resObj);
+
 	} catch (error) {
 		console.log(error);
 		next(error);
@@ -168,39 +225,26 @@ router.post('/setUserInfo', async (req, res, next) => {
 		console.log(error);
 		next(error);
 	}
-
 });
 
 
 router.post('/setTodoItems', async (req, res, next) => {
 	const { firstKey, secondKey, todoItems, finTodoItems } = req.body;
 	try {
-		///////////////////////////////////////////////////////////////////////
-		// [TODO] 이 부분 공통되는 부분이라 함수로 빼기
-		///////////////////////////////////////////////////////////////////////
-		const user = await User.find({ where: { firstKey } });
-		if (!user) {
-			res.json({
-				status: ERROR,
-				msg: "not registered, you must finish 'td setinfo'",	
-			});	
-			return;
+		const { user, resObj } = await authUserKey(
+			firstKey, secondKey,
+			{ 
+				SUCCESS: "todo-items successfully pushed :)", 
+				ERROR: "not registered, you must finish 'td setinfo'" 
+			},
+			{ SUCCESS, ERROR }
+		);
+		if (resObj.status == ERROR) {
+			res.json(resObj);
+			return;	
 		}
-		const valid = await bcrypt.compare(secondKey, user.secondKeyHash);
-		if(!valid) {
-			res.json({
-				status: ERROR,
-				msg: 'invalid key-pair',
-			});
-			return;
-		}
-		///////////////////////////////////////////////////////////////////////
-
 		await user.update({ todoItems, finTodoItems });
-		res.json({
-			status: SUCCESS,
-			msg: 'todo-items successfully pushed :)',
-		});
+		res.json(resObj);
 			
 	} catch (error) {
 		res.json({
