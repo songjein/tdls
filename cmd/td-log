@@ -113,7 +113,7 @@ const createOrUpdateLog = async () => {
 	
 	// content of an article
 	let htmlBody = undefined;	
-	htmlBody = marked(md.split(';;;').slice(1).join(';;;'));
+	htmlBody = marked(md.split(';;;').slice(1).join(';;;'), { gfm: true });
 	console.log(htmlBody);
 	
 	if (logId) {

@@ -98,7 +98,11 @@
 						<% if (user.Logs.length > 0) { %>
 							<% const logs = user.Logs %>
 							<% for (let i = 0 ; i < logs.length; i++) { %>
-								- <b><%= logs[i].title %></b>, <span class='gray'><%= moment(logs[i].createdAt).fromNow() %></span> ; <a href='/logs/<%= logs[i].id %>'>show(<span>#<%= logs[i].id %></span>)</a><br>
+								- 
+								<% for (let j = 0 ; j < logs[i].Tags.length ; j++) { %>
+									<span class='tag'><%= logs[i].Tags[j].name %></span>
+								<% } %>
+								<b><%= logs[i].title %></b>, <span class='gray'><%= moment(logs[i].createdAt).fromNow() %></span> ; <a href='/logs/<%= logs[i].id %>'>show(<span>#<%= logs[i].id %></span>)</a><br>
 							<% } %>
 						<% } else { %>
 							no contribution yet :(...<br>
