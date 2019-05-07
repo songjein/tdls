@@ -11,7 +11,7 @@ const fs = require('fs');
 const globals = require('./globals');
 
 program
-	.description('Change the priority of an items')
+	.description('Change the priority of an item')
 	.option('-i, --idx <required>', 'todo item\'s index at which the prioirty will be updated') 
 	.option('-p, --priority <required>', 'prioirty of a todo item') 
 	.parse(process.argv);
