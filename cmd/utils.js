@@ -19,12 +19,20 @@ module.exports = {
 		return JSON.parse(keyText); 
 	},
 	getTodoItemsFromFile() {
-		const todoText = fs.readFileSync(TODO_FILE, 'utf-8');
-		return todoText; 
+		try {
+			const todoText = fs.readFileSync(TODO_FILE, 'utf-8');
+			return todoText; 
+		} catch {
+			return null;	
+		}
 	},
 	getFinTodoItemsFromFile() {
-		const finTodoText = fs.readFileSync(FIN_FILE, 'utf-8');
-		return finTodoText; 
+		try {
+			const finTodoText = fs.readFileSync(FIN_FILE, 'utf-8');
+			return finTodoText; 
+		} catch {
+			return null;	
+		}
 	},
 	notExistKeyFileExitProcess () {
 		if (!fs.existsSync(KEY_FILE)) {
